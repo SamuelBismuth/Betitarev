@@ -26,6 +26,9 @@ public abstract class User {
 
     }
 
+    public void updateDatabase() {
+    }
+
     public String getName() {
         return name;
     }
