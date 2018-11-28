@@ -23,11 +23,9 @@ public abstract class User {
         this.password = password;
         this.mail = mail;
         this.friends = null;
-
     }
 
-    public void updateDatabase() {
-    }
+    public abstract void updateDatabase();
 
     public String getName() {
         return name;

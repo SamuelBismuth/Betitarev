@@ -1,6 +1,6 @@
 package com.example.betitarev.betitarev.objects;
 
-//Singletone
+//Singleton
 public class SuperAdmin extends User implements Admin {
 
     public SuperAdmin(String name, String familyName, Password password, Mail mail) {
@@ -11,7 +11,6 @@ public class SuperAdmin extends User implements Admin {
         super(name, familyName, picture, password, mail);
     }
 
-
     @Override
     public boolean sendWarning(User player) {
         return false;
@@ -21,4 +20,5 @@ public class SuperAdmin extends User implements Admin {
     public boolean removePlayer(User player) {
         return false;
     }
+
 }

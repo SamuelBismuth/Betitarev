@@ -12,6 +12,10 @@ public class BasicAdmin extends User implements Admin {
     }
 
     @Override
+    public void updateDatabase() {
+    }
+
+    @Override
     public boolean sendWarning(User player) {
         return false;
     }
@@ -20,4 +24,5 @@ public class BasicAdmin extends User implements Admin {
     public boolean removePlayer(User player) {
         return false;
     }
+
 }

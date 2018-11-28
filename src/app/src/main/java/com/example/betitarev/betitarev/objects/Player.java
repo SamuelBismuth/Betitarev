@@ -6,12 +6,17 @@ public class Player extends User {
 
     public Player(String name, String familyName, Password password, Mail mail) {
         super(name, familyName, password, mail);
-        this.statistics = statistics.initialize();
+        this.statistics = new Statistics();
     }
 
     public Player(String name, String familyName, String picture, Password password, Mail mail) {
         super(name, familyName, picture, password, mail);
-        this.statistics = statistics.initialize();
+        this.statistics = new Statistics();
 
     }
+
+    public Statistics getStatistics() {
+        return statistics;
+    }
+
 }
