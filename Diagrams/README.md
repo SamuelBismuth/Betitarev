@@ -2,7 +2,7 @@
 
 This folder contains the next diagrams: 
 
-- [ ] Use case diagram. [@yoshago]( https://github.com/yoshago )
+- [x] Use case diagram. [@yoshago]( https://github.com/yoshago )
 - [x] Class diagram. [@SamuelBismuth]( https://github.com/SamuelBismuth )
 - [x] Object diagram. [@SamuelBismuth]( https://github.com/SamuelBismuth )
 - [X] Activity diagram. [@yoshago]( https://github.com/yoshago )
