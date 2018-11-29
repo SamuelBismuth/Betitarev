@@ -12,6 +12,10 @@ public class SuperAdmin extends User implements Admin {
     }
 
     @Override
+    public void updateDatabase() {
+    }
+
+    @Override
     public boolean sendWarning(User player) {
         return false;
     }
