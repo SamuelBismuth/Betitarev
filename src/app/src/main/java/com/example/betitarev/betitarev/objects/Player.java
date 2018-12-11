@@ -15,6 +15,10 @@ public class Player extends User {
 
     }
 
+    @Override
+    public void updateDatabase() {
+    }
+
     public Statistics getStatistics() {
         return statistics;
     }
