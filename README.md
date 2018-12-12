@@ -13,7 +13,7 @@ The general idea is to put what we call a ”bet friend” into an application.
 Assuming that all the task required back and front-end, and even phone configuration such that sending notification.  
 The tasks are classify from the most to the less important.  
 - [x] Log in/up and database connection. [@SamuelBismuth]( https://github.com/SamuelBismuth )
-- [ ] Real time database. [@SamuelBismuth]( https://github.com/SamuelBismuth )
+- [x] Real time database. [@SamuelBismuth]( https://github.com/SamuelBismuth )
 - [ ] Profile of the user. [@yoshago]( https://github.com/yoshago )
 - [ ] Bet process (all the best process including the gain...). [@yoshago]( https://github.com/yoshago )  [@SamuelBismuth]( https://github.com/SamuelBismuth )  [@Yishay1]( https://github.com/Yishay1 )
 - [ ] List of friend.  [@Yishay1]( https://github.com/Yishay1 )
