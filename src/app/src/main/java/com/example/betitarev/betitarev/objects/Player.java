@@ -9,8 +9,8 @@ public class Player extends User {
         this.statistics = new Statistics();
     }
 
-    public Player(String name, String familyName, String picture, Password password, Mail mail) {
-        super(name, familyName, picture, password, mail);
+    public Player(String name, String familyName, String picture, Mail mail) {
+        super(name, familyName, picture, mail);
         this.statistics = new Statistics();
 
     }

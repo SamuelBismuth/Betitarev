@@ -21,7 +21,7 @@ public abstract class User {
         this.picture = "../../../Betitarev/pictures/anonymous.png";
     }
 
-    public User(String name, String familyName, String picture, Password password, Mail mail) {
+    public User(String name, String familyName, String picture, Mail mail) {
         this.name = name;
         this.familyName = familyName;
         this.picture = picture;
