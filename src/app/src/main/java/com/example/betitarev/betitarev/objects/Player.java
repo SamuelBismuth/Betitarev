@@ -4,8 +4,8 @@ public class Player extends User {
 
     private Statistics statistics;
 
-    public Player(String name, String familyName, Password password, Mail mail) {
-        super(name, familyName, password, mail);
+    public Player(String name, String familyName, Mail mail) {
+        super(name, familyName, mail);
         this.statistics = new Statistics();
     }
 

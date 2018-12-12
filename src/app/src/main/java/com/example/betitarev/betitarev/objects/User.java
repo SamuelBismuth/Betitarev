@@ -1,16 +1,21 @@
 package com.example.betitarev.betitarev.objects;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 public abstract class User {
 
     private String name, familyName, picture;  // path to the picture in our server.
-    private Password password;
     private Mail mail;
     private Friends friends;
 
-    public User(String name, String familyName, Password password, Mail mail) {
+    // Default constructor required for calls to
+    // DataSnapshot.getValue(User.class)
+    public User() {
+    }
+
+    public User(String name, String familyName, Mail mail) {
         this.name = name;
         this.familyName = familyName;
-        this.password = password;
         this.mail = mail;
         this.friends = null;
         this.picture = "../../../Betitarev/pictures/anonymous.png";
@@ -20,7 +25,6 @@ public abstract class User {
         this.name = name;
         this.familyName = familyName;
         this.picture = picture;
-        this.password = password;
         this.mail = mail;
         this.friends = null;
     }
@@ -49,14 +53,6 @@ public abstract class User {
 
     public void setPicture(String picture) {
         this.picture = picture;
-    }
-
-    public Password getPassword() {
-        return password;
-    }
-
-    public void setPassword(Password password) {
-        this.password = password;
     }
 
     public Mail getMail() {

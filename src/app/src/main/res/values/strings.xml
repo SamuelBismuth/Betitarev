@@ -29,4 +29,8 @@
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
     <string name="appbar_scrolling_view_behavior" />
+    <string name="title_activity_user_info">UserInfoActivity</string>
+    <string name="name">Name</string>
+    <string name="action_save">Save</string>
+    <string name="family_name">Family Name</string>
 </resources>
