@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,17 +13,29 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.objects.Mail;
+import com.example.betitarev.betitarev.objects.Player;
+import com.example.betitarev.betitarev.objects.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword;
+    private EditText inputEmail, inputPassword, inputName, inputFamilyName;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
+    private DatabaseReference mFirebaseDatabase;
+    private FirebaseDatabase mFirebaseInstance;
+
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +49,15 @@ public class SignupActivity extends AppCompatActivity {
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
+        inputName = (EditText) findViewById(R.id.name);
+        inputFamilyName = (EditText) findViewById(R.id.family_name);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
+
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+
+        // get reference to 'users' node
+        mFirebaseDatabase = mFirebaseInstance.getReference("users");
 
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +79,8 @@ public class SignupActivity extends AppCompatActivity {
 
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
+                String name = inputName.getText().toString().trim();
+                String familyName = inputFamilyName.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
@@ -67,6 +89,16 @@ public class SignupActivity extends AppCompatActivity {
 
                 if (TextUtils.isEmpty(password)) {
                     Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(name)) {
+                    Toast.makeText(getApplicationContext(), "Enter name!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(familyName)) {
+                    Toast.makeText(getApplicationContext(), "Enter family name!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -96,8 +128,20 @@ public class SignupActivity extends AppCompatActivity {
                             }
                         });
 
+                createUser(name, familyName, new Mail(email));
+
             }
         });
+
+    }
+
+    /**
+     * Creating new user node under 'users'
+     */
+    private void createUser(String name, String familyName, Mail email) {
+        this.userId = mFirebaseDatabase.push().getKey();
+        User user = new Player(name, familyName, email, userId);
+        mFirebaseDatabase.child(userId).setValue(user);
     }
 
     @Override

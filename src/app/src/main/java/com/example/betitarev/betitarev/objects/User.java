@@ -4,7 +4,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 public abstract class User {
 
-    private String name, familyName, picture;  // path to the picture in our server.
+    private String name, familyName, picture, userId;  // path to the picture in our server.
     private Mail mail;
     private Friends friends;
 
@@ -13,19 +13,21 @@ public abstract class User {
     public User() {
     }
 
-    public User(String name, String familyName, Mail mail) {
+    public User(String name, String familyName, Mail mail, String userId) {
         this.name = name;
         this.familyName = familyName;
         this.mail = mail;
+        this.userId = userId;
         this.friends = null;
         this.picture = "../../../Betitarev/pictures/anonymous.png";
     }
 
-    public User(String name, String familyName, String picture, Mail mail) {
+    public User(String name, String familyName, String picture, Mail mail, String userId) {
         this.name = name;
         this.familyName = familyName;
         this.picture = picture;
         this.mail = mail;
+        this.userId = userId;
         this.friends = null;
     }
 
