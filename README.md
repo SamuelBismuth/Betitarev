@@ -19,6 +19,7 @@ The tasks are classify from the most to the less important.
 - [ ] List of friend.  [@Yishay1]( https://github.com/Yishay1 )
 - [ ] Chat between friend. [@SamuelBismuth]( https://github.com/SamuelBismuth )
 - [ ] Real money transaction [@SamuelBismuth]( https://github.com/SamuelBismuth ) [@Yishay1]( https://github.com/Yishay1 )
+- [ ] Main page\ Lobby [@SamuelBismuth]( https://github.com/SamuelBismuth ) [@yoshago]( https://github.com/yoshago )
 
 # Team Work Rules
 
