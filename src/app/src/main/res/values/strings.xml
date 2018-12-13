@@ -35,4 +35,7 @@
     <string name="family_name">Family Name</string>
     <string name="title_activity_profile_page">ProfilePageActivity</string>
     <string name="hint_family_name">family name</string>
+    <string name="title_activity_statistics">StatisticsActivity</string>
+    <string name="title_activity_place_bet">PlaceBetActivity</string>
+    <string name="title_activity_opened_bet">OpenedBetActivity</string>
 </resources>

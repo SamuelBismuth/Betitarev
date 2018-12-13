@@ -1,4 +1,4 @@
-package com.example.betitarev.betitarev.activities;
+package com.example.betitarev.betitarev.activities.activities.registration;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

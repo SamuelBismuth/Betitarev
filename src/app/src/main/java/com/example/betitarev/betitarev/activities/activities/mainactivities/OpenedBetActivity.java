@@ -1,4 +1,4 @@
-package com.example.betitarev.betitarev.activities;
+package com.example.betitarev.betitarev.activities.activities.mainactivities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,12 +9,12 @@ import android.view.View;
 
 import com.example.betitarev.betitarev.R;
 
-public class ProfilePageActivity extends AppCompatActivity {
+public class OpenedBetActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_page);
+        setContentView(R.layout.activity_opened_bet);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
