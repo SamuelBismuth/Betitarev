@@ -14,12 +14,15 @@ Assuming that all the task required back and front-end, and even phone configura
 The tasks are classify from the most to the less important.  
 - [x] Log in/up and database connection. [@SamuelBismuth]( https://github.com/SamuelBismuth )
 - [x] Real time database. [@SamuelBismuth]( https://github.com/SamuelBismuth )
-- [ ] Profile of the user. [@yoshago]( https://github.com/yoshago )
+- [ ] Profile of the user activity. [@yoshago]( https://github.com/yoshago )
+- [ ] Place a bet activity. [@Yishay1]( https://github.com/Yishay1 )
+- [ ] Opened bet activity. [@SamuelBismuth]( https://github.com/SamuelBismuth )
+- [ ] Statistics activity. [@Yishay1]( https://github.com/Yishay1 )
+- [ ] Connection between all the activities. [@SamuelBismuth]( https://github.com/SamuelBismuth )
+- [ ] Account settings activity. [@yoshago]( https://github.com/yoshago )
 - [ ] Bet process (all the best process including the gain...). [@yoshago]( https://github.com/yoshago )  [@SamuelBismuth]( https://github.com/SamuelBismuth )  [@Yishay1]( https://github.com/Yishay1 )
-- [ ] List of friend.  [@Yishay1]( https://github.com/Yishay1 )
 - [ ] Chat between friend. [@SamuelBismuth]( https://github.com/SamuelBismuth )
 - [ ] Real money transaction [@SamuelBismuth]( https://github.com/SamuelBismuth ) [@Yishay1]( https://github.com/Yishay1 )
-- [ ] Main page\ Lobby [@SamuelBismuth]( https://github.com/SamuelBismuth ) [@yoshago]( https://github.com/yoshago )
 
 # Team Work Rules
 
