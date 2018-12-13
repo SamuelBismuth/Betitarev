@@ -38,4 +38,9 @@
     <string name="title_activity_statistics">StatisticsActivity</string>
     <string name="title_activity_place_bet">PlaceBetActivity</string>
     <string name="title_activity_opened_bet">OpenedBetActivity</string>
+
+    <string name="title_shop">Shop</string>
+    <string name="title_gifts">Gifts</string>
+    <string name="title_cart">Cart</string>
+    <string name="title_profile">Profile</string>
 </resources>
