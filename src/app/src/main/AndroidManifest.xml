@@ -25,10 +25,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AccountSettingsActivity"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activities.activities.registration.SignupActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -37,20 +33,8 @@
             android:label="@string/title_activity_reset_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.activities.mainactivities.StatisticsActivity"
-            android:label="@string/title_activity_statistics"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activities.activities.mainactivities.ProfileActivity"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activities.activities.mainactivities.PlaceBetActivity"
-            android:label="@string/title_activity_place_bet"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activities.activities.mainactivities.OpenedBetActivity"
-            android:label="@string/title_activity_opened_bet"
+            android:name=".activities.MainActivity"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

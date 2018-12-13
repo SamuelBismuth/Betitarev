@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
-import com.example.betitarev.betitarev.activities.AccountSettingsActivity;
+import com.example.betitarev.betitarev.activities.MainActivity;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.Player;
 import com.example.betitarev.betitarev.objects.User;
@@ -119,7 +119,7 @@ public class SignupActivity extends AppCompatActivity {
                                     Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
-                                    startActivity(new Intent(SignupActivity.this, AccountSettingsActivity.class));
+                                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
                                     finish();
                                 }
                             }
