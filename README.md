@@ -18,7 +18,7 @@ The tasks are classify from the most to the less important.
 - [ ] Place a bet activity. [@Yishay1]( https://github.com/Yishay1 )
 - [ ] Opened bet activity. [@SamuelBismuth]( https://github.com/SamuelBismuth )
 - [ ] Statistics activity. [@Yishay1]( https://github.com/Yishay1 )
-- [ ] Connection between all the activities. [@SamuelBismuth]( https://github.com/SamuelBismuth )
+- [x] Connection between all the activities. [@SamuelBismuth]( https://github.com/SamuelBismuth )
 - [ ] Account settings activity. [@yoshago]( https://github.com/yoshago )
 - [ ] Bet process (all the best process including the gain...). [@yoshago]( https://github.com/yoshago )  [@SamuelBismuth]( https://github.com/SamuelBismuth )  [@Yishay1]( https://github.com/Yishay1 )
 - [ ] Chat between friend. [@SamuelBismuth]( https://github.com/SamuelBismuth )
