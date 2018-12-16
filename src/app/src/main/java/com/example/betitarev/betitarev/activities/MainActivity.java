@@ -1,5 +1,6 @@
 package com.example.betitarev.betitarev.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -11,12 +12,16 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.activities.activities.registration.LoginActivity;
 import com.example.betitarev.betitarev.fragment.OpenedBetActivity;
 import com.example.betitarev.betitarev.fragment.PlaceBetActivity;
 import com.example.betitarev.betitarev.fragment.ProfileActivity;
 import com.example.betitarev.betitarev.fragment.StatisticsActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
+
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +55,13 @@ public class MainActivity extends AppCompatActivity {
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_profile:
-                    fragment = new ProfileActivity();
+                    //Get Firebase auth instance
+                    auth = FirebaseAuth.getInstance();
+                    String name = "Unknown";
+                    if (auth.getCurrentUser() != null) {
+                        name = auth.getCurrentUser().getEmail();
+                    }
+                    fragment = ProfileActivity.newInstance(name);
                     loadFragment(fragment);
                     return true;
             }
