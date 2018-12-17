@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".fragment.ProfileActivity"
-    tools:showIn="@layout/activity_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/activity_profile_layout">
+        android:id="@+id/edit_profile_layout">
 
 
         <ImageView
@@ -60,41 +60,49 @@
             android:paddingBottom="24dp">
 
 
-            <ImageView
-                android:id="@+id/edit"
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/editUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp"
-                android:clickable="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="70dp">
 
-                android:src="@android:drawable/ic_menu_edit" />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Please Enter New User Name"
+                    android:textColor="#fff"
+                    android:textSizeHint="24sp"
+                    android:textStyle="bold"
+                    android:imeOptions="actionNext"
+                    android:textColorHint="@color/colorAccent" />
 
-            <TextView
-                android:id="@+id/name"
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="70dp"
-                android:text="Yehonatan Shaag"
-                android:textColor="#fff"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:layout_below="@+id/editUsername"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Please Enter New Email Address"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:textColorHint="@color/colorAccent"
+                    android:textColor="#fff"
+                    android:textSizeHint="24sp"
+                    android:textStyle="bold"/>
+
+            </android.support.design.widget.TextInputLayout>
 
 
-
-            <TextView
-                android:id="@+id/email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:text="yoshago@gmail.com"
-                android:textColor="#fff"
-                android:textSize="18sp" />
         </RelativeLayout>
 
 

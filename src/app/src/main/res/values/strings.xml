@@ -45,4 +45,7 @@
     <string name="title_opened_bet">Opened Bets</string>
     <string name="title_place_bet">Place a Bet</string>
     <string name="title_statistics">Statistics</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
