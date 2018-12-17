@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +34,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ProfileActivity extends Fragment {
 
-    private FirebaseAuth auth;
-    private String Name;
-    private TextView mNameTextView;
+    private static FirebaseAuth auth;
+    private static String Name, Email;
+    private TextView mNameTextView, mEmailTextView;
     // Hold a reference to the current animator,
     // so that it can be canceled mid-way.
     private Animator mCurrentAnimator;
@@ -53,13 +59,32 @@ public class ProfileActivity extends Fragment {
         // Required empty public constructor
     }
 
-    public static ProfileActivity newInstance(String Name) {
+    public static ProfileActivity newInstance() {
         ProfileActivity fragment = new ProfileActivity();
-        Bundle args = new Bundle();
-        args.putString("Name", Name);
-        fragment.setArguments(args);
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
+        String email = auth.getCurrentUser().getEmail();
+        Email = email;
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+        //Query the database for current user data based on authentication email
+        reference.orderByChild("mail/mail").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot datas: dataSnapshot.getChildren()){
+                    Name = String.format("%s %s",datas.child("name").getValue().toString(),datas.child("familyName").getValue().toString());
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+//        Bundle args = new Bundle();
+//        args.putString("Name", Name);
+//        args.putString("Email",email);
+//        fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,12 +94,7 @@ public class ProfileActivity extends Fragment {
 
     }
 
-    private void readBundle(Bundle bundle) {
-        if (bundle != null) {
-            Name = bundle.getString("Name");
 
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,8 +102,10 @@ public class ProfileActivity extends Fragment {
         View view = inflater.inflate(R.layout.activity_profile, container, false);
 
         mNameTextView = (TextView) view.findViewById(R.id.name);
-        readBundle(getArguments());
-        mNameTextView.setText(String.format("%s", Name));
+        mNameTextView.setText(Name);
+
+        mEmailTextView = (TextView) view.findViewById(R.id.email);
+        mEmailTextView.setText(Email);
 
 
         final View thumb1View = view.findViewById(R.id.profile_image);

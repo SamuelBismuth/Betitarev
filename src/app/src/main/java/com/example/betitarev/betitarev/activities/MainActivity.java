@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseAuth auth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,28 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_profile:
-                    //Get Firebase auth instance
-                    auth = FirebaseAuth.getInstance();
-                    String email = auth.getCurrentUser().getEmail();
-                    Log.e("email",email);
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-                    String familyname = "Unknown";
-                    reference.orderByChild("mail/mail").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for(DataSnapshot datas: dataSnapshot.getChildren()){
-                                String familyname=datas.child("familyName").getValue().toString();
-                            }
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });
-                    String name = "Unknown";
-                    if (auth.getCurrentUser() != null) {
-                        name = familyname;
-                    }
-                    fragment = ProfileActivity.newInstance(name);
+                    fragment = ProfileActivity.newInstance();
                     loadFragment(fragment);
                     return true;
             }
@@ -104,6 +83,5 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void enlargeImage(View view) {
-    }
+
 }
