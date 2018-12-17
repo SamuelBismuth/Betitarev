@@ -1,23 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".fragment.PlaceBetActivity"
     tools:showIn="@layout/activity_place_bet">
 
-    <Button
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content"
+        android:stretchColumns="1">
 
-    <SearchView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:popupTheme="@style/AppTheme.PopupOverlay"
+            android:title="@string/title_place_bet"
+            tools:targetApi="lollipop" />
 
-    </SearchView>
+        <SearchView
+            android:id="@+id/search_friend"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:defaultQueryHint="@string/add_friend"
+            app:iconifiedByDefault="false"
+            app:queryHint="@string/add_friend"
+            tools:ignore="MissingPrefix" />
 
-</android.widget.LinearLayout>
+        <EditText
+            android:id="@+id/bet_phrase"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="@string/bet_phrase"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/bet_value"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="@string/bet_value"
+            android:inputType="text" />
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/without_arb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/without_arbitrator" />
+
+            <RadioButton
+                android:id="@+id/with_arb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/with_arbitrator" />
+
+        </RadioGroup>
+
+        <SearchView
+            android:id="@+id/search_arbitrator"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:queryHint="@string/Add_arbitrator"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/send_request"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="@string/send_request"
+            />
+
+
+        <!-- This button fix the issue of the scroll view but this is not the best
+        solution implementation we could have, maybe we're able to fix the problem
+        with another solution. -->
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
+
+    </TableLayout>
+
+</ScrollView>

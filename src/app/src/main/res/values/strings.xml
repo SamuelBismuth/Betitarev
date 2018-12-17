@@ -50,4 +50,10 @@
     <string name="action_search">Search</string>
     <string name="hello_world">hello world</string>
     <string name="add_friend">Add friend</string>
+    <string name="Add_arbitrator">Add arbitrator</string>
+    <string name="bet_phrase">Bet phrase</string>
+    <string name="without_arbitrator">Without arbitrator</string>
+    <string name="with_arbitrator">With arbitrator</string>
+    <string name="bet_value">Bet value</string>
+    <string name="send_request">SEND REQUEST</string>
 </resources>
