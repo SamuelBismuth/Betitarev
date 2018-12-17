@@ -1,5 +1,7 @@
 package com.example.betitarev.betitarev.objects;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 public abstract class User {
@@ -30,6 +32,7 @@ public abstract class User {
         this.userId = userId;
         this.friends = null;
     }
+
 
     public abstract void updateDatabase();
 
