@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -24,12 +25,7 @@ import com.example.betitarev.betitarev.fragment.PlaceBetActivity;
 import com.example.betitarev.betitarev.fragment.ProfileActivity;
 import com.example.betitarev.betitarev.fragment.StatisticsActivity;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
-
-    private String TAG = MainActivity.class.getSimpleName();
-    String[] arrays = new String[]{"98411", "98422", "98433", "98444", "98455"};
-    ArrayAdapter<String> adapter;
-
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 case R.id.navigation_place_bet:
                     fragment = new PlaceBetActivity();
                     loadFragment(fragment);
-                    runPlaceBet();
                     return true;
                 case R.id.navigation_opened_bet:
                     fragment = new OpenedBetActivity();
@@ -73,41 +68,27 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     };
 
-    private void runPlaceBet() {
-        Toolbar tbMainSearch = (Toolbar) findViewById(R.id.toolbar);
-        ListView lvToolbarSearch = (ListView) findViewById(R.id.toolbarsearch);
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrays);
-        Log.e("hello", lvToolbarSearch.toString());
-        lvToolbarSearch.setAdapter(adapter);
-        setSupportActionBar(tbMainSearch);
-        ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.search, menu);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        MenuItem mSearchmenuItem = menu.findItem(R.id.menu_toolbarsearch);
-        SearchView searchView = (SearchView) mSearchmenuItem.getActionView();
-        searchView.setQueryHint("enter Text");
-        searchView.setOnQueryTextListener(this  );
-        Log.d(TAG, "onCreateOptionsMenu: mSearchmenuItem->" + mSearchmenuItem.getActionView());
-        return true;
-    }
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.search, menu);
 
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        Log.d(TAG, "onQueryTextSubmit: query->"+query);
-        return true;
-    }
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        Log.d(TAG, "onQueryTextChange: newText->" + newText);
-        adapter.getFilter().filter(newText);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //votre code ici
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
         return true;
     }
 
