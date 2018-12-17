@@ -32,6 +32,11 @@
             app:queryHint="@string/add_friend"
             tools:ignore="MissingPrefix" />
 
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/bet_phrase"
             android:layout_width="match_parent"
@@ -71,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:queryHint="@string/Add_arbitrator"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/send_request"
