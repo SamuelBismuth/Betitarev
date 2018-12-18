@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.activities.EditProfileActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -97,8 +99,8 @@ public class ProfileActivity extends Fragment {
         editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new EditProfileFragment();
-                loadFragment(fragment);
+                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                startActivity(intent);
 
             }
         });
