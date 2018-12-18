@@ -56,4 +56,6 @@
     <string name="with_arbitrator">With arbitrator</string>
     <string name="bet_value">Bet value</string>
     <string name="send_request">SEND REQUEST</string>
+    <string name="search">Search</string>
+    <string name="title_activity_search_results">SearchActivity</string>
 </resources>
