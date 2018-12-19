@@ -36,7 +36,7 @@ public class PlaceBetActivity extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        player = FireBaseQuery.getPlayer()
+        player = FireBaseQuery.getPlayer(FireBaseQuery.getCurrentMail());
     }
 
     @Override

@@ -34,7 +34,7 @@ public class FireBaseQuery {
         return new Mail(auth.getCurrentUser().getEmail());
     }
 
-    public static User getPlayer(final Mail email) {
+    public static Player getPlayer(final Mail email) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.orderByChild("mail/mail").equalTo(email.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -49,7 +49,6 @@ public class FireBaseQuery {
                         @Override
                         public void onSuccess(Uri uri) {
                             picture = uri;
-
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
