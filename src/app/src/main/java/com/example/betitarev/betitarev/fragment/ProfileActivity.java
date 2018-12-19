@@ -28,6 +28,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.activities.EditProfileActivity;
+import com.example.betitarev.betitarev.objects.Mail;
+import com.example.betitarev.betitarev.objects.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,11 +54,14 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import static android.support.constraint.Constraints.TAG;
+import static com.example.betitarev.betitarev.libraries.FireBaseQuery.getCurrentMail;
+import static com.example.betitarev.betitarev.libraries.FireBaseQuery.getPlayer;
 
 public class ProfileActivity extends Fragment {
 
     private static FirebaseAuth auth;
-    private static String Name, Email, Picture;
+    private static String Name, Picture;
+    private static Mail Email;
     private TextView mNameTextView, mEmailTextView;
     private ImageView mPictureSrc;
     // Hold a reference to the current animator,
@@ -71,36 +76,20 @@ public class ProfileActivity extends Fragment {
     // Create a storage reference from our app
     private StorageReference storageRef, pathReference;
     private FirebaseStorage storage;
-    private Uri picUri;
-    private Bitmap bm;
+    private static User user;
 
 
 
 
     public ProfileActivity() {
-        // Required empty public constructor
+        Email = getCurrentMail();
+        Log.e("a",Email.getMail());
+        user = getPlayer(Email);
+        Name = user.getName() + " " + user.getFamilyName();
     }
 
     public static ProfileActivity newInstance() {
         ProfileActivity fragment = new ProfileActivity();
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
-        Email = auth.getCurrentUser().getEmail();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        //Query the database for current user data based on authentication email
-        reference.orderByChild("mail/mail").equalTo(Email).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot datas: dataSnapshot.getChildren()){
-                    Name = String.format("%s %s",datas.child("name").getValue().toString(),datas.child("familyName").getValue().toString());
-
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
         return fragment;
     }
 
@@ -124,7 +113,7 @@ public class ProfileActivity extends Fragment {
         mNameTextView.setText(Name);
 
         mEmailTextView = view.findViewById(R.id.email);
-        mEmailTextView.setText(Email);
+        mEmailTextView.setText(Email.getMail());
 
 
         mPictureSrc =  view.findViewById(R.id.profile_image);
@@ -172,14 +161,14 @@ public class ProfileActivity extends Fragment {
     private void setProfileImage() {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
-        pathReference = storageRef.child("images/"+Email +"/profile");
+        pathReference = storageRef.child("images/"+Email.getMail() +"/profile");
 
         pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide
                         .with(getContext())
-                        .load(uri) // the uri you got from Firebase
+                        .load(uri)
                         .into(mPictureSrc);
             }
         }).addOnFailureListener(new OnFailureListener() {

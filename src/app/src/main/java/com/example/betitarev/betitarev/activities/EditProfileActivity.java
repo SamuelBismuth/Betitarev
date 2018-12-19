@@ -4,12 +4,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +15,8 @@ import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.activities.activities.registration.LoginActivity;
+import com.example.betitarev.betitarev.objects.Mail;
+import com.example.betitarev.betitarev.objects.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,6 +31,9 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 
+import static com.example.betitarev.betitarev.libraries.FireBaseQuery.getCurrentMail;
+import static com.example.betitarev.betitarev.libraries.FireBaseQuery.getPlayer;
+
 public class EditProfileActivity extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -40,7 +41,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private ImageView mImageView;
     private Button btnSaveChanges;
     private FirebaseAuth auth;
-    private String Email;
+    private Mail Email;
+    private User user;
     private DatabaseReference reference;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -50,17 +52,19 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        inputFirstName = (EditText) findViewById(R.id.editFirstName);
-        inputLastName = (EditText) findViewById(R.id.editLastName);
-        inputOldPassword = (EditText) findViewById(R.id.editOldPassword);
-        inputNewPassword = (EditText) findViewById(R.id.editNewPassword);
-        btnSaveChanges = (Button) findViewById(R.id.btn_save_changes);
-        auth = FirebaseAuth.getInstance();
-        Email = auth.getCurrentUser().getEmail();
-        reference = FirebaseDatabase.getInstance().getReference("users");
-        reference = reference.orderByChild("mail/mail").equalTo(Email).getRef();
+        inputFirstName =  findViewById(R.id.editFirstName);
+        inputLastName =  findViewById(R.id.editLastName);
+        inputOldPassword = findViewById(R.id.editOldPassword);
+        inputNewPassword =  findViewById(R.id.editNewPassword);
+        btnSaveChanges =  findViewById(R.id.btn_save_changes);
+
+        Email = getCurrentMail();
+        user = getPlayer(Email);
+        inputFirstName.setText(user.getName());
+        inputLastName.setText(user.getFamilyName());
+
 
         ImageView editProfileImage = (ImageView) findViewById(R.id.edit_profile_image) ;
         editProfileImage.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +75,6 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-        updateEditTextNameFromDb();
 
         btnSaveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,29 +103,16 @@ public class EditProfileActivity extends AppCompatActivity {
         mImageView.buildDrawingCache();
         Bitmap bitmap = mImageView.getDrawingCache();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 200, baos);
         byte[] data = baos.toByteArray();
         ref.putBytes(data);
     }
 
-    private void updateEditTextNameFromDb() {
-        reference.orderByChild("mail/mail").equalTo(Email).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot datas: dataSnapshot.getChildren()){
-                    inputFirstName.setText(datas.child("name").getValue().toString());
-                    inputLastName.setText(datas.child("familyName").getValue().toString());
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-    }
 
     private void updateNameData(final String firstName, final String lastName) {
-        reference.orderByChild("mail/mail").equalTo(Email).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference = FirebaseDatabase.getInstance().getReference().child("users");
+        reference.orderByChild("mail/mail").equalTo(Email.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot datas: dataSnapshot.getChildren()){
