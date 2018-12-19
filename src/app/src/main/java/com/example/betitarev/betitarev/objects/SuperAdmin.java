@@ -3,12 +3,12 @@ package com.example.betitarev.betitarev.objects;
 //Singleton
 public class SuperAdmin extends User implements Admin {
 
-    public SuperAdmin(String name, String familyName, Mail mail, String userId) {
-        super(name, familyName, mail, userId);
+    public SuperAdmin(String name, String familyName, Mail mail) {
+        super(name, familyName, mail);
     }
 
-    public SuperAdmin(String name, String familyName, String picture, Mail mail, String userId) {
-        super(name, familyName, picture, mail, userId);
+    public SuperAdmin(String name, String familyName, String picture, Mail mail) {
+        super(name, familyName, picture, mail);
     }
 
     @Override

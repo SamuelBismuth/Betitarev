@@ -1,18 +1,24 @@
 package com.example.betitarev.betitarev.objects;
 
+import android.net.Uri;
+
 public class Player extends User {
 
     private Statistics statistics;
 
-    public Player(String name, String familyName, Mail mail, String userId) {
-        super(name, familyName, mail, userId);
+    public Player(String name, String familyName, Mail mail) {
+        super(name, familyName, mail);
         this.statistics = new Statistics();
     }
 
-    public Player(String name, String familyName, String picture, Mail mail, String userId) {
-        super(name, familyName, picture, mail, userId);
+    public Player(String name, String familyName, Uri picture, Mail mail) {
+        super(name, familyName, picture, mail);
         this.statistics = new Statistics();
+    }
 
+    public Player(String name, String familyName, Uri picture, Mail mail, Statistics statistics) {
+        super(name, familyName, picture, mail);
+        this.statistics = statistics;
     }
 
     @Override

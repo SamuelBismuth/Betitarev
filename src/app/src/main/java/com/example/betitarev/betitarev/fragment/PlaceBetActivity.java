@@ -104,7 +104,7 @@ public class PlaceBetActivity extends Fragment {
             }
         });
 
-        listOfFriend.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listOfFriend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 searchFriend.setText(listOfFriend.getItemAtPosition(0).toString());
@@ -113,7 +113,7 @@ public class PlaceBetActivity extends Fragment {
             }
         });
 
-        listOfArbitrator.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listOfArbitrator.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 searchArbitrator.setText(listOfArbitrator.getItemAtPosition(0).toString());
@@ -125,7 +125,7 @@ public class PlaceBetActivity extends Fragment {
             @Override
             public void onClick(View v) {
                 // Clear everything, send the request, and move to another fragment maybe?
-                if (isInRules(v)) {
+                if (isInRules()) {
                     sendNotification(v);
                     clearAll(v);
                 } else
@@ -147,11 +147,9 @@ public class PlaceBetActivity extends Fragment {
      * - The radio button either on without or with arbitrator.
      * - If the radio button on with arbitrator, the seach view add arbitrator is also required.
      *
-     * @param view
      * @return true is all the fields are full, else false.
      */
-    private boolean isInRules(View view) {
-        Log.i("hi", listOfFriend.getItemAtPosition(0).toString());
+    private boolean isInRules() {
         return true;
     }
 

@@ -1,10 +1,13 @@
 package com.example.betitarev.betitarev.objects;
 
+import android.net.Uri;
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
 public abstract class User {
 
-    private String name, familyName, picture, userId;  // path to the picture in our server.
+    private String name, familyName;  // path to the picture in our server.
+    private Uri picture;
     private Mail mail;
     private Friends friends;
 
@@ -13,21 +16,18 @@ public abstract class User {
     public User() {
     }
 
-    public User(String name, String familyName, Mail mail, String userId) {
+    public User(String name, String familyName, Mail mail) {
         this.name = name;
         this.familyName = familyName;
         this.mail = mail;
-        this.userId = userId;
         this.friends = null;
-        this.picture = "../../../Betitarev/pictures/anonymous.png";
     }
 
-    public User(String name, String familyName, String picture, Mail mail, String userId) {
+    public User(String name, String familyName, Uri picture, Mail mail) {
         this.name = name;
         this.familyName = familyName;
         this.picture = picture;
         this.mail = mail;
-        this.userId = userId;
         this.friends = null;
     }
 
@@ -49,11 +49,11 @@ public abstract class User {
         this.familyName = familyName;
     }
 
-    public String getPicture() {
+    public Uri getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(Uri picture) {
         this.picture = picture;
     }
 
