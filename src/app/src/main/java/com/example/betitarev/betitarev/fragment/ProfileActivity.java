@@ -22,12 +22,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.activities.EditProfileActivity;
+import com.example.betitarev.betitarev.activities.activities.registration.LoginActivity;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -64,6 +67,8 @@ public class ProfileActivity extends Fragment {
     private static Mail Email;
     private TextView mNameTextView, mEmailTextView;
     private ImageView mPictureSrc;
+    private Button mSignOutBtn;
+    private ImageView mEditBtn;
     // Hold a reference to the current animator,
     // so that it can be canceled mid-way.
     private Animator mCurrentAnimator;
@@ -108,6 +113,7 @@ public class ProfileActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_profile, container, false);
+        auth = FirebaseAuth.getInstance();
 
         mNameTextView = view.findViewById(R.id.name);
         mNameTextView.setText(Name);
@@ -119,14 +125,26 @@ public class ProfileActivity extends Fragment {
         mPictureSrc =  view.findViewById(R.id.profile_image);
         setProfileImage();
 
+        mSignOutBtn = view.findViewById(R.id.btn_sign_out);
+        mSignOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                auth.signOut();
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
 
 
 
 
-        final View editView = view.findViewById(R.id.edit);
-        editView.setOnClickListener(new View.OnClickListener() {
+
+
+        mEditBtn = view.findViewById(R.id.edit);
+        mEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), EditProfileActivity.class);

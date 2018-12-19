@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -19,8 +20,11 @@ import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,7 +50,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+    private FirebaseUser FBUser;
     private boolean changedProfileImage = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +65,7 @@ public class EditProfileActivity extends AppCompatActivity {
         inputOldPassword = findViewById(R.id.editOldPassword);
         inputNewPassword =  findViewById(R.id.editNewPassword);
         btnSaveChanges =  findViewById(R.id.btn_save_changes);
-
+        auth = FirebaseAuth.getInstance();
         Email = getCurrentMail();
         user = getPlayer(Email);
         inputFirstName.setText(user.getName());
@@ -82,28 +88,51 @@ public class EditProfileActivity extends AppCompatActivity {
                 final String firstName = inputFirstName.getText().toString();
                 final String lastName = inputLastName.getText().toString();
                 updateNameData(firstName, lastName);
-                if(changedProfileImage) {
+                if (changedProfileImage) {
                     uploadImage();
                 }
-
+                if (inputOldPassword.getText().toString().length()>=1) {
+                    updatePassword(inputOldPassword.getText().toString(), inputNewPassword.getText().toString());
+                }
                 finish();
-
-
-
             }
         });
+    }
 
+    private void updatePassword(String oldPass, final String newPass) {
+        FBUser = auth.getCurrentUser();
+        AuthCredential credential = EmailAuthProvider.getCredential(Email.getMail(), oldPass);
+        FBUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    FBUser.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(),"Something went wrong. Please try again later",Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(),"Password Successfully Modified",Toast.LENGTH_LONG).show();
+
+                            }
+                        }
+                    });
+                } else {
+                    Toast.makeText(getApplicationContext(),"Authentication Failed",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void uploadImage() {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        StorageReference ref = storageReference.child("images/" +Email+"/profile");
+        StorageReference ref = storageReference.child("images/" +Email.getMail()+"/profile");
         mImageView.setDrawingCacheEnabled(true);
         mImageView.buildDrawingCache();
         Bitmap bitmap = mImageView.getDrawingCache();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 200, baos);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] data = baos.toByteArray();
         ref.putBytes(data);
     }
