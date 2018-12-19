@@ -23,10 +23,18 @@
             android:title="@string/title_place_bet"
             tools:targetApi="lollipop" />
 
+        <EditText
+            android:id="@+id/search_friend"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_bettor"
+            android:inputType="textVisiblePassword" />
+
         <ListView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:id="@+id/list_friend"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="NestedScrolling" />
 
         <EditText
             android:id="@+id/bet_phrase"
@@ -62,20 +70,26 @@
 
         </RadioGroup>
 
-        <SearchView
+        <EditText
             android:id="@+id/search_arbitrator"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:queryHint="@string/Add_arbitrator"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_arbitrator"
+            android:inputType="textVisiblePassword"
             android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/list_arbitrator"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:ignore="NestedScrolling" />
 
         <Button
             android:id="@+id/send_request"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:text="@string/send_request"
-            />
-
+            android:text="@string/send_request" />
 
         <!-- This button fix the issue of the scroll view but this is not the best
         solution implementation we could have, maybe we're able to fix the problem

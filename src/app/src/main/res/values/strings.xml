@@ -58,4 +58,6 @@
     <string name="send_request">SEND REQUEST</string>
     <string name="search">Search</string>
     <string name="title_activity_search_results">SearchActivity</string>
+    <string name="search_bettor">Search bettor</string>
+    <string name="search_arbitrator">Search arbitrator</string>
 </resources>
