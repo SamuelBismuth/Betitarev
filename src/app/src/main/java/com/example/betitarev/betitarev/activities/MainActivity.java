@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_profile:
-                    fragment = new ProfileActivity();
+                    fragment = ProfileActivity.newInstance();
                     loadFragment(fragment);
                     return true;
             }
@@ -69,5 +69,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
 
 }
