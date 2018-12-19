@@ -137,7 +137,7 @@ public class SignupActivity extends AppCompatActivity {
      */
     private void createUser(String name, String familyName, Mail email) {
         this.userId = mFirebaseDatabase.push().getKey();
-        User user = new Player(name, familyName, email, userId);
+        User user = new Player(name, familyName, email);
         mFirebaseDatabase.child(userId).setValue(user);
     }
 

@@ -180,7 +180,6 @@ public class ProfileActivity extends Fragment {
                 Glide
                         .with(getContext())
                         .load(uri) // the uri you got from Firebase
-                        .centerCrop()
                         .into(mPictureSrc);
             }
         }).addOnFailureListener(new OnFailureListener() {
