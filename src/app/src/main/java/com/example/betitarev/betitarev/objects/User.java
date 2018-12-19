@@ -1,13 +1,6 @@
 package com.example.betitarev.betitarev.objects;
 
-<<<<<<< HEAD
 import android.net.Uri;
-
-=======
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
->>>>>>> c60173fa45847aee942d1b4133e6f865b34f1cc6
-import com.google.firebase.database.IgnoreExtraProperties;
 
 public abstract class User {
 
