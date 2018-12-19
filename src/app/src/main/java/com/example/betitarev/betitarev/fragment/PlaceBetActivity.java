@@ -18,6 +18,8 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.libraries.FireBaseQuery;
+import com.example.betitarev.betitarev.objects.Player;
 
 public class PlaceBetActivity extends Fragment {
 
@@ -26,6 +28,7 @@ public class PlaceBetActivity extends Fragment {
     private RadioButton withArbitrator, withoutArbitrator;
     private ListView listOfFriend, listOfArbitrator;
     private EditText searchFriend, searchArbitrator;
+    private Player player;
 
     public PlaceBetActivity() {
     }
@@ -33,6 +36,7 @@ public class PlaceBetActivity extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        player = FireBaseQuery.getPlayer()
     }
 
     @Override

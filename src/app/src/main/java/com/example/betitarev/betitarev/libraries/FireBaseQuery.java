@@ -26,10 +26,15 @@ public class FireBaseQuery {
     private static FirebaseStorage storage;
     private static String name, familyName;
     private static Uri picture;
+    private static FirebaseAuth auth;
 
+
+    public static Mail getCurrentMail() {
+        auth = FirebaseAuth.getInstance();
+        return new Mail(auth.getCurrentUser().getEmail());
+    }
 
     public static User getPlayer(final Mail email) {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.orderByChild("mail/mail").equalTo(email.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
