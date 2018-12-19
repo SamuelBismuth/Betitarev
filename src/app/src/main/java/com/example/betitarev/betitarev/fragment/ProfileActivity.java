@@ -4,47 +4,61 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
-import com.example.betitarev.betitarev.activities.MainActivity;
-import com.example.betitarev.betitarev.fragment.PlaceBetActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.betitarev.betitarev.activities.EditProfileActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class ProfileActivity extends Fragment {
 
     private static FirebaseAuth auth;
-    private static String Name, Email;
+    private static String Name, Email, Picture;
     private TextView mNameTextView, mEmailTextView;
+    private ImageView mPictureSrc;
     // Hold a reference to the current animator,
     // so that it can be canceled mid-way.
     private Animator mCurrentAnimator;
@@ -53,6 +67,14 @@ public class ProfileActivity extends Fragment {
     // duration is ideal for subtle animations or animations that occur
     // very frequently.
     private int mShortAnimationDuration;
+
+    // Create a storage reference from our app
+    private StorageReference storageRef, pathReference;
+    private FirebaseStorage storage;
+    private Uri picUri;
+    private Bitmap bm;
+
+
 
 
     public ProfileActivity() {
@@ -63,25 +85,22 @@ public class ProfileActivity extends Fragment {
         ProfileActivity fragment = new ProfileActivity();
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
-        String email = auth.getCurrentUser().getEmail();
-        Email = email;
+        Email = auth.getCurrentUser().getEmail();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         //Query the database for current user data based on authentication email
-        reference.orderByChild("mail/mail").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.orderByChild("mail/mail").equalTo(Email).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot datas: dataSnapshot.getChildren()){
                     Name = String.format("%s %s",datas.child("name").getValue().toString(),datas.child("familyName").getValue().toString());
+
                 }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-//        Bundle args = new Bundle();
-//        args.putString("Name", Name);
-//        args.putString("Email",email);
-//        fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -101,18 +120,37 @@ public class ProfileActivity extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_profile, container, false);
 
-        mNameTextView = (TextView) view.findViewById(R.id.name);
+        mNameTextView = view.findViewById(R.id.name);
         mNameTextView.setText(Name);
 
-        mEmailTextView = (TextView) view.findViewById(R.id.email);
+        mEmailTextView = view.findViewById(R.id.email);
         mEmailTextView.setText(Email);
 
 
-        final View thumb1View = view.findViewById(R.id.profile_image);
-        thumb1View.setOnClickListener(new View.OnClickListener() {
+        mPictureSrc =  view.findViewById(R.id.profile_image);
+        setProfileImage();
+
+
+
+
+
+
+
+        final View editView = view.findViewById(R.id.edit);
+        editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(thumb1View, R.drawable.man);
+                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        final ImageView profileImageView = view.findViewById(R.id.profile_image);
+        profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zoomImageFromThumb(profileImageView, profileImageView.getDrawable());
             }
         });
 
@@ -126,9 +164,43 @@ public class ProfileActivity extends Fragment {
 
         return view;
 
+
     }
 
-    private void zoomImageFromThumb(final View thumbView, int imageResId) {
+
+
+    private void setProfileImage() {
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+        pathReference = storageRef.child("images/"+Email +"/profile");
+
+        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide
+                        .with(getContext())
+                        .load(uri) // the uri you got from Firebase
+                        .centerCrop()
+                        .into(mPictureSrc);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e("downloadImage", "failed");
+            }
+        });
+    }
+
+    private void loadFragment(Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.activity_profile_layout, fragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private void zoomImageFromThumb(final View thumbView, Drawable imageResId) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
         if (mCurrentAnimator != null) {
@@ -138,7 +210,7 @@ public class ProfileActivity extends Fragment {
         // Load the high-resolution "zoomed-in" image.
         final ImageView expandedImageView = (ImageView) getView().findViewById(
                 R.id.expanded_image);
-        expandedImageView.setImageResource(imageResId);
+        expandedImageView.setImageDrawable(imageResId);
 
         // Calculate the starting and ending bounds for the zoomed-in image.
         // This step involves lots of math. Yay, math.
@@ -152,7 +224,7 @@ public class ProfileActivity extends Fragment {
         // bounds, since that's the origin for the positioning animation
         // properties (X, Y).
         thumbView.getGlobalVisibleRect(startBounds);
-        getView().findViewById(R.id.layout)
+        getView().findViewById(R.id.activity_profile_layout)
                 .getGlobalVisibleRect(finalBounds, globalOffset);
         startBounds.offset(-globalOffset.x, -globalOffset.y);
         finalBounds.offset(-globalOffset.x, -globalOffset.y);

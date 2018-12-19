@@ -60,4 +60,9 @@
     <string name="title_activity_search_results">SearchActivity</string>
     <string name="search_bettor">Search bettor</string>
     <string name="search_arbitrator">Search arbitrator</string>
+    <string name="btn_save_changes">Save Changes</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_edit_profile">EditProfileActivity</string>
 </resources>
