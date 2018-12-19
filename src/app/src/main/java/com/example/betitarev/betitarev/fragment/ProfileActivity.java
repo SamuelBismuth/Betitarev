@@ -17,14 +17,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -66,9 +72,10 @@ public class ProfileActivity extends Fragment {
     private static String Name, Picture;
     private static Mail Email;
     private TextView mNameTextView, mEmailTextView;
-    private ImageView mPictureSrc;
+    private ImageView mPictureSrc, mEditBtn;
     private Button mSignOutBtn;
-    private ImageView mEditBtn;
+    private ListView mListFriends;
+    private EditText mSearchFriend;
     // Hold a reference to the current animator,
     // so that it can be canceled mid-way.
     private Animator mCurrentAnimator;
@@ -82,8 +89,7 @@ public class ProfileActivity extends Fragment {
     private StorageReference storageRef, pathReference;
     private FirebaseStorage storage;
     private static User user;
-
-
+    private ArrayAdapter<String> adapterFriend;
 
 
     public ProfileActivity() {
@@ -121,6 +127,9 @@ public class ProfileActivity extends Fragment {
         mEmailTextView = view.findViewById(R.id.email);
         mEmailTextView.setText(Email.getMail());
 
+        mListFriends = view.findViewById(R.id.list_friend);
+        mSearchFriend = view.findViewById(R.id.search_friend);
+
 
         mPictureSrc =  view.findViewById(R.id.profile_image);
         setProfileImage();
@@ -136,13 +145,34 @@ public class ProfileActivity extends Fragment {
             }
         });
 
+        String friends[] = {"Yishayito", "Samyyy", "Jonato", "HTC Sense", "HTC Sensation XE",
+                "iPhone 4S", "Samsung Galaxy Note 800",
+                "Samsung Galaxy S3", "MacBook Air", "Mac Mini", "MacBook Pro"};
+        adapterFriend = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, friends);
+        mListFriends.setAdapter(adapterFriend);
+        mSearchFriend.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                ProfileActivity.this.adapterFriend.getFilter().filter(cs);
+            }
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+            }
+            @Override
+            public void afterTextChanged(Editable arg0) {
+            }
+        });
 
-
-
-
-
-
-
+        mListFriends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mSearchFriend.setText(mListFriends.getItemAtPosition(0).toString());
+                mSearchFriend.clearFocus();
+                mSignOutBtn.requestFocus();
+            }
+        });
         mEditBtn = view.findViewById(R.id.edit);
         mEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
