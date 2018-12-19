@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +28,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.ByteArrayOutputStream;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -37,6 +42,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private String Email;
     private DatabaseReference reference;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private boolean changedProfileImage = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +79,10 @@ public class EditProfileActivity extends AppCompatActivity {
                 final String firstName = inputFirstName.getText().toString();
                 final String lastName = inputLastName.getText().toString();
                 updateNameData(firstName, lastName);
+                if(changedProfileImage) {
+                    uploadImage();
+                }
+
                 finish();
 
 
@@ -78,6 +90,19 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void uploadImage() {
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        StorageReference ref = storageReference.child("images/" +Email+"/profile");
+        mImageView.setDrawingCacheEnabled(true);
+        mImageView.buildDrawingCache();
+        Bitmap bitmap = mImageView.getDrawingCache();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] data = baos.toByteArray();
+        ref.putBytes(data);
     }
 
     private void updateEditTextNameFromDb() {
@@ -126,6 +151,8 @@ public class EditProfileActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             mImageView = (ImageView) findViewById(R.id.edit_profile_image);
             mImageView.setImageBitmap(imageBitmap);
+
+            changedProfileImage = true;
         }
     }
 
