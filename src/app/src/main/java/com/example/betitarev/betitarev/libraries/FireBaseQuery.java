@@ -72,30 +72,28 @@ public class FireBaseQuery {
                                         friendSet.add(new Friend(new Mail(friend.getValue().toString()),
                                                 user.child("name").getValue().toString() +
                                                         " " + user.child("familyName").getValue().toString()));
+                            friends = new Friends(friendSet);
+                            storage = FirebaseStorage.getInstance();
+                            storageRef = storage.getReference();
+                            pathReference = storageRef.child("images/" + email.getMail() + "/profile");
+                            pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    picture = uri;
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    Log.e("downloadImage", "failed");
+                                }
+                            });
+                            CurrentUser.getInstance(name, familyName, picture, email, statistics, friends);
+                            mainActivity.begin();
                         }
-
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                         }
                     });
-
-                    friends = new Friends(friendSet);
-                    storage = FirebaseStorage.getInstance();
-                    storageRef = storage.getReference();
-                    pathReference = storageRef.child("images/" + email.getMail() + "/profile");
-                    pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            picture = uri;
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Log.e("downloadImage", "failed");
-                        }
-                    });
-                    CurrentUser.getInstance(name, familyName, picture, email, statistics, friends);
-                    mainActivity.begin();
                 }
             }
 
