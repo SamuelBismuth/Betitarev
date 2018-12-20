@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.activities.MainActivity;
+import com.example.betitarev.betitarev.libraries.FireBaseQuery;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.Player;
 import com.example.betitarev.betitarev.objects.User;
@@ -74,10 +75,10 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String email = inputEmail.getText().toString().trim();
+                final String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
-                String name = inputName.getText().toString().trim();
-                String familyName = inputFamilyName.getText().toString().trim();
+                final String name = inputName.getText().toString().trim();
+                final String familyName = inputFamilyName.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
@@ -120,12 +121,11 @@ public class SignupActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                 } else {
                                     startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                                    createUser(name, familyName, new Mail(email));
                                     finish();
                                 }
                             }
                         });
-
-                createUser(name, familyName, new Mail(email));
 
             }
         });

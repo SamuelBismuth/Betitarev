@@ -1,27 +1,29 @@
 package com.example.betitarev.betitarev.objects;
 
-import java.util.Date;
-
 public class Friend {
 
-    private User user;
-    private Date date;
-    private Discussion discussion;
+    private Mail mail;
+    private String completeName;
 
-    public Friend(User user) {
-        this.user = user;
-        this.date = new Date();  // Should be initialized as the current date.
+    public Friend(Mail mail) {
+        this.mail = mail;
     }
 
-    public User getUser() {
-        return user;
+    public Friend(Mail mail, String completeName) {
+        this.mail = mail;
+        this.completeName = completeName;
     }
 
-    public Date getDate() {
-        return date;
+    public String getCompleteName() {
+        return completeName;
     }
 
-    public Discussion getDiscussion() {
-        return discussion;
+    public Mail getMail() {
+        return mail;
+    }
+
+    @Override
+    public String toString() {
+        return this.getCompleteName();
     }
 }
