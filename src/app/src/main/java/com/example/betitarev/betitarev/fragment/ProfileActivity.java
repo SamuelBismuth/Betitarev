@@ -64,7 +64,8 @@ import javax.xml.parsers.SAXParserFactory;
 
 import static android.support.constraint.Constraints.TAG;
 import static com.example.betitarev.betitarev.libraries.FireBaseQuery.getCurrentMail;
-import static com.example.betitarev.betitarev.libraries.FireBaseQuery.getPlayer;
+import static com.example.betitarev.betitarev.libraries.FireBaseQuery.loadCurrentUser;
+
 
 public class ProfileActivity extends Fragment {
 
@@ -95,7 +96,7 @@ public class ProfileActivity extends Fragment {
     public ProfileActivity() {
         Email = getCurrentMail();
         Log.e("a",Email.getMail());
-        user = getPlayer(Email);
+        user = loadCurrentUser(Email);
         Name = user.getName() + " " + user.getFamilyName();
     }
 
