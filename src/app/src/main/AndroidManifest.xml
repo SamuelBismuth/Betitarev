@@ -47,6 +47,14 @@
             android:name=".activities.EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.AnotherProfileActivity"
+            android:label="@string/title_activity_another_profile"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.AddFriendActivity"
+            android:label="@string/title_activity_add_friend"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

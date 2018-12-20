@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.activities.activities.registration.LoginActivity;
+import com.example.betitarev.betitarev.objects.CurrentUser;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,7 +37,6 @@ import com.google.firebase.storage.StorageReference;
 import java.io.ByteArrayOutputStream;
 
 import static com.example.betitarev.betitarev.libraries.FireBaseQuery.getCurrentMail;
-import static com.example.betitarev.betitarev.libraries.FireBaseQuery.getPlayer;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -46,7 +46,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button btnSaveChanges;
     private FirebaseAuth auth;
     private Mail Email;
-    private User user;
+    private CurrentUser user;
     private DatabaseReference reference;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -67,7 +67,7 @@ public class EditProfileActivity extends AppCompatActivity {
         btnSaveChanges =  findViewById(R.id.btn_save_changes);
         auth = FirebaseAuth.getInstance();
         Email = getCurrentMail();
-        user = getPlayer(Email);
+        user = CurrentUser.getInstance();
         inputFirstName.setText(user.getName());
         inputLastName.setText(user.getFamilyName());
 

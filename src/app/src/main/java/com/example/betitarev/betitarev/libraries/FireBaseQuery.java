@@ -11,6 +11,7 @@ import com.example.betitarev.betitarev.objects.Friends;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.Statistic;
 import com.example.betitarev.betitarev.objects.Statistics;
+import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -36,6 +39,10 @@ public class FireBaseQuery {
     private static FirebaseAuth auth;
     private static Set<Friend> friendSet = new LinkedHashSet<>();
     private static Set<DataSnapshot> mailSet = new LinkedHashSet<>();
+    private static Set<Mail> allEmailsSet = new LinkedHashSet<>();
+
+
+
 
 
     public static Mail getCurrentMail() {
@@ -52,6 +59,18 @@ public class FireBaseQuery {
      */
     public static void loadCurrentUser(final Mail email, final MainActivity mainActivity) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+        reference.orderByChild("mail/mail").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                    allEmailsSet.add(new Mail(datas.child("mail/mail").getValue().toString()));
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
         reference.orderByChild("mail/mail").equalTo(email.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -68,11 +87,13 @@ public class FireBaseQuery {
                     reference.orderByChild("mail/mail").addListenerForSingleValueEvent(new ValueEventListener() {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot friend : mailSet)
-                                for (DataSnapshot user : dataSnapshot.getChildren())
+                                for (DataSnapshot user : dataSnapshot.getChildren()) {
                                     if (user.child("mail/mail").getValue().toString().equals(friend.getValue().toString()))
                                         friendSet.add(new Friend(new Mail(friend.getValue().toString()),
                                                 user.child("name").getValue().toString() +
                                                         " " + user.child("familyName").getValue().toString()));
+                                }
+
                             friends = new Friends(friendSet);
                             storage = FirebaseStorage.getInstance();
                             storageRef = storage.getReference();
@@ -89,6 +110,7 @@ public class FireBaseQuery {
                                 }
                             });
                             CurrentUser.getInstance(name, familyName, picture, email, statistics, friends);
+                            UsersNamesHashmap.getInstance(allEmailsSet);
                             mainActivity.begin();
                         }
                         @Override
@@ -98,10 +120,28 @@ public class FireBaseQuery {
                 }
             }
 
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
+    public static void loadUserNameHashMap(final Mail mail, final UsersNamesHashmap USH){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+        reference.orderByChild("mail/mail").equalTo(mail.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                    name = datas.child("name").getValue().toString();
+                    familyName = datas.child("familyName").getValue().toString();
+                    USH.getHashmap().put(mail, name+" "+ familyName);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
     }
 
 }

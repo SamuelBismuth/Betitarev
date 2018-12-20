@@ -40,6 +40,7 @@ import com.example.betitarev.betitarev.activities.activities.registration.LoginA
 import com.example.betitarev.betitarev.objects.CurrentUser;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.User;
+import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,6 +60,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -97,7 +101,6 @@ public class ProfileActivity extends Fragment {
     public ProfileActivity() {
         Email = getCurrentMail();
         Log.e("a",Email.getMail());
-        loadCurrentUser(Email);
         user = CurrentUser.getInstance();
         Name = user.getName() + " " + user.getFamilyName();
     }
@@ -148,10 +151,9 @@ public class ProfileActivity extends Fragment {
             }
         });
 
-        String friends[] = {"Yishayito", "Samyyy", "Jonato", "HTC Sense", "HTC Sensation XE",
-                "iPhone 4S", "Samsung Galaxy Note 800",
-                "Samsung Galaxy S3", "MacBook Air", "Mac Mini", "MacBook Pro"};
-        adapterFriend = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, friends);
+        HashMap<Mail,String> usernamesHashmap = UsersNamesHashmap.getInstance().getHashmap();
+        List<String> listUserNames = new ArrayList<>(usernamesHashmap.values());
+        adapterFriend = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, listUserNames );
         mListFriends.setAdapter(adapterFriend);
         mSearchFriend.addTextChangedListener(new TextWatcher() {
             @Override
