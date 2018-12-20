@@ -13,8 +13,24 @@ import com.example.betitarev.betitarev.fragment.OpenedBetActivity;
 import com.example.betitarev.betitarev.fragment.PlaceBetActivity;
 import com.example.betitarev.betitarev.fragment.ProfileActivity;
 import com.example.betitarev.betitarev.fragment.StatisticsActivity;
+import com.example.betitarev.betitarev.libraries.FireBaseQuery;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        FireBaseQuery.loadCurrentUser(FireBaseQuery.getCurrentMail());
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        loadFragment(new PlaceBetActivity());
+    }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -40,22 +56,9 @@ public class MainActivity extends AppCompatActivity {
                     loadFragment(fragment);
                     return true;
             }
-
             return false;
         }
     };
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        // load the store fragment by default
-        loadFragment(new PlaceBetActivity());
-    }
 
     /**
      * loading fragment into FrameLayout
