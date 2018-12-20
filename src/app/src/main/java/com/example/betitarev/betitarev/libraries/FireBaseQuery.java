@@ -34,7 +34,6 @@ public class FireBaseQuery {
         return new Mail(auth.getCurrentUser().getEmail());
     }
 
-
     public static void loadCurrentUser(final Mail email) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.orderByChild("mail/mail").equalTo(email.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
