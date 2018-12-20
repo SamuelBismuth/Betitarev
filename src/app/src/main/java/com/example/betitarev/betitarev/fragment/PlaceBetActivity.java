@@ -25,6 +25,8 @@ import com.example.betitarev.betitarev.objects.CurrentUser;
 import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class PlaceBetActivity extends Fragment {
@@ -57,10 +59,9 @@ public class PlaceBetActivity extends Fragment {
         searchArbitrator = view.findViewById(R.id.search_arbitrator);
         RadioGroup radioGroup = view.findViewById(R.id.radio_group);
         Button sendRequestButton = view.findViewById(R.id.send_request);
-
-        String friends[] = {"Yishayito", "Samyyy", "Jonato", "HTC Sense", "HTC Sensation XE",
-                "iPhone 4S", "Samsung Galaxy Note 800",
-                "Samsung Galaxy S3", "MacBook Air", "Mac Mini", "MacBook Pro"};
+        List<String> friends = new ArrayList<>();
+        for (Friend friend : CurrentUser.getInstance().getFriends().getFriends())
+            friends.add(friend.getCompleteName());
         adapterFriend = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, friends);
         listOfFriend.setAdapter(adapterFriend);
         searchFriend.addTextChangedListener(new TextWatcher() {
@@ -77,11 +78,7 @@ public class PlaceBetActivity extends Fragment {
             public void afterTextChanged(Editable arg0) {
             }
         });
-
-        String arbitrators[] = {"Yishayito", "Samyyy", "Jonato", "HTC Sense", "HTC Sensation XE",
-                "iPhone 4S", "Samsung Galaxy Note 800",
-                "Samsung Galaxy S3", "MacBook Air", "Mac Mini", "MacBook Pro"};
-        adapterArbitrator = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, arbitrators);
+        adapterArbitrator = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, friends);
         listOfArbitrator.setAdapter(adapterArbitrator);
         searchArbitrator.addTextChangedListener(new TextWatcher() {
             @Override
@@ -163,16 +160,16 @@ public class PlaceBetActivity extends Fragment {
             return false;
         if(this.getWithArbitrator().isChecked()) {
             for (Friend friend : CurrentUser.getInstance().getFriends().getFriends()) {
-                if (friend.getUser().getCompleteName().equals(listOfFriend.getItemAtPosition(0)))
+                if (friend.getCompleteName().equals(listOfFriend.getItemAtPosition(0)))
                     play = true;
-                if (friend.getUser().getCompleteName().equals(listOfArbitrator.getItemAtPosition(0)))
+                if (friend.getCompleteName().equals(listOfArbitrator.getItemAtPosition(0)))
                     arb = true;
             }
             return play & arb;
         }
         if(this.getWithoutArbitrator().isChecked())
             for(Friend player : CurrentUser.getInstance().getFriends().getFriends())
-                if(player.getUser().getCompleteName().equals(listOfFriend.getItemAtPosition(0)))
+                if(player.getCompleteName().equals(listOfFriend.getItemAtPosition(0)))
                     return true;
         return false;
     }
@@ -197,14 +194,6 @@ public class PlaceBetActivity extends Fragment {
 
     public RadioButton getWithoutArbitrator() {
         return withoutArbitrator;
-    }
-
-    public ArrayAdapter<String> getAdapterFriend() {
-        return adapterFriend;
-    }
-
-    public ArrayAdapter<String> getAdapterArbitrator() {
-        return adapterArbitrator;
     }
 
     public EditText getSearchFriend() {

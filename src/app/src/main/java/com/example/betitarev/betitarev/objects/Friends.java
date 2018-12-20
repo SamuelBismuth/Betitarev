@@ -14,15 +14,15 @@ public class Friends {
         return 0;
     }
 
-    protected boolean isFriend(User user) {
+    protected boolean isFriend(Mail mail) {
         return false;
     }
 
-    protected boolean addFriend(User user) {
+    protected boolean addFriend(Mail mail) {
         return false;
     }
 
-    protected boolean removeFriend(User user) {
+    protected boolean removeFriend(Mail mail) {
         return false;
     }
 
