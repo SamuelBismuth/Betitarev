@@ -37,6 +37,7 @@ import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.activities.EditProfileActivity;
 import com.example.betitarev.betitarev.activities.activities.registration.LoginActivity;
+import com.example.betitarev.betitarev.objects.CurrentUser;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -89,14 +90,15 @@ public class ProfileActivity extends Fragment {
     // Create a storage reference from our app
     private StorageReference storageRef, pathReference;
     private FirebaseStorage storage;
-    private static User user;
+    CurrentUser user;
     private ArrayAdapter<String> adapterFriend;
 
 
     public ProfileActivity() {
         Email = getCurrentMail();
         Log.e("a",Email.getMail());
-        user = loadCurrentUser(Email);
+        loadCurrentUser(Email);
+        user = CurrentUser.getInstance();
         Name = user.getName() + " " + user.getFamilyName();
     }
 
