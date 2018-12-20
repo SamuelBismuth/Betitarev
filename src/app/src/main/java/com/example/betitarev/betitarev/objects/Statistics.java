@@ -11,6 +11,13 @@ public class Statistics {
         ArbitratorStat = new Statistic(0);
     }
 
+    public Statistics(Statistic winStat, Statistic loseStat, Statistic drawStat, Statistic arbitratorStat) {
+        this.winStat = winStat;
+        this.loseStat = loseStat;
+        this.drawStat = drawStat;
+        ArbitratorStat = arbitratorStat;
+    }
+
     protected int getNumberOfGames(){
         return 0;
     }

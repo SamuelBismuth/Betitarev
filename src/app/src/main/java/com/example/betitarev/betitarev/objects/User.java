@@ -7,7 +7,6 @@ public abstract class User {
     private String name, familyName;  // path to the picture in our server.
     private Uri picture;
     private Mail mail;
-    private Friends friends;
 
     // Default constructor required for calls to
     // DataSnapshot.getValue(User.class)
@@ -18,7 +17,6 @@ public abstract class User {
         this.name = name;
         this.familyName = familyName;
         this.mail = mail;
-        this.friends = null;
     }
 
     public User(String name, String familyName, Uri picture, Mail mail) {
@@ -26,7 +24,6 @@ public abstract class User {
         this.familyName = familyName;
         this.picture = picture;
         this.mail = mail;
-        this.friends = null;
     }
 
 
@@ -64,12 +61,8 @@ public abstract class User {
         this.mail = mail;
     }
 
-    public Friends getFriends() {
-        return friends;
-    }
-
-    public void setFriends(Friends friends) {
-        this.friends = friends;
+    public String getCompleteName() {
+        return this.getName() + " " + this.getFamilyName();
     }
 
 }

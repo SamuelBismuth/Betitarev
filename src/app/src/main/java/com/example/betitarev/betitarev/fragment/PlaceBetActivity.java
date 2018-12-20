@@ -1,6 +1,8 @@
 package com.example.betitarev.betitarev.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +20,12 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.libraries.FireBaseQuery;
+import com.example.betitarev.betitarev.objects.CurrentUser;
+import com.example.betitarev.betitarev.objects.Friend;
+import com.example.betitarev.betitarev.objects.Player;
+
+import java.util.stream.Collectors;
 
 public class PlaceBetActivity extends Fragment {
 
@@ -150,7 +158,23 @@ public class PlaceBetActivity extends Fragment {
      * @return true is all the fields are full, else false.
      */
     private boolean isInRules() {
-        return true;
+        boolean arb = false, play = false;
+        if(this.getBetPhrase().getText() == null || this.getBetValue().getText() == null)
+            return false;
+        if(this.getWithArbitrator().isChecked()) {
+            for (Friend friend : CurrentUser.getInstance().getFriends().getFriends()) {
+                if (friend.getUser().getCompleteName().equals(listOfFriend.getItemAtPosition(0)))
+                    play = true;
+                if (friend.getUser().getCompleteName().equals(listOfArbitrator.getItemAtPosition(0)))
+                    arb = true;
+            }
+            return play & arb;
+        }
+        if(this.getWithoutArbitrator().isChecked())
+            for(Friend player : CurrentUser.getInstance().getFriends().getFriends())
+                if(player.getUser().getCompleteName().equals(listOfFriend.getItemAtPosition(0)))
+                    return true;
+        return false;
     }
 
     private void sendNotification(View view) {
