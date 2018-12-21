@@ -1,27 +1,27 @@
 {
   "project_info": {
     "project_number": "650746908206",
-    "firebase_url": "https://betitarev.firebaseio.com/ ",
+    "firebase_url": "https://betitarev.firebaseio.com",
     "project_id": "betitarev",
     "storage_bucket": "betitarev.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:973386683280:android:d842af33038fad5c",
+        "mobilesdk_app_id": "1:650746908206:android:18c5cb573cde8935",
         "android_client_info": {
           "package_name": "com.example.betitarev.betitarev"
         }
       },
       "oauth_client": [
         {
-          "client_id": "973386683280-baqgf530ok5b79ti51hhqqe4danubb0k.apps.googleusercontent.com",
+          "client_id": "650746908206-56mk6i07ndke9hg8ku6sev6cn6pdt44h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": " AIzaSyCWcOyYXAhOnDOz2vSGmG5__bbRP1zcMlw "
+          "current_key": "AIzaSyDb0bbAqUPdcuexd1MpxShuzAqyrWP0D5U"
         }
       ],
       "services": {
