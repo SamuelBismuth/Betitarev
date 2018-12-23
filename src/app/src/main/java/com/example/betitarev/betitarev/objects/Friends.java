@@ -1,5 +1,7 @@
 package com.example.betitarev.betitarev.objects;
 
+import android.util.Log;
+
 import java.util.Set;
 
 public class Friends {
@@ -11,19 +13,34 @@ public class Friends {
     }
 
     protected int getNumOfFriends() {
-        return 0;
+        return friends.size();
     }
 
-    protected boolean isFriend(Mail mail) {
+    protected boolean isFriend(Friend friend) {
+        if (friends.contains(friend))
+            return true;
         return false;
     }
 
-    protected boolean addFriend(Mail mail) {
-        return false;
+    protected boolean addFriend(Friend friend) {
+        try {
+            friends.add(friend);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 
-    protected boolean removeFriend(Mail mail) {
-        return false;
+    protected boolean removeFriend(Friend friend) {
+        try{
+            friends.remove(friend);
+            return true;
+        }
+        catch(Exception e) {
+            Log.e("error", e.getMessage());
+            return false;
+        }
     }
 
     public Set<Friend> getFriends() {

@@ -38,6 +38,10 @@ public class CurrentUser {
 
     }
 
+    public void addFriend(Friend friend){
+        friends.addFriend(friend);
+    }
+
     public String getName() {
         return name;
     }

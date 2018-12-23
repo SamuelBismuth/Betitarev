@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.objects.CurrentUser;
+import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -54,6 +55,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
         } else {
             Name= (String) savedInstanceState.getSerializable("Name");
         }
+        Log.e("test3","" + UsersNamesHashmap.getAllKeysForValue(Name).size());
         Email = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
 
         mNameTextView = findViewById(R.id.name);
@@ -69,8 +71,9 @@ public class AnotherProfileActivity extends AppCompatActivity {
         mAddFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Friend friend = new Friend(Email, Name);
+                CurrentUser.getInstance().addFriend(friend);
+                finish();
             }
         });
     }

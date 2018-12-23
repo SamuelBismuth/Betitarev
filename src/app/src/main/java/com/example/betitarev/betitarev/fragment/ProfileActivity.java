@@ -154,7 +154,7 @@ public class ProfileActivity extends Fragment {
         });
 
         HashMap<Mail,String> usernamesHashmap = UsersNamesHashmap.getInstance().getHashmap();
-        final List<String> listUserNames = new ArrayList<>(usernamesHashmap.values());
+        List<String> listUserNames = new ArrayList<>(usernamesHashmap.values());
         adapterFriend = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, listUserNames );
         mListFriends.setAdapter(adapterFriend);
         mSearchFriend.addTextChangedListener(new TextWatcher() {

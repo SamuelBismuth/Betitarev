@@ -63,7 +63,8 @@ public class FireBaseQuery {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
-                    allEmailsSet.add(new Mail(datas.child("mail/mail").getValue().toString()));
+                    Mail currentMail = new Mail(datas.child("mail/mail").getValue().toString());
+                    allEmailsSet.add(currentMail);
                 }
             }
             @Override
@@ -137,7 +138,7 @@ public class FireBaseQuery {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
                     name1 = datas.child("name").getValue().toString();
                     familyName1 = datas.child("familyName").getValue().toString();
-                    USH.getHashmap().put(mail, name+" "+ familyName);
+                    USH.getHashmap().put(mail, name1+" "+ familyName1);
                 }
             }
             @Override

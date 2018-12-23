@@ -1,6 +1,7 @@
 package com.example.betitarev.betitarev.objects;
 
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
