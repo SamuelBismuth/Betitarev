@@ -2,13 +2,19 @@ package com.example.betitarev.betitarev.objects;
 
 import android.util.Log;
 
-import java.util.Set;
+import java.util.List;
 
 public class Friends {
 
-    private Set<Friend> friends;
+    private List<Friend> friends;
 
-    public Friends(Set<Friend> friends) {
+    public Friends(){}
+
+    public Friends(Friends friends){
+        this.friends = friends.friends;
+    }
+
+    public Friends(List<Friend> friends) {
         this.friends = friends;
     }
 
@@ -16,13 +22,13 @@ public class Friends {
         return friends.size();
     }
 
-    protected boolean isFriend(Friend friend) {
+    public boolean isFriend(Friend friend) {
         if (friends.contains(friend))
             return true;
         return false;
     }
 
-    protected boolean addFriend(Friend friend) {
+    public boolean addFriend(Friend friend) {
         try {
             friends.add(friend);
             return true;
@@ -32,7 +38,7 @@ public class Friends {
         }
     }
 
-    protected boolean removeFriend(Friend friend) {
+    public boolean removeFriend(Friend friend) {
         try{
             friends.remove(friend);
             return true;
@@ -43,7 +49,7 @@ public class Friends {
         }
     }
 
-    public Set<Friend> getFriends() {
+    public List<Friend> getFriends() {
         return friends;
     }
 }

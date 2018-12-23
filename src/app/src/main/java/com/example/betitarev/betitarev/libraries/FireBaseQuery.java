@@ -1,5 +1,7 @@
 package com.example.betitarev.betitarev.libraries;
 
+import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -23,9 +25,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class FireBaseQuery {
@@ -37,7 +39,7 @@ public class FireBaseQuery {
     private static Friends friends;
     private static Uri picture;
     private static FirebaseAuth auth;
-    private static Set<Friend> friendSet = new LinkedHashSet<>();
+    private static List<Friend> friendSet = new ArrayList<>();
     private static Set<DataSnapshot> mailSet = new LinkedHashSet<>();
     private static Set<Mail> allEmailsSet = new LinkedHashSet<>();
 
@@ -82,18 +84,10 @@ public class FireBaseQuery {
                             new Statistic(Integer.parseInt(datas.child("statistics/arbitratorStat/counter").getValue().toString())),
                             new Statistic(Integer.parseInt(datas.child("statistics/arbitratorStat/counter").getValue().toString())),
                             new Statistic(Integer.parseInt(datas.child("statistics/arbitratorStat/counter").getValue().toString())));
-                    for (DataSnapshot friend_local : datas.child("friends").getChildren())
-                        mailSet.add(friend_local);
+                    friends = datas.child("friends").getValue(Friends.class);
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
                     reference.orderByChild("mail/mail").addListenerForSingleValueEvent(new ValueEventListener() {
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot friend : mailSet)
-                                for (DataSnapshot user : dataSnapshot.getChildren()) {
-                                    if (user.child("mail/mail").getValue().toString().equals(friend.getValue().toString()))
-                                        friendSet.add(new Friend(new Mail(friend.getValue().toString()),
-                                                user.child("name").getValue().toString() +
-                                                        " " + user.child("familyName").getValue().toString()));
-                                }
 
                             friends = new Friends(friendSet);
                             storage = FirebaseStorage.getInstance();
@@ -146,6 +140,25 @@ public class FireBaseQuery {
             }
         });
 
+    }
+    public static void updateUserFriends(final Context con) {
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+        reference.orderByChild("mail/mail").equalTo(CurrentUser.getInstance().getMail().getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot datas : dataSnapshot.getChildren()){
+                    CurrentUser.getInstance().setUserid(datas.getKey());
+                }
+                reference.child(CurrentUser.getInstance().getUserid()).child("friends").setValue(CurrentUser.getInstance().getFriends());
+                Activity a = (Activity) con;
+                a.finish();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
 

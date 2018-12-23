@@ -3,8 +3,6 @@ package com.example.betitarev.betitarev.activities;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.libraries.FireBaseQuery;
 import com.example.betitarev.betitarev.objects.CurrentUser;
 import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Mail;
@@ -25,12 +24,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import static java.security.AccessController.getContext;
-
 public class AnotherProfileActivity extends AppCompatActivity {
     private static FirebaseAuth auth;
     private static String Name;
     private static Mail Email;
+    private Friend currentFriend;
     private TextView mNameTextView, mEmailTextView;
     private ImageView mPictureSrc;
     private Button mAddFriendBtn;
@@ -66,16 +64,31 @@ public class AnotherProfileActivity extends AppCompatActivity {
 
         mPictureSrc =  findViewById(R.id.profile_image);
         setProfileImage();
-
         mAddFriendBtn = (Button) findViewById(R.id.btn_add_friend);
         mAddFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Friend friend = new Friend(Email, Name);
-                CurrentUser.getInstance().addFriend(friend);
-                finish();
+                CurrentUser.getInstance().getFriends().addFriend(currentFriend);
+                FireBaseQuery.updateUserFriends(view.getContext());
             }
         });
+        currentFriend = new Friend(Email, Name);
+        if(CurrentUser.getInstance().getFriends().isFriend(currentFriend)){
+            mAddFriendBtn.setText("UNFRIEND");
+            Log.e("isAlreadyFriend", "yes");
+            mAddFriendBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    CurrentUser.getInstance().getFriends().removeFriend(currentFriend);
+                    FireBaseQuery.updateUserFriends(view.getContext());
+                }
+            });
+
+        }
+
+
+
     }
 
     private void setProfileImage() {

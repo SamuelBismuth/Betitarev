@@ -4,6 +4,8 @@ public class Mail {
 
     private String mail;
 
+    private Mail(){}
+
     public Mail(String mail) {
         this.mail = mail;
     }
