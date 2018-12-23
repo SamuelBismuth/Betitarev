@@ -5,9 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.fragment.OpenedBetActivity;
@@ -15,27 +18,21 @@ import com.example.betitarev.betitarev.fragment.PlaceBetActivity;
 import com.example.betitarev.betitarev.fragment.ProfileActivity;
 import com.example.betitarev.betitarev.fragment.StatisticsActivity;
 import com.example.betitarev.betitarev.libraries.FireBaseQuery;
-import com.example.betitarev.betitarev.objects.CurrentUser;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        FireBaseQuery.loadCurrentUser(FireBaseQuery.getCurrentMail(), this);
-
-    }
-
-    public void begin(){
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        loadFragment(new PlaceBetActivity());
-    }
-
+    private static final String TAG = "MainActivity";
+    String dataTitle, dataMessage;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    public static String title, message;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -64,6 +61,66 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        FireBaseQuery.loadCurrentUser(FireBaseQuery.getCurrentMail(), this);
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+                    }
+                });
+
+        // Handle possible data accompanying notification message.
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+                if (key.equals("title")) {
+                    dataTitle = (String) getIntent().getExtras().get(key);
+                }
+                if (key.equals("message")) {
+                    dataMessage = (String) getIntent().getExtras().get(key);
+                }
+            }
+            showAlertDialog();
+        }
+
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("messages");
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Message");
+        builder.setMessage("title: " + dataTitle + "\n" + "message: " + dataMessage);
+        builder.setPositiveButton("OK", null);
+        builder.show();
+    }
+
+    public void subscribeToTopic(View view) {
+        FirebaseMessaging.getInstance().subscribeToTopic("notifications");
+        Toast.makeText(this, "Subscribed to Topic: Notifications", Toast.LENGTH_SHORT).show();
+    }
+
+    public void sendMessage(View view) {
+        myRef.push().setValue(message + " " + title);
+        Toast.makeText(this, "Message Sent", Toast.LENGTH_SHORT).show();
+    }
+
+    public void begin() {
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        loadFragment(new PlaceBetActivity());
+    }
 
     /**
      * loading fragment into FrameLayout

@@ -47,13 +47,10 @@
             android:name=".activities.EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <service android:name=".objects.Notification">
+        <service
+            android:name=".helper.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
-        <service android:name=".helper.FireBaseIdService">
-            <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>

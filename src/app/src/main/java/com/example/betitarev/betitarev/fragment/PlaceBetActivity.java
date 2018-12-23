@@ -18,8 +18,11 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.activities.MainActivity;
 import com.example.betitarev.betitarev.objects.CurrentUser;
 import com.example.betitarev.betitarev.objects.Friend;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -182,8 +185,10 @@ public class PlaceBetActivity extends Fragment {
 
     private void sendNotification(View view) {
         Log.i("Data I got:", bettor.getCompleteName() + bettor.getMail().getMail());
-        if(arbitrator != null)
+        if (arbitrator != null)
             Log.i("If arb", arbitrator.getCompleteName() + arbitrator.getMail().getMail());
+        MainActivity.title = "titre";
+        MainActivity.message = "test";
     }
 
     private void clearAll(View view) {
