@@ -1,8 +1,12 @@
 package com.example.betitarev.betitarev.fragment;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,14 +46,21 @@ public class StatisticsActivity extends Fragment {
         numberOfLose = view.findViewById(R.id.number_of_lose);
         numberOfDraw = view.findViewById(R.id.number_of_draw);
         numberOfArbitrator = view.findViewById(R.id.number_of_arbitrator);
-        numberOfWin.setText("\n\n"+numberOfWin.getText() + Integer.toString(
-                CurrentUser.getInstance().getStatistics().getWinStat().getCounter()));
-        numberOfLose.setText("\n\n"+numberOfLose.getText()+Integer.toString(
-                CurrentUser.getInstance().getStatistics().getLoseStat().getCounter()));
-        numberOfDraw.setText("\n\n"+numberOfDraw.getText()+Integer.toString(
-                CurrentUser.getInstance().getStatistics().getDrawStat().getCounter()));
-        numberOfArbitrator.setText("\n\n"+numberOfArbitrator.getText()+Integer.toString(
-                CurrentUser.getInstance().getStatistics().getArbitratorStat().getCounter()));
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        Log.i("samjbwdiywvhfv", Integer.toString(height ));
+        numberOfWin.setTextSize(height * width / 6);
+
+        /** numberOfWin.setText("+numberOfWin.getText() + Integer.toString(
+                 CurrentUser.getInstance().getStatistics().getWinStat().getCounter()));
+         numberOfLose.setText("\n\n"+numberOfLose.getText()+Integer.toString(
+                 CurrentUser.getInstance().getStatistics().getLoseStat().getCounter()));
+         numberOfDraw.setText("\n\n"+numberOfDraw.getText()+Integer.toString(
+                 CurrentUser.getInstance().getStatistics().getDrawStat().getCounter()));
+         numberOfArbitrator.setText("\n\n"+numberOfArbitrator.getText()+Integer.toString(
+                 CurrentUser.getInstance().getStatistics().getArbitratorStat().getCounter()));**/
         return view;
     }
 
