@@ -17,17 +17,31 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.activities.AnotherProfileActivity;
 import com.example.betitarev.betitarev.activities.EditProfileActivity;
+import com.example.betitarev.betitarev.activities.activities.registration.LoginActivity;
+import com.example.betitarev.betitarev.objects.CurrentUser;
+import com.example.betitarev.betitarev.objects.Mail;
+import com.example.betitarev.betitarev.objects.User;
+import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,18 +61,28 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import static android.support.constraint.Constraints.TAG;
+import static com.example.betitarev.betitarev.libraries.FireBaseQuery.getCurrentMail;
+import static com.example.betitarev.betitarev.libraries.FireBaseQuery.loadCurrentUser;
+
 
 public class ProfileActivity extends Fragment {
 
     private static FirebaseAuth auth;
-    private static String Name, Email, Picture;
+    private static String Name,mAddFriendName;
+    private static Mail Email, mAddFriendMail;
     private TextView mNameTextView, mEmailTextView;
-    private ImageView mPictureSrc;
+    private ImageView mPictureSrc, mEditBtn, mHeaderCoverImage;
+    private Button mSignOutBtn;
+    private ListView mListFriends;
+    private EditText mSearchFriend;
     // Hold a reference to the current animator,
     // so that it can be canceled mid-way.
     private Animator mCurrentAnimator;
@@ -71,36 +95,18 @@ public class ProfileActivity extends Fragment {
     // Create a storage reference from our app
     private StorageReference storageRef, pathReference;
     private FirebaseStorage storage;
-    private Uri picUri;
-    private Bitmap bm;
-
-
+    CurrentUser user;
+    private ArrayAdapter<String> adapterFriend;
 
 
     public ProfileActivity() {
-        // Required empty public constructor
+        Email = getCurrentMail();
+        user = CurrentUser.getInstance();
+        Name = user.getName() + " " + user.getFamilyName();
     }
 
     public static ProfileActivity newInstance() {
         ProfileActivity fragment = new ProfileActivity();
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
-        Email = auth.getCurrentUser().getEmail();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        //Query the database for current user data based on authentication email
-        reference.orderByChild("mail/mail").equalTo(Email).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot datas: dataSnapshot.getChildren()){
-                    Name = String.format("%s %s",datas.child("name").getValue().toString(),datas.child("familyName").getValue().toString());
-
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
         return fragment;
     }
 
@@ -119,25 +125,67 @@ public class ProfileActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_profile, container, false);
+        auth = FirebaseAuth.getInstance();
+
+        mHeaderCoverImage = view.findViewById(R.id.header_cover_image);
 
         mNameTextView = view.findViewById(R.id.name);
         mNameTextView.setText(Name);
 
         mEmailTextView = view.findViewById(R.id.email);
-        mEmailTextView.setText(Email);
+        mEmailTextView.setText(Email.getMail());
+
+        mListFriends = view.findViewById(R.id.list_friend);
+        mSearchFriend = view.findViewById(R.id.search_friend);
 
 
         mPictureSrc =  view.findViewById(R.id.profile_image);
         setProfileImage();
 
+        mSignOutBtn = view.findViewById(R.id.btn_sign_out);
+        mSignOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                auth.signOut();
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        HashMap<Mail,String> usernamesHashmap = UsersNamesHashmap.getInstance().getHashmap();
+        final List<String> listUserNames = new ArrayList<>(usernamesHashmap.values());
+        adapterFriend = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, listUserNames );
+        mListFriends.setAdapter(adapterFriend);
+        mSearchFriend.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                adapterFriend.getFilter().filter(cs);
+            }
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+            }
+            @Override
+            public void afterTextChanged(Editable arg0) {
+            }
+        });
+
+        mListFriends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Log.e("friendSelected",adapterFriend.getItem(position));
+                mAddFriendName = adapterFriend.getItem(position);
+                Intent intent = new Intent (getActivity(),AnotherProfileActivity.class);
+                intent.putExtra("Name", mAddFriendName);
+                startActivity(intent);
 
 
-
-
-
-
-        final View editView = view.findViewById(R.id.edit);
-        editView.setOnClickListener(new View.OnClickListener() {
+            }
+        });
+        mEditBtn = view.findViewById(R.id.edit);
+        mEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), EditProfileActivity.class);
@@ -170,24 +218,7 @@ public class ProfileActivity extends Fragment {
 
 
     private void setProfileImage() {
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference();
-        pathReference = storageRef.child("images/"+Email +"/profile");
-
-        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide
-                        .with(getContext())
-                        .load(uri) // the uri you got from Firebase
-                        .into(mPictureSrc);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.e("downloadImage", "failed");
-            }
-        });
+        Glide.with(getContext()).load(user.getPicture()).into(mPictureSrc);
     }
 
     private void loadFragment(Fragment fragment) {

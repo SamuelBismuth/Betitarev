@@ -33,6 +33,11 @@ public class CurrentUser {
         return instance;
     }
 
+    public void setPicture(Uri picture) {
+        this.picture = picture;
+
+    }
+
     public String getName() {
         return name;
     }
