@@ -32,7 +32,7 @@ public class FireBaseQuery {
 
     private static StorageReference storageRef, pathReference;
     private static FirebaseStorage storage;
-    private static String name, familyName;
+    private static String name, familyName, name1, familyName1;
     private static Statistics statistics;
     private static Friends friends;
     private static Uri picture;
@@ -102,6 +102,8 @@ public class FireBaseQuery {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     picture = uri;
+                                    if(CurrentUser.getInstance()!=null)
+                                    CurrentUser.getInstance().setPicture(uri);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -112,6 +114,7 @@ public class FireBaseQuery {
                             CurrentUser.getInstance(name, familyName, picture, email, statistics, friends);
                             UsersNamesHashmap.getInstance(allEmailsSet);
                             mainActivity.begin();
+
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
@@ -132,8 +135,8 @@ public class FireBaseQuery {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
-                    name = datas.child("name").getValue().toString();
-                    familyName = datas.child("familyName").getValue().toString();
+                    name1 = datas.child("name").getValue().toString();
+                    familyName1 = datas.child("familyName").getValue().toString();
                     USH.getHashmap().put(mail, name+" "+ familyName);
                 }
             }
@@ -143,6 +146,7 @@ public class FireBaseQuery {
         });
 
     }
+
 
 }
 

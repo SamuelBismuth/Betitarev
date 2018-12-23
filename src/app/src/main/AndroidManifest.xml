@@ -12,7 +12,9 @@
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false" />
+        android:required="false"
+        />
+
 
     <application
         android:allowBackup="true"
@@ -24,7 +26,8 @@
         tools:ignore="ExtraText">
         <activity
             android:name=".activities.activities.registration.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,10 +54,6 @@
             android:name=".activities.AnotherProfileActivity"
             android:label="@string/title_activity_another_profile"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activities.AddFriendActivity"
-            android:label="@string/title_activity_add_friend"
-            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

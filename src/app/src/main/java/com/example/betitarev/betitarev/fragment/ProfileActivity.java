@@ -35,6 +35,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.activities.AnotherProfileActivity;
 import com.example.betitarev.betitarev.activities.EditProfileActivity;
 import com.example.betitarev.betitarev.activities.activities.registration.LoginActivity;
 import com.example.betitarev.betitarev.objects.CurrentUser;
@@ -75,10 +76,10 @@ import static com.example.betitarev.betitarev.libraries.FireBaseQuery.loadCurren
 public class ProfileActivity extends Fragment {
 
     private static FirebaseAuth auth;
-    private static String Name, Picture;
-    private static Mail Email;
+    private static String Name,mAddFriendName;
+    private static Mail Email, mAddFriendMail;
     private TextView mNameTextView, mEmailTextView;
-    private ImageView mPictureSrc, mEditBtn;
+    private ImageView mPictureSrc, mEditBtn, mHeaderCoverImage;
     private Button mSignOutBtn;
     private ListView mListFriends;
     private EditText mSearchFriend;
@@ -100,7 +101,6 @@ public class ProfileActivity extends Fragment {
 
     public ProfileActivity() {
         Email = getCurrentMail();
-        Log.e("a",Email.getMail());
         user = CurrentUser.getInstance();
         Name = user.getName() + " " + user.getFamilyName();
     }
@@ -127,6 +127,8 @@ public class ProfileActivity extends Fragment {
         View view = inflater.inflate(R.layout.activity_profile, container, false);
         auth = FirebaseAuth.getInstance();
 
+        mHeaderCoverImage = view.findViewById(R.id.header_cover_image);
+
         mNameTextView = view.findViewById(R.id.name);
         mNameTextView.setText(Name);
 
@@ -152,14 +154,14 @@ public class ProfileActivity extends Fragment {
         });
 
         HashMap<Mail,String> usernamesHashmap = UsersNamesHashmap.getInstance().getHashmap();
-        List<String> listUserNames = new ArrayList<>(usernamesHashmap.values());
+        final List<String> listUserNames = new ArrayList<>(usernamesHashmap.values());
         adapterFriend = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, listUserNames );
         mListFriends.setAdapter(adapterFriend);
         mSearchFriend.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                 // When user changed the Text
-                ProfileActivity.this.adapterFriend.getFilter().filter(cs);
+                adapterFriend.getFilter().filter(cs);
             }
             @Override
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
@@ -172,10 +174,14 @@ public class ProfileActivity extends Fragment {
 
         mListFriends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mSearchFriend.setText(mListFriends.getItemAtPosition(0).toString());
-                mSearchFriend.clearFocus();
-                mSignOutBtn.requestFocus();
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Log.e("friendSelected",adapterFriend.getItem(position));
+                mAddFriendName = adapterFriend.getItem(position);
+                Intent intent = new Intent (getActivity(),AnotherProfileActivity.class);
+                intent.putExtra("Name", mAddFriendName);
+                startActivity(intent);
+
+
             }
         });
         mEditBtn = view.findViewById(R.id.edit);
@@ -212,24 +218,7 @@ public class ProfileActivity extends Fragment {
 
 
     private void setProfileImage() {
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference();
-        pathReference = storageRef.child("images/"+Email.getMail() +"/profile");
-
-        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide
-                        .with(getContext())
-                        .load(uri)
-                        .into(mPictureSrc);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.e("downloadImage", "failed");
-            }
-        });
+        Glide.with(getContext()).load(user.getPicture()).into(mPictureSrc);
     }
 
     private void loadFragment(Fragment fragment) {

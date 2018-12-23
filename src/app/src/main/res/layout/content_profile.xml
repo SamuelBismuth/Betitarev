@@ -17,18 +17,33 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:title = "Profile Page"
             android:popupTheme="@style/AppTheme.PopupOverlay"
             android:minHeight="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            tools:targetApi="lollipop"/>
+            tools:targetApi="lollipop">
+            <EditText
+            android:id="@+id/search_friend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Search Friend"
+            android:drawableLeft = "@drawable/ic_search_black_24dp"
+            android:inputType="textVisiblePassword" />
+        </Toolbar>
+        <ListView
+            android:id="@+id/list_friend"
+            android:layout_below="@+id/toolbar"
+
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="NestedScrolling" />
+
 
 
 
         <ImageView
             android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
-            android:layout_below="@+id/toolbar"
+            android:layout_below="@+id/list_friend"
             android:layout_height="150dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="centerCrop"
@@ -128,18 +143,6 @@
             tools:context=".fragment.ProfileActivity"
             tools:showIn="@layout/activity_profile" >
 
-            <EditText
-                android:id="@+id/search_friend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Search Friend"
-                android:inputType="textVisiblePassword" />
-
-            <ListView
-                android:id="@+id/list_friend"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                tools:ignore="NestedScrolling" />
 
             <Button
                 android:id="@+id/btn_sign_out"

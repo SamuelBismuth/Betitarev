@@ -23,7 +23,7 @@ public class UsersNamesHashmap {
             loadUserNameHashMap(mail, this);
         }
     }
-    static  List<Mail> getAllKeysForValue(String value)
+    public static List<Mail> getAllKeysForValue(String value)
     {
         List<Mail> listOfKeys = null;
         HashMap<Mail,String> mapOfWords = UsersNamesHashmap.getInstance().getHashmap();
