@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <android.support.constraint.ConstraintLayout
+   <!-- <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -49,47 +50,52 @@
     </android.support.constraint.ConstraintLayout>
 
 
-    <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal" >
-
-        <android.support.constraint.ConstraintLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/holo_blue_light"
-            android:layout_weight="1"
-            android:orientation="horizontal" >
-            <TextView
-                android:id="@+id/number_of_arbitrator"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="50.0"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="arbitrator:" />
-        </android.support.constraint.ConstraintLayout>
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="38dp">
 
         <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_red_light"
+            android:background="@android:color/holo_blue_light"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/number_of_draw"
+                android:id="@+id/number_of_arbitrator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="50.0"
-
                 android:gravity="center"
-                android:text="draw:" />
+                android:text="arbitrator:"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="159dp" />
         </android.support.constraint.ConstraintLayout>
 
-    </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="274dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_red_light"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteY="293dp">
+
+            <TextView
+                android:id="@+id/number_of_draw"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="50.0"
+
+                android:gravity="center"
+                android:text="draw:"
+                tools:layout_editor_absoluteY="104dp" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout> -->
 </android.support.constraint.ConstraintLayout>
