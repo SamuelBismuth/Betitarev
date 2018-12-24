@@ -2,13 +2,16 @@ package com.example.betitarev.betitarev.objects;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Friends {
 
     private List<Friend> friends;
 
-    public Friends(){}
+    public Friends(){
+        this.friends = new ArrayList<Friend>();
+    }
 
     public Friends(Friends friends){
         this.friends = friends.friends;

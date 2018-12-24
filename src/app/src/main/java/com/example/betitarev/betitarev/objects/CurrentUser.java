@@ -1,7 +1,5 @@
 package com.example.betitarev.betitarev.objects;
 
-import android.net.Uri;
-
 // Singleton
 public class CurrentUser {
 
@@ -11,28 +9,24 @@ public class CurrentUser {
 
 
     private String userid;  // path to the picture in our server.
-    private Uri picture;
+    private String picture;
     private Mail mail;
     private Statistics statistics;
     private Friends friends;
 
     static CurrentUser instance = null; // Singleton implementation.
 
-    static public CurrentUser getInstance(Player user) {
+    static public CurrentUser getInstance(User user, String userid) {
         if(instance != null)
             return instance;
-        instance = new CurrentUser(user);
+        instance = new CurrentUser(user, userid);
         return instance;
     }
 
-    static public CurrentUser getInstance(String name, String familyName, Uri picture, Mail mail, Statistics statistics, Friends friends) {
-        if(instance != null)
-            return instance;
-        instance = new CurrentUser(name, familyName, picture, mail, statistics, friends);
-        return instance;
-    }
 
-    private CurrentUser(Player user){
+
+    private CurrentUser(User user, String userid){
+        this.userid = userid;
         this.name = user.getName();
         this.familyName = user.getFamilyName();
         this.picture = user.getPicture();
@@ -40,20 +34,13 @@ public class CurrentUser {
         this.statistics = user.getStatistics();
         this.friends = user.getFriends();
     }
-    private CurrentUser(String name, String familyName, Uri picture, Mail mail, Statistics statistics, Friends friends) {
-        this.name = name;
-        this.familyName = familyName;
-        this.picture = picture;
-        this.mail = mail;
-        this.statistics = statistics;
-        this.friends = friends;
-    }
+
 
     public static CurrentUser getInstance() {
         return instance;
     }
 
-    public void setPicture(Uri picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
 
     }
@@ -69,7 +56,7 @@ public class CurrentUser {
         return familyName;
     }
 
-    public Uri getPicture() {
+    public String getPicture() {
         return picture;
     }
 
