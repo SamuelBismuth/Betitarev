@@ -27,6 +27,8 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.betitarev.betitarev.activities.MainActivity.title;
+
 public class PlaceBetActivity extends Fragment {
 
     ArrayAdapter<String> adapterFriend, adapterArbitrator;
@@ -187,8 +189,6 @@ public class PlaceBetActivity extends Fragment {
         Log.i("Data I got:", bettor.getCompleteName() + bettor.getMail().getMail());
         if (arbitrator != null)
             Log.i("If arb", arbitrator.getCompleteName() + arbitrator.getMail().getMail());
-        MainActivity.title = "titre";
-        MainActivity.message = "test";
     }
 
     private void clearAll(View view) {

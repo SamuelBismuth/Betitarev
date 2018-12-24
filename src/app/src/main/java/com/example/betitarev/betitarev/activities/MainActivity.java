@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     String dataTitle, dataMessage;
     FirebaseDatabase database;
-    DatabaseReference myRef;
+    public static DatabaseReference myRef;
     public static String title, message;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("messages");
+        sendMessage();
     }
 
     private void showAlertDialog() {
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Subscribed to Topic: Notifications", Toast.LENGTH_SHORT).show();
     }
 
-    public void sendMessage(View view) {
+    public void sendMessage() {
         myRef.push().setValue(message + " " + title);
         Toast.makeText(this, "Message Sent", Toast.LENGTH_SHORT).show();
     }
