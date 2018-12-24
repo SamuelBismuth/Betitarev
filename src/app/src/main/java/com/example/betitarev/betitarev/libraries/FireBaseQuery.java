@@ -90,7 +90,6 @@ public class FireBaseQuery {
                     name1 = datas.child("name").getValue().toString();
                     familyName1 = datas.child("familyName").getValue().toString();
                     USH.getHashmap().put(mail, name1 + " " + familyName1);
-
                 }
             }
 

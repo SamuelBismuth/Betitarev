@@ -2,7 +2,6 @@ package com.example.betitarev.betitarev.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,7 +23,6 @@ import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Notification;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -194,8 +192,6 @@ public class PlaceBetActivity extends Fragment {
             Log.i("If arb", arbitrator.getCompleteName() + arbitrator.getMail().getMail());
         sendMessage(); // Change this.
     }
-
-
 
 
     public void sendMessage() {
