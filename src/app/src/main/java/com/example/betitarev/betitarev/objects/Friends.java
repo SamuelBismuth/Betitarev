@@ -1,32 +1,55 @@
 package com.example.betitarev.betitarev.objects;
 
-import java.util.Set;
+import android.util.Log;
+
+import java.util.List;
 
 public class Friends {
 
-    private Set<Friend> friends;
+    private List<Friend> friends;
 
-    public Friends(Set<Friend> friends) {
+    public Friends(){}
+
+    public Friends(Friends friends){
+        this.friends = friends.friends;
+    }
+
+    public Friends(List<Friend> friends) {
         this.friends = friends;
     }
 
     protected int getNumOfFriends() {
-        return 0;
+        return friends.size();
     }
 
-    protected boolean isFriend(Mail mail) {
+    public boolean isFriend(Friend friend) {
+        if (friends.contains(friend))
+            return true;
         return false;
     }
 
-    protected boolean addFriend(Mail mail) {
-        return false;
+    public boolean addFriend(Friend friend) {
+        try {
+            friends.add(friend);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 
-    protected boolean removeFriend(Mail mail) {
-        return false;
+    public boolean removeFriend(Friend friend) {
+        try{
+            friends.remove(friend);
+            return true;
+        }
+        catch(Exception e) {
+            Log.e("error", e.getMessage());
+            return false;
+        }
     }
 
-    public Set<Friend> getFriends() {
+    public List<Friend> getFriends() {
         return friends;
     }
 }

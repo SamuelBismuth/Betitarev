@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_profile:
-                    fragment = ProfileActivity.newInstance();
+                    fragment = new ProfileActivity();
                     loadFragment(fragment);
                     return true;
             }
