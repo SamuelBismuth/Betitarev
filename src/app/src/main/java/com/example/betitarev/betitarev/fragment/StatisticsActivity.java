@@ -29,9 +29,9 @@ import android.support.v4.app.FragmentTransaction;
 public class StatisticsActivity extends Fragment{
 
     private TextView numberOfWin, numberOfLose, numberOfDraw, numberOfArbitrator;
-
     private PieChartView pieChartView;
     private Button btn;
+    private TextView tv;
 
     public StatisticsActivity() {
         // Required empty public constructor
@@ -56,33 +56,14 @@ public class StatisticsActivity extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_statistics, container, false);
-//        numberOfWin = view.findViewById(R.id.number_of_win);
-//        numberOfLose = view.findViewById(R.id.number_of_lose);
-//        numberOfDraw = view.findViewById(R.id.number_of_draw);
-//        numberOfArbitrator = view.findViewById(R.id.number_of_arbitrator);
-//        DisplayMetrics displayMetrics = new DisplayMetrics();
-//        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-//        int height = displayMetrics.heightPixels;
-//        int width = displayMetrics.widthPixels;
-//        //Log.i("samjbwdiywvhfv", Integer.toString(height ));
-//        numberOfWin.setTextSize(height * width / 40000);
-//        numberOfLose.setTextSize(height * width / 40000);
-//        numberOfDraw.setTextSize(height * width / 40000);
-//        numberOfArbitrator.setTextSize(height * width / 40000);
-//        numberOfWin.setText(numberOfWin.getText()+Integer.toString(
-//                CurrentUser.getInstance().getStatistics().getWinStat().getCounter()));
-//         numberOfLose.setText(numberOfLose.getText()+Integer.toString(
-//                 CurrentUser.getInstance().getStatistics().getLoseStat().getCounter()));
-//         numberOfDraw.setText(numberOfDraw.getText()+Integer.toString(
-//                 CurrentUser.getInstance().getStatistics().getDrawStat().getCounter()));
-//         numberOfArbitrator.setText(numberOfArbitrator.getText()+Integer.toString(
-//                 CurrentUser.getInstance().getStatistics().getArbitratorStat().getCounter()));
+
 
         int win=CurrentPlayer.getInstance().getStatistics().getWinStat().getCounter();
         int lose=CurrentPlayer.getInstance().getStatistics().getLoseStat().getCounter();
         int draw=CurrentPlayer.getInstance().getStatistics().getDrawStat().getCounter();
         int arbitrator=CurrentPlayer.getInstance().getStatistics().getArbitratorStat().getCounter();
 
+        //pie chart of participation in bets
         pieChartView = view.findViewById(R.id.chart);
         List pieData = new ArrayList<>();
         pieData.add(new SliceValue(win, Color.GREEN).setLabel("win"));
@@ -94,18 +75,24 @@ public class StatisticsActivity extends Fragment{
         pieChartData.setHasCenterCircle(true).setCenterText1("Bet's participation").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
         pieChartView.setPieChartData(pieChartData);
 
+        tv = (TextView)view.findViewById(R.id.bet_invite);
         btn = (Button)view.findViewById(R.id.btn);
+        //condition: if current player does not participat on bets - invite him to
         if (win==0 && lose==0 && draw==0 && arbitrator==0){
             btn.setVisibility(View.VISIBLE);
+            tv.setVisibility(View.VISIBLE);
         }else {
             btn.setVisibility(View.INVISIBLE);
+            tv.setVisibility(View.INVISIBLE);
         }
+        //define on click go to place a bet
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadFragment(new PlaceBetActivity());
             }
         });
+
         return view;
     }
 
