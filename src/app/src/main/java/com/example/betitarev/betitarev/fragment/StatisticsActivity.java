@@ -81,9 +81,11 @@ public class StatisticsActivity extends Fragment{
         if (win==0 && lose==0 && draw==0 && arbitrator==0){
             btn.setVisibility(View.VISIBLE);
             tv.setVisibility(View.VISIBLE);
+            pieChartView.setVisibility(View.INVISIBLE);
         }else {
             btn.setVisibility(View.INVISIBLE);
             tv.setVisibility(View.INVISIBLE);
+            pieChartView.setVisibility(View.VISIBLE);
         }
         //define on click go to place a bet
         btn.setOnClickListener(new View.OnClickListener() {
