@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.betitarev.betitarev.R;
-import com.example.betitarev.betitarev.objects.CurrentUser;
+import com.example.betitarev.betitarev.objects.CurrentPlayer;
+
 //for graph
 import android.graphics.Color;
 import java.util.ArrayList;
@@ -76,29 +77,35 @@ public class StatisticsActivity extends Fragment{
 //                 CurrentUser.getInstance().getStatistics().getDrawStat().getCounter()));
 //         numberOfArbitrator.setText(numberOfArbitrator.getText()+Integer.toString(
 //                 CurrentUser.getInstance().getStatistics().getArbitratorStat().getCounter()));
+
+        int win=CurrentPlayer.getInstance().getStatistics().getWinStat().getCounter();
+        int lose=CurrentPlayer.getInstance().getStatistics().getLoseStat().getCounter();
+        int draw=CurrentPlayer.getInstance().getStatistics().getDrawStat().getCounter();
+        int arbitrator=CurrentPlayer.getInstance().getStatistics().getArbitratorStat().getCounter();
+
+        pieChartView = view.findViewById(R.id.chart);
+        List pieData = new ArrayList<>();
+        pieData.add(new SliceValue(win, Color.GREEN).setLabel("win"));
+        pieData.add(new SliceValue(lose, Color.RED).setLabel("lose"));
+        pieData.add(new SliceValue(draw, Color.YELLOW).setLabel("draw"));
+        pieData.add(new SliceValue(arbitrator, Color.BLUE).setLabel("arbitrator"));
+        PieChartData pieChartData = new PieChartData(pieData);
+        pieChartData.setHasLabels(true).setValueLabelTextSize(14);
+        pieChartData.setHasCenterCircle(true).setCenterText1("Bet's participation").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
+        pieChartView.setPieChartData(pieChartData);
+
         btn = (Button)view.findViewById(R.id.btn);
+        if (win==0 && lose==0 && draw==0 && arbitrator==0){
+            btn.setVisibility(View.VISIBLE);
+        }else {
+            btn.setVisibility(View.INVISIBLE);
+        }
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadFragment(new PlaceBetActivity());
             }
         });
-        int win=CurrentUser.getInstance().getStatistics().getWinStat().getCounter();
-        int lose=CurrentUser.getInstance().getStatistics().getLoseStat().getCounter();
-        int draw=CurrentUser.getInstance().getStatistics().getDrawStat().getCounter();
-        int arbitrator=CurrentUser.getInstance().getStatistics().getArbitratorStat().getCounter();
-        if(win==0 && lose==0 && draw==0 && arbitrator==0) {
-            pieChartView = view.findViewById(R.id.chart);
-            List pieData = new ArrayList<>();
-            pieData.add(new SliceValue(win, Color.GREEN).setLabel("win"));
-            pieData.add(new SliceValue(lose, Color.RED).setLabel("lose"));
-            pieData.add(new SliceValue(draw, Color.YELLOW).setLabel("draw"));
-            pieData.add(new SliceValue(arbitrator, Color.BLUE).setLabel("arbitrator"));
-            PieChartData pieChartData = new PieChartData(pieData);
-            pieChartData.setHasLabels(true).setValueLabelTextSize(14);
-            pieChartData.setHasCenterCircle(true).setCenterText1("Bet's participation").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
-            pieChartView.setPieChartData(pieChartData);
-        }
         return view;
     }
 
