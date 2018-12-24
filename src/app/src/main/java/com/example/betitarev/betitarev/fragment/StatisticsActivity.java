@@ -76,25 +76,29 @@ public class StatisticsActivity extends Fragment{
 //                 CurrentUser.getInstance().getStatistics().getDrawStat().getCounter()));
 //         numberOfArbitrator.setText(numberOfArbitrator.getText()+Integer.toString(
 //                 CurrentUser.getInstance().getStatistics().getArbitratorStat().getCounter()));
-        btn = (Button)getView().findViewById(R.id.btn);
+        btn = (Button)view.findViewById(R.id.btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadFragment(new PlaceBetActivity());
             }
         });
-
-        pieChartView = view.findViewById(R.id.chart);
-
-        List pieData = new ArrayList<>();
-        pieData.add(new SliceValue(CurrentUser.getInstance().getStatistics().getWinStat().getCounter(), Color.GREEN).setLabel("win"));
-        pieData.add(new SliceValue(CurrentUser.getInstance().getStatistics().getLoseStat().getCounter(), Color.RED).setLabel("lose"));
-        pieData.add(new SliceValue(CurrentUser.getInstance().getStatistics().getDrawStat().getCounter(), Color.YELLOW).setLabel("draw"));
-        pieData.add(new SliceValue(CurrentUser.getInstance().getStatistics().getArbitratorStat().getCounter(), Color.BLUE).setLabel("arbitrator"));
-        PieChartData pieChartData = new PieChartData(pieData);
-        pieChartData.setHasLabels(true).setValueLabelTextSize(14);
-        pieChartData.setHasCenterCircle(true).setCenterText1("Bet's participation").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
-        pieChartView.setPieChartData(pieChartData);
+        int win=CurrentUser.getInstance().getStatistics().getWinStat().getCounter();
+        int lose=CurrentUser.getInstance().getStatistics().getLoseStat().getCounter();
+        int draw=CurrentUser.getInstance().getStatistics().getDrawStat().getCounter();
+        int arbitrator=CurrentUser.getInstance().getStatistics().getArbitratorStat().getCounter();
+        if(win==0 && lose==0 && draw==0 && arbitrator==0) {
+            pieChartView = view.findViewById(R.id.chart);
+            List pieData = new ArrayList<>();
+            pieData.add(new SliceValue(win, Color.GREEN).setLabel("win"));
+            pieData.add(new SliceValue(lose, Color.RED).setLabel("lose"));
+            pieData.add(new SliceValue(draw, Color.YELLOW).setLabel("draw"));
+            pieData.add(new SliceValue(arbitrator, Color.BLUE).setLabel("arbitrator"));
+            PieChartData pieChartData = new PieChartData(pieData);
+            pieChartData.setHasLabels(true).setValueLabelTextSize(14);
+            pieChartData.setHasCenterCircle(true).setCenterText1("Bet's participation").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
+            pieChartView.setPieChartData(pieChartData);
+        }
         return view;
     }
 
