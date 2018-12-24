@@ -21,6 +21,9 @@ public abstract class User {
         this.name = name;
         this.familyName = familyName;
         this.mail = mail;
+        this.picture = " ";
+        this.statistics = new Statistics();
+        this.friends = new Friends();
         this.pushToken = pushToken;
     }
 
@@ -29,7 +32,7 @@ public abstract class User {
         this.familyName = familyName;
         this.mail = mail;
         this.pushToken = pushToken;
-        this.picture = " ";
+        this.picture = picture;
         this.statistics = new Statistics();
         this.friends = new Friends();
     }
