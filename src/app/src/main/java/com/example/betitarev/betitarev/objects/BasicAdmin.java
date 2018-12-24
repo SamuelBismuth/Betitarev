@@ -1,7 +1,5 @@
 package com.example.betitarev.betitarev.objects;
 
-import android.net.Uri;
-
 public class BasicAdmin extends User implements Admin {
 
 
@@ -9,7 +7,7 @@ public class BasicAdmin extends User implements Admin {
         super(name, familyName, mail);
     }
 
-    public BasicAdmin(String name, String familyName, Uri picture, Mail mail, String userId) {
+    public BasicAdmin(String name, String familyName, String picture, Mail mail, String userId) {
         super(name, familyName, picture, mail);
     }
 

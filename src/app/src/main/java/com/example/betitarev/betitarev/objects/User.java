@@ -1,12 +1,12 @@
 package com.example.betitarev.betitarev.objects;
 
-import android.net.Uri;
-
 public abstract class User {
 
     private String name, familyName;  // path to the picture in our server.
-    private Uri picture;
+    private String picture;
     private Mail mail;
+    private Statistics statistics;
+    private Friends friends;
 
     // Default constructor required for calls to
     // DataSnapshot.getValue(User.class)
@@ -17,13 +17,27 @@ public abstract class User {
         this.name = name;
         this.familyName = familyName;
         this.mail = mail;
+        this.picture = " ";
+        this.statistics = new Statistics();
+        this.friends = new Friends();
     }
 
-    public User(String name, String familyName, Uri picture, Mail mail) {
+    public User(String name, String familyName, String picture, Mail mail) {
         this.name = name;
         this.familyName = familyName;
         this.picture = picture;
         this.mail = mail;
+        this.statistics = new Statistics();
+        this.friends = new Friends();
+    }
+
+    public User(String name, String familyName, String picture, Mail mail, Statistics statistics, Friends friends) {
+        this.name = name;
+        this.familyName = familyName;
+        this.picture = picture;
+        this.mail = mail;
+        this.friends = friends;
+        this.statistics = statistics;
     }
 
 
@@ -45,11 +59,11 @@ public abstract class User {
         this.familyName = familyName;
     }
 
-    public Uri getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(Uri picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 
@@ -65,4 +79,31 @@ public abstract class User {
         return this.getName() + " " + this.getFamilyName();
     }
 
+    public Statistics getStatistics() {
+        return statistics;
+    }
+
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics;
+    }
+
+    public Friends getFriends() {
+        return friends;
+    }
+
+    public void setFriends(Friends friends) {
+        this.friends = friends;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", familyName='" + familyName + '\'' +
+                ", picture=" + picture +
+                ", mail=" + mail +
+                ", statistics=" + statistics +
+                ", friends=" + friends +
+                '}';
+    }
 }

@@ -17,46 +17,13 @@ import java.util.List;
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.view.PieChartView;
-import android.view.View.OnClickListener;
-import android.content.Intent;
 
-import com.example.betitarev.betitarev.activities.MainActivity;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.MenuItem;
 
-import com.example.betitarev.betitarev.R;
-import com.example.betitarev.betitarev.fragment.OpenedBetActivity;
-import com.example.betitarev.betitarev.fragment.PlaceBetActivity;
-import com.example.betitarev.betitarev.fragment.ProfileActivity;
-import com.example.betitarev.betitarev.fragment.StatisticsActivity;
-import com.example.betitarev.betitarev.libraries.FireBaseQuery;
-import com.example.betitarev.betitarev.objects.CurrentUser;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.example.betitarev.betitarev.R;
-import com.example.betitarev.betitarev.activities.MainActivity;
-import com.example.betitarev.betitarev.fragment.PlaceBetActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.example.betitarev.betitarev.fragment.PlaceBetActivity;
+
+
+
 
 public class StatisticsActivity extends Fragment{
 
@@ -79,13 +46,8 @@ public class StatisticsActivity extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        btn = (Button)findViewById(R.id.btn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(StatisticsActivity.this, PlaceBetActivity.class));
-            }
-        });
+
+
     }
 
     @Override
@@ -114,7 +76,13 @@ public class StatisticsActivity extends Fragment{
 //                 CurrentUser.getInstance().getStatistics().getDrawStat().getCounter()));
 //         numberOfArbitrator.setText(numberOfArbitrator.getText()+Integer.toString(
 //                 CurrentUser.getInstance().getStatistics().getArbitratorStat().getCounter()));
-
+        btn = (Button)getView().findViewById(R.id.btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new PlaceBetActivity());
+            }
+        });
 
         pieChartView = view.findViewById(R.id.chart);
 
@@ -123,7 +91,6 @@ public class StatisticsActivity extends Fragment{
         pieData.add(new SliceValue(CurrentUser.getInstance().getStatistics().getLoseStat().getCounter(), Color.RED).setLabel("lose"));
         pieData.add(new SliceValue(CurrentUser.getInstance().getStatistics().getDrawStat().getCounter(), Color.YELLOW).setLabel("draw"));
         pieData.add(new SliceValue(CurrentUser.getInstance().getStatistics().getArbitratorStat().getCounter(), Color.BLUE).setLabel("arbitrator"));
-
         PieChartData pieChartData = new PieChartData(pieData);
         pieChartData.setHasLabels(true).setValueLabelTextSize(14);
         pieChartData.setHasCenterCircle(true).setCenterText1("Bet's participation").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
@@ -131,6 +98,13 @@ public class StatisticsActivity extends Fragment{
         return view;
     }
 
+    private void loadFragment(Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
 
 

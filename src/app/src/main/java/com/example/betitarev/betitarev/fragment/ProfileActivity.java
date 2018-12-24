@@ -5,16 +5,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
@@ -28,7 +22,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,37 +33,16 @@ import com.example.betitarev.betitarev.activities.EditProfileActivity;
 import com.example.betitarev.betitarev.activities.activities.registration.LoginActivity;
 import com.example.betitarev.betitarev.objects.CurrentUser;
 import com.example.betitarev.betitarev.objects.Mail;
-import com.example.betitarev.betitarev.objects.User;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import static android.support.constraint.Constraints.TAG;
 import static com.example.betitarev.betitarev.libraries.FireBaseQuery.getCurrentMail;
-import static com.example.betitarev.betitarev.libraries.FireBaseQuery.loadCurrentUser;
 
 
 public class ProfileActivity extends Fragment {
@@ -91,6 +63,7 @@ public class ProfileActivity extends Fragment {
     // duration is ideal for subtle animations or animations that occur
     // very frequently.
     private int mShortAnimationDuration;
+
 
     // Create a storage reference from our app
     private StorageReference storageRef, pathReference;
@@ -218,7 +191,20 @@ public class ProfileActivity extends Fragment {
 
 
     private void setProfileImage() {
-        Glide.with(getContext()).load(user.getPicture()).into(mPictureSrc);
+        Glide.with(getContext()).load(CurrentUser.getInstance().getPicture()).into(mPictureSrc);
+//        StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" +Email.getMail()+"/profile");
+//        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Glide.with(getContext()).load(uri).into(mPictureSrc);
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception exception) {
+//                Log.e("downloadImage", "failed");
+//            }
+//        });
+
     }
 
     private void loadFragment(Fragment fragment) {

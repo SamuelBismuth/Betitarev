@@ -4,6 +4,10 @@ public class Statistic {
 
     private int counter;
 
+    public Statistic(){
+        this.counter = 0;
+    }
+
     public Statistic(int counter) {
         this.counter = counter;
     }
