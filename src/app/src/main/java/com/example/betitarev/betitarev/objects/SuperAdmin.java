@@ -5,12 +5,12 @@ import android.net.Uri;
 //Singleton
 public class SuperAdmin extends User implements Admin {
 
-    public SuperAdmin(String name, String familyName, Mail mail) {
-        super(name, familyName, mail);
+    public SuperAdmin(String name, String familyName, Mail mail, String pushToken) {
+        super(name, familyName, mail, pushToken);
     }
 
-    public SuperAdmin(String name, String familyName, Uri picture, Mail mail) {
-        super(name, familyName, picture, mail);
+    public SuperAdmin(String name, String familyName, Uri picture, Mail mail, String pushToken) {
+        super(name, familyName, picture, mail, pushToken);
     }
 
     @Override

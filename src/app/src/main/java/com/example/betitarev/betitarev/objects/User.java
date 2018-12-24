@@ -7,25 +7,27 @@ public abstract class User {
     private String name, familyName;  // path to the picture in our server.
     private Uri picture;
     private Mail mail;
+    private String pushToken;
 
     // Default constructor required for calls to
     // DataSnapshot.getValue(User.class)
     public User() {
     }
 
-    public User(String name, String familyName, Mail mail) {
+    public User(String name, String familyName, Mail mail, String pushToken) {
         this.name = name;
         this.familyName = familyName;
         this.mail = mail;
+        this.pushToken = pushToken;
     }
 
-    public User(String name, String familyName, Uri picture, Mail mail) {
+    public User(String name, String familyName, Uri picture, Mail mail, String pushToken) {
         this.name = name;
         this.familyName = familyName;
         this.picture = picture;
         this.mail = mail;
+        this.pushToken = pushToken;
     }
-
 
     public abstract void updateDatabase();
 
@@ -65,4 +67,11 @@ public abstract class User {
         return this.getName() + " " + this.getFamilyName();
     }
 
+    public String getPushToken() {
+        return pushToken;
+    }
+
+    public void setPushToken(String pushToken) {
+        this.pushToken = pushToken;
+    }
 }

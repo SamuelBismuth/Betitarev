@@ -2,6 +2,7 @@ package com.example.betitarev.betitarev.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,16 +19,16 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
-import com.example.betitarev.betitarev.activities.MainActivity;
-import com.example.betitarev.betitarev.objects.CurrentUser;
+import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Friend;
+import com.example.betitarev.betitarev.objects.Notification;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.betitarev.betitarev.activities.MainActivity.title;
 
 public class PlaceBetActivity extends Fragment {
 
@@ -61,7 +62,7 @@ public class PlaceBetActivity extends Fragment {
         RadioGroup radioGroup = view.findViewById(R.id.radio_group);
         Button sendRequestButton = view.findViewById(R.id.send_request);
         List<String> friends = new ArrayList<>();
-        for (Friend friend : CurrentUser.getInstance().getFriends().getFriends())
+        for (Friend friend : CurrentPlayer.getInstance().getFriends().getFriends())
             friends.add(friend.getCompleteName());
         adapterFriend = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, friends);
         listOfFriend.setAdapter(adapterFriend);
@@ -164,7 +165,7 @@ public class PlaceBetActivity extends Fragment {
         if (this.getBetPhrase().getText() == null || this.getBetValue().getText() == null)
             return false;
         if (this.getWithArbitrator().isChecked()) {
-            for (Friend friend : CurrentUser.getInstance().getFriends().getFriends()) {
+            for (Friend friend : CurrentPlayer.getInstance().getFriends().getFriends()) {
                 if (friend.getCompleteName().equals(listOfFriend.getItemAtPosition(0))) {
                     play = true;
                     bettor = friend;
@@ -177,7 +178,7 @@ public class PlaceBetActivity extends Fragment {
             return play & arb;
         }
         if (this.getWithoutArbitrator().isChecked())
-            for (Friend player : CurrentUser.getInstance().getFriends().getFriends())
+            for (Friend player : CurrentPlayer.getInstance().getFriends().getFriends())
                 if (player.getCompleteName().equals(listOfFriend.getItemAtPosition(0))) {
                     bettor = player;
                     return true;
@@ -189,6 +190,22 @@ public class PlaceBetActivity extends Fragment {
         Log.i("Data I got:", bettor.getCompleteName() + bettor.getMail().getMail());
         if (arbitrator != null)
             Log.i("If arb", arbitrator.getCompleteName() + arbitrator.getMail().getMail());
+        sendMessage(); // Change this.
+    }
+
+
+
+
+    public void sendMessage() {
+        // test
+        DatabaseReference mFirebaseDatabase;
+        FirebaseDatabase mFirebaseInstance;
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+        mFirebaseDatabase = mFirebaseInstance.getReference("notifcations");
+        String notifId = mFirebaseDatabase.push().getKey();
+        Notification notif = new Notification("titre de la notif", "message de la notif",
+                "samuelbismuth101@gmail.com", "samuelbismuth101@gmail.com");
+        mFirebaseDatabase.child(notifId).setValue(notif);
     }
 
     private void clearAll(View view) {

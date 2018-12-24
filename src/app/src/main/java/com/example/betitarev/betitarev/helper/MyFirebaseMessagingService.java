@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.example.betitarev.betitarev.R;
@@ -41,9 +42,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         sendNotification(notificationTitle, notificationBody, dataTitle, dataMessage);
     }
 
+   /** private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Message");
+        builder.setMessage("title: " + dataTitle + "\n" + "message: " + dataMessage);
+        builder.setPositiveButton("OK", null);
+        builder.show();
+    }
+
+    public void subscribeToTopic(View view) {
+    FirebaseMessaging.getInstance().subscribeToTopic("notifications");
+    Toast.makeText(this, "Subscribed to Topic: Notifications", Toast.LENGTH_SHORT).show();
+    }
+    */
+
+
     /**
-     //     * Create and show a simple notification containing the received FCM message.
-     //     */
+     * //     * Create and show a simple notification containing the received FCM message.
+     * //
+     */
     private void sendNotification(String notificationTitle, String notificationBody, String dataTitle, String dataMessage) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("title", dataTitle);
@@ -52,7 +69,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(notificationTitle)

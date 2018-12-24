@@ -7,18 +7,18 @@ public class Player extends User {
     private Statistics statistics;
     private Friends friends;
 
-    public Player(String name, String familyName, Mail mail) {
-        super(name, familyName, mail);
+    public Player(String name, String familyName, Mail mail, String pushToken) {
+        super(name, familyName, mail, pushToken);
         this.statistics = new Statistics();
     }
 
-    public Player(String name, String familyName, Uri picture, Mail mail) {
-        super(name, familyName, picture, mail);
+    public Player(String name, String familyName, Uri picture, Mail mail, String pushToken) {
+        super(name, familyName, picture, mail, pushToken);
         this.statistics = new Statistics();
     }
 
-    public Player(String name, String familyName, Uri picture, Mail mail, Statistics statistics, Friends friends) {
-        super(name, familyName, picture, mail);
+    public Player(String name, String familyName, Uri picture, Mail mail, Statistics statistics, Friends friends, String pushToken) {
+        super(name, familyName, picture, mail, pushToken);
         this.statistics = statistics;
         this.friends = friends;
     }

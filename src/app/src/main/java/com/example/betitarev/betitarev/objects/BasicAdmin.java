@@ -5,12 +5,12 @@ import android.net.Uri;
 public class BasicAdmin extends User implements Admin {
 
 
-    public BasicAdmin(String name, String familyName, Mail mail, String userId) {
-        super(name, familyName, mail);
+    public BasicAdmin(String name, String familyName, Mail mail, String pushToken) {
+        super(name, familyName, mail, pushToken);
     }
 
-    public BasicAdmin(String name, String familyName, Uri picture, Mail mail, String userId) {
-        super(name, familyName, picture, mail);
+    public BasicAdmin(String name, String familyName, Uri picture, Mail mail, String pushToken) {
+        super(name, familyName, picture, mail, pushToken);
     }
 
     @Override

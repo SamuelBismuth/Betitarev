@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -120,9 +123,22 @@ public class SignupActivity extends AppCompatActivity {
                                     Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
-                                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
-                                    createUser(name, familyName, new Mail(email));
-                                    finish();
+                                    FirebaseInstanceId.getInstance().getInstanceId()
+                                            .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                    if (!task.isSuccessful()) {
+                                                        Log.w("SignupActivity", "getInstanceId failed", task.getException());
+                                                        return;
+                                                    }
+                                                    // Get new Instance ID token
+                                                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                                                    createUser(name, familyName, new Mail(email), task.getResult().getToken());
+                                                    finish();
+                                                    // Log and toast
+                                                }
+                                            });
+
                                 }
                             }
                         });
@@ -134,9 +150,9 @@ public class SignupActivity extends AppCompatActivity {
     /**
      * Creating new user node under 'users'
      */
-    private void createUser(String name, String familyName, Mail email) {
+    private void createUser(String name, String familyName, Mail email, String pushToken) {
         this.userId = mFirebaseDatabase.push().getKey();
-        User user = new Player(name, familyName, email);
+        User user = new Player(name, familyName, email, pushToken);
         mFirebaseDatabase.child(userId).setValue(user);
     }
 

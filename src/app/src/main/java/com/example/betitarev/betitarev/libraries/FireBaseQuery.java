@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.betitarev.betitarev.activities.MainActivity;
-import com.example.betitarev.betitarev.objects.CurrentUser;
+import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Friends;
 import com.example.betitarev.betitarev.objects.Mail;
@@ -30,6 +30,7 @@ public class FireBaseQuery {
     private static StorageReference storageRef, pathReference;
     private static FirebaseStorage storage;
     private static String name, familyName;
+    private static String pushToken;
     private static Statistics statistics;
     private static Friends friends;
     private static Uri picture;
@@ -61,6 +62,7 @@ public class FireBaseQuery {
                             new Statistic(Integer.parseInt(datas.child("statistics/arbitratorStat/counter").getValue().toString())),
                             new Statistic(Integer.parseInt(datas.child("statistics/arbitratorStat/counter").getValue().toString())),
                             new Statistic(Integer.parseInt(datas.child("statistics/arbitratorStat/counter").getValue().toString())));
+                    pushToken = datas.child("pushToken").getValue().toString();
                     for (DataSnapshot friend_local : datas.child("friends").getChildren())
                         mailSet.add(friend_local);
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
@@ -87,9 +89,10 @@ public class FireBaseQuery {
                                     Log.e("downloadImage", "failed");
                                 }
                             });
-                            CurrentUser.getInstance(name, familyName, picture, email, statistics, friends);
+                            CurrentPlayer.getInstance(name, familyName, picture, email, statistics, friends, pushToken);
                             mainActivity.begin();
                         }
+
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                         }

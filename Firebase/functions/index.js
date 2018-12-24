@@ -1,44 +1,49 @@
-const functions = require('firebase-functions');
-
-const admin = require('firebase-admin');
+let functions = require('firebase-functions');
+let admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
-
-// // Take the text parameter passed to this HTTP endpoint and insert it into the
-// // Realtime Database under the path /messages/:pushId/original
-// exports.addMessage = functions.https.onRequest((request, response) => {
-//   // Grab the text parameter.
-//   const title = request.query.title;
-//   const message = request.query.message;
-//   // Push it into the Realtime Database then send a response
-//   admin.database().ref('/messages').push({title: title, message: message}).then(snapshot => {
-//     // Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
-//     response.redirect(303, snapshot.ref);
-//   });
-// });
-
-exports.pushNotification = functions.database.ref('/messages/{pushId}').onWrite( event => {
-
-    console.log('Push notification event triggered');
-
-    //  Grab the current value of what was written to the Realtime Database.
-    var valueObject = event.data.val();
-        
-    const payload = {
-        notification: {
-            title: 'App Name',
-            body: "New message",
-            sound: "default"
-        },
-        data: {
-            title: valueObject.title,
-            message: valueObject.message
+exports.sendPush = functions.database.ref('/notifications/{projectId}').onWrite(event => {
+    let projectStateChanged = false;
+    let projectCreated = false;
+    let projectData = event.data.val();
+    if (!event.data.previous.exists()) {
+        projectCreated = true;
+    }
+    if (!projectCreated && event.data.changed()) {
+        projectStateChanged = true;
+    }
+    let msg = 'A project state was changed';
+		if (projectCreated) {
+			msg = `The following new project was added to the project: ${projectData.title}`;
+		}
+    return loadUsers().then(users => {
+        let tokens = [];
+        for (let user of users) {
+            tokens.push(user.pushToken);
         }
-    };
- 
-    const options = {
-        priority: "high",
-        timeToLive: 60 * 60 * 24 //24 hours
-    };
-
-    return admin.messaging().sendToTopic("notifications", payload, options);
+        let payload = {
+            notification: {
+                title: 'Firebase Notification',
+                body: msg,
+                sound: 'default',
+                badge: '1'
+            }
+        };
+        return admin.messaging().sendToDevice(tokens, payload);
+    });
 });
+function loadUsers() {
+    let dbRef = admin.database().ref('/users');
+    let defer = new Promise((resolve, reject) => {
+        dbRef.once('value', (snap) => {
+            let data = snap.val();
+            let users = [];
+            for (var property in data) {
+                users.push(data[property]);
+            }
+            resolve(users);
+        }, (err) => {
+            reject(err);
+        });
+    });
+    return defer;
+}
