@@ -62,8 +62,10 @@ public class PlaceBetActivity extends Fragment {
         RadioGroup radioGroup = view.findViewById(R.id.radio_group);
         Button sendRequestButton = view.findViewById(R.id.send_request);
         List<String> friends = new ArrayList<>();
+
         for (Friend friend : CurrentPlayer.getInstance().getFriends().getFriends())
             friends.add(friend.getCompleteName());
+
         adapterFriend = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, friends);
         listOfFriend.setAdapter(adapterFriend);
         searchFriend.addTextChangedListener(new TextWatcher() {

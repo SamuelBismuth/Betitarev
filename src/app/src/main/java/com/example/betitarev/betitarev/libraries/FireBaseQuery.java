@@ -8,11 +8,8 @@ import android.util.Log;
 
 import com.example.betitarev.betitarev.activities.MainActivity;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
-import com.example.betitarev.betitarev.objects.Friend;
-import com.example.betitarev.betitarev.objects.Friends;
 import com.example.betitarev.betitarev.objects.Mail;
-import com.example.betitarev.betitarev.objects.Statistic;
-import com.example.betitarev.betitarev.objects.Statistics;
+import com.example.betitarev.betitarev.objects.Player;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,25 +22,17 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 public class FireBaseQuery {
 
-    private static StorageReference storageRef, pathReference;
-    private static FirebaseStorage storage;
-    private static String name, familyName, name1, familyName1;
-
-    private static String pushToken;
-    private static Statistics statistics;
-    private static Friends friends;
-    private static Uri picture;
+    private static String userid, name1, familyName1;
+    private static Player user;
     private static FirebaseAuth auth;
-    private static List<Friend> friendSet = new ArrayList<>();
-    private static Set<DataSnapshot> mailSet = new LinkedHashSet<>();
     private static Set<Mail> allEmailsSet = new LinkedHashSet<>();
+    private static FirebaseStorage storage;
+    private static StorageReference storageReference;
 
     public static Mail getCurrentMail() {
         auth = FirebaseAuth.getInstance();
@@ -63,9 +52,12 @@ public class FireBaseQuery {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
                     Mail currentMail = new Mail(datas.child("mail/mail").getValue().toString());
+                    Log.e("user", currentMail.getMail());
                     allEmailsSet.add(currentMail);
                 }
+                UsersNamesHashmap.getInstance(allEmailsSet);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -75,58 +67,21 @@ public class FireBaseQuery {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
-                    name = datas.child("name").getValue().toString();
-                    familyName = datas.child("familyName").getValue().toString();
-                    statistics = new Statistics(new Statistic(Integer.parseInt(datas.child("statistics/arbitratorStat/counter").getValue().toString())),
-                            new Statistic(Integer.parseInt(datas.child("statistics/arbitratorStat/counter").getValue().toString())),
-                            new Statistic(Integer.parseInt(datas.child("statistics/arbitratorStat/counter").getValue().toString())),
-                            new Statistic(Integer.parseInt(datas.child("statistics/arbitratorStat/counter").getValue().toString())));
-                    pushToken = datas.child("pushToken").getValue().toString();
-                    for (DataSnapshot friend_local : datas.child("friends").getChildren())
-                        mailSet.add(friend_local);
-
-                    friends = datas.child("friends").getValue(Friends.class);
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-                    reference.orderByChild("mail/mail").addListenerForSingleValueEvent(new ValueEventListener() {
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                            friends = new Friends(friendSet);
-                            storage = FirebaseStorage.getInstance();
-                            storageRef = storage.getReference();
-                            pathReference = storageRef.child("images/" + email.getMail() + "/profile");
-                            pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    picture = uri;
-                                    if(CurrentPlayer.getInstance()!=null)
-                                    CurrentPlayer.getInstance().setPicture(uri);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    Log.e("downloadImage", "failed");
-                                }
-                            });
-                            CurrentPlayer.getInstance(name, familyName, picture, email, statistics, friends, pushToken);
-                            UsersNamesHashmap.getInstance(allEmailsSet);
-                            mainActivity.begin();
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });
+                    user = datas.getValue(Player.class);
+                    userid = datas.getKey();
                 }
+                CurrentPlayer.getInstance(user, userid);
+                Log.e("userDetails", user.toString());
+                mainActivity.begin();
             }
-
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
-    public static void loadUserNameHashMap(final Mail mail, final UsersNamesHashmap USH){
+
+    public static void loadUserNameHashMap(final Mail mail, final UsersNamesHashmap USH) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.orderByChild("mail/mail").equalTo(mail.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -134,9 +89,11 @@ public class FireBaseQuery {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
                     name1 = datas.child("name").getValue().toString();
                     familyName1 = datas.child("familyName").getValue().toString();
-                    USH.getHashmap().put(mail, name1+" "+ familyName1);
+                    USH.getHashmap().put(mail, name1 + " " + familyName1);
+
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -149,13 +106,12 @@ public class FireBaseQuery {
         reference.orderByChild("mail/mail").equalTo(CurrentPlayer.getInstance().getMail().getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot datas : dataSnapshot.getChildren()){
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
                     CurrentPlayer.getInstance().setUserid(datas.getKey());
                 }
                 reference.child(CurrentPlayer.getInstance().getUserid()).child("friends").setValue(CurrentPlayer.getInstance().getFriends());
                 Activity a = (Activity) con;
                 a.finish();
-
             }
 
             @Override
@@ -165,5 +121,25 @@ public class FireBaseQuery {
     }
 
 
+    public static void updateUserPictureUri() {
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        StorageReference ref = storageReference.child("images/" + CurrentPlayer.getInstance().getMail().getMail() + "/profile");
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users/");
+                final Uri Furi = uri;
+                CurrentPlayer.getInstance().setPicture(Furi.toString());
+                reference.child(CurrentPlayer.getInstance().getUserid()).child("picture").setValue(Furi.toString());
+                Log.e("update pictrue Uri", "5");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e("downloadImage", "failed");
+            }
+        });
+    }
 }
 

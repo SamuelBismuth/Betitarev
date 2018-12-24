@@ -15,14 +15,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
-import com.example.betitarev.betitarev.activities.activities.registration.LoginActivity;
-import com.example.betitarev.betitarev.objects.CurrentUser;
+import com.example.betitarev.betitarev.libraries.FireBaseQuery;
+import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Mail;
-import com.example.betitarev.betitarev.objects.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,7 +44,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button btnSaveChanges;
     private FirebaseAuth auth;
     private Mail Email;
-    private CurrentUser user;
+    private CurrentPlayer user;
     private DatabaseReference reference;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -67,7 +65,7 @@ public class EditProfileActivity extends AppCompatActivity {
         btnSaveChanges =  findViewById(R.id.btn_save_changes);
         auth = FirebaseAuth.getInstance();
         Email = getCurrentMail();
-        user = CurrentUser.getInstance();
+        user = CurrentPlayer.getInstance();
         inputFirstName.setText(user.getName());
         inputLastName.setText(user.getFamilyName());
 
@@ -135,6 +133,9 @@ public class EditProfileActivity extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] data = baos.toByteArray();
         ref.putBytes(data);
+        Log.e("trying to upload image", "success");
+        FireBaseQuery.updateUserPictureUri();
+
     }
 
 
@@ -154,6 +155,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
             }
         });
+        CurrentPlayer.getInstance().setName(firstName);
+        CurrentPlayer.getInstance().setFamilyName(lastName);
 
     }
 

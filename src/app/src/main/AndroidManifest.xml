@@ -51,15 +51,22 @@
             android:label="@string/title_activity_edit_profile"
             android:theme="@style/AppTheme.NoActionBar" />
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6e6b0cf95911578add185dbdc234b0f2a0f4c5d5
         <service
             android:name=".helper.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+<<<<<<< HEAD
 =======
 
         <service android:name=".helper.FireBaseIdService">
             <intent-filter>
 >>>>>>> master
+=======
+>>>>>>> 6e6b0cf95911578add185dbdc234b0f2a0f4c5d5
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
