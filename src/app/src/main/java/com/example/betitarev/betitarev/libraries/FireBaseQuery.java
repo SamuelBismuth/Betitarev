@@ -27,8 +27,6 @@ import java.util.Set;
 
 public class FireBaseQuery {
 
-
-
     private static String userid, name1, familyName1;
     private static Player user;
     private static FirebaseAuth auth;
@@ -36,12 +34,10 @@ public class FireBaseQuery {
     private static FirebaseStorage storage;
     private static StorageReference storageReference;
 
-
     public static Mail getCurrentMail() {
         auth = FirebaseAuth.getInstance();
         return new Mail(auth.getCurrentUser().getEmail());
     }
-
 
     /**
      * Add the statistics and the friends on the database.
@@ -61,6 +57,7 @@ public class FireBaseQuery {
                 }
                 UsersNamesHashmap.getInstance(allEmailsSet);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -70,15 +67,12 @@ public class FireBaseQuery {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
-
                     user = datas.getValue(Player.class);
                     userid = datas.getKey();
                 }
                 CurrentPlayer.getInstance(user, userid);
                 Log.e("userDetails", user.toString());
-
                 mainActivity.begin();
-
             }
 
             @Override
@@ -86,7 +80,8 @@ public class FireBaseQuery {
             }
         });
     }
-    public static void loadUserNameHashMap(final Mail mail, final UsersNamesHashmap USH){
+
+    public static void loadUserNameHashMap(final Mail mail, final UsersNamesHashmap USH) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.orderByChild("mail/mail").equalTo(mail.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -94,25 +89,28 @@ public class FireBaseQuery {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
                     name1 = datas.child("name").getValue().toString();
                     familyName1 = datas.child("familyName").getValue().toString();
-                    USH.getHashmap().put(mail, name1+" "+ familyName1);
-
+                    USH.getHashmap().put(mail, name1 + " " + familyName1);
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
 
     }
+
     public static void updateUserFriends(final Context con) {
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.orderByChild("mail/mail").equalTo(CurrentPlayer.getInstance().getMail().getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                    CurrentPlayer.getInstance().setUserid(datas.getKey());
+                }
                 reference.child(CurrentPlayer.getInstance().getUserid()).child("friends").setValue(CurrentPlayer.getInstance().getFriends());
                 Activity a = (Activity) con;
                 a.finish();
-
             }
 
             @Override
@@ -125,7 +123,7 @@ public class FireBaseQuery {
     public static void updateUserPictureUri() {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        StorageReference ref = storageReference.child("images/" +CurrentPlayer.getInstance().getMail().getMail()+"/profile");
+        StorageReference ref = storageReference.child("images/" + CurrentPlayer.getInstance().getMail().getMail() + "/profile");
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -133,7 +131,7 @@ public class FireBaseQuery {
                 final Uri Furi = uri;
                 CurrentPlayer.getInstance().setPicture(Furi.toString());
                 reference.child(CurrentPlayer.getInstance().getUserid()).child("picture").setValue(Furi.toString());
-                Log.e("update pictrue Uri","5");
+                Log.e("update pictrue Uri", "5");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

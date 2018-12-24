@@ -3,6 +3,8 @@ package com.example.betitarev.betitarev.objects;
 // Singleton
 public class CurrentPlayer extends Player {
 
+    private String userid; // path to the picture in our server.
+
     static CurrentPlayer instance = null; // Singleton implementation.
 
     static public CurrentPlayer getInstance(Player player, String userid) {
@@ -27,5 +29,14 @@ public class CurrentPlayer extends Player {
     public void updateDatabase() {
 
     }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
 
 }
