@@ -46,7 +46,13 @@ public class CurrentUser {
     }
 
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public void setFamilyName(String familyName) {
+        this.familyName = familyName;
+    }
 
     public String getName() {
         return name;

@@ -155,6 +155,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
             }
         });
+        CurrentUser.getInstance().setName(firstName);
+        CurrentUser.getInstance().setFamilyName(lastName);
 
     }
 
