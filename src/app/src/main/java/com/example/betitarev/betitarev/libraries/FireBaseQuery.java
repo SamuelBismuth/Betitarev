@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.betitarev.betitarev.activities.MainActivity;
+
 import com.example.betitarev.betitarev.objects.CurrentUser;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.Player;
@@ -29,8 +30,8 @@ import java.util.Set;
 public class FireBaseQuery {
 
 
-    private static String userid, name1, familyName1;
 
+    private static String userid, name1, familyName1;
     private static User user;
     private static FirebaseAuth auth;
     private static Set<Mail> allEmailsSet = new LinkedHashSet<>();
@@ -69,6 +70,7 @@ public class FireBaseQuery {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
+
                     user = datas.getValue(Player.class);
                     userid = datas.getKey();
                 }
@@ -78,7 +80,6 @@ public class FireBaseQuery {
                 mainActivity.begin();
 
             }
-
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -94,6 +95,7 @@ public class FireBaseQuery {
                     name1 = datas.child("name").getValue().toString();
                     familyName1 = datas.child("familyName").getValue().toString();
                     USH.getHashmap().put(mail, name1+" "+ familyName1);
+
                 }
             }
             @Override

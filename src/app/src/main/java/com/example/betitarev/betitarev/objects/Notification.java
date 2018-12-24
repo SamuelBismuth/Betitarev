@@ -1,22 +1,30 @@
 package com.example.betitarev.betitarev.objects;
 
-import android.util.Log;
+public class Notification {
 
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
+    private String title, message;
+    private String senderMail, receiverMail;
 
-public class Notification extends FirebaseMessagingService {
+    public Notification(String title, String message, String senderMail, String receiverMail) {
+        this.title = title;
+        this.message = message;
+        this.senderMail = senderMail;
+        this.receiverMail = receiverMail;
+    }
 
-    private static final String TAG = "FCM Service";
+    public String getTitle() {
+        return title;
+    }
 
-    @Override
+    public String getMessage() {
+        return message;
+    }
 
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-        // TODO: Handle FCM messages here.
-        // If the application is in the foreground handle both data and notification messages here.
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated.
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
-        Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
+    public String getSenderMail() {
+        return senderMail;
+    }
+
+    public String getReceiverMail() {
+        return receiverMail;
     }
 }
