@@ -122,6 +122,10 @@ public abstract class User {
         this.friends = friends;
     }
 
+    public String getUserid() {
+        return userid;
+    }
+
     @Override
     public String toString() {
         return "User{" +

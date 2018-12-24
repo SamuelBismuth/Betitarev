@@ -31,7 +31,7 @@ import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.activities.AnotherProfileActivity;
 import com.example.betitarev.betitarev.activities.EditProfileActivity;
 import com.example.betitarev.betitarev.activities.activities.registration.LoginActivity;
-import com.example.betitarev.betitarev.objects.CurrentUser;
+import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
 import com.google.firebase.auth.FirebaseAuth;
@@ -68,13 +68,13 @@ public class ProfileActivity extends Fragment {
     // Create a storage reference from our app
     private StorageReference storageRef, pathReference;
     private FirebaseStorage storage;
-    CurrentUser user;
+    private CurrentPlayer user;
     private ArrayAdapter<String> adapterFriend;
 
 
     public ProfileActivity() {
         Email = getCurrentMail();
-        user = CurrentUser.getInstance();
+        user = CurrentPlayer.getInstance();
         Name = user.getName() + " " + user.getFamilyName();
     }
 
@@ -191,7 +191,7 @@ public class ProfileActivity extends Fragment {
 
 
     private void setProfileImage() {
-        Glide.with(getContext()).load(CurrentUser.getInstance().getPicture()).into(mPictureSrc);
+        Glide.with(getContext()).load(CurrentPlayer.getInstance().getPicture()).into(mPictureSrc);
 //        StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" +Email.getMail()+"/profile");
 //        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 //            @Override

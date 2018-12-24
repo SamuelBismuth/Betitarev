@@ -7,11 +7,9 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.betitarev.betitarev.activities.MainActivity;
-
-import com.example.betitarev.betitarev.objects.CurrentUser;
+import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.Player;
-import com.example.betitarev.betitarev.objects.User;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,7 +30,7 @@ public class FireBaseQuery {
 
 
     private static String userid, name1, familyName1;
-    private static User user;
+    private static Player user;
     private static FirebaseAuth auth;
     private static Set<Mail> allEmailsSet = new LinkedHashSet<>();
     private static FirebaseStorage storage;
@@ -58,8 +56,10 @@ public class FireBaseQuery {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
                     Mail currentMail = new Mail(datas.child("mail/mail").getValue().toString());
+                    Log.e("user", currentMail.getMail());
                     allEmailsSet.add(currentMail);
                 }
+                UsersNamesHashmap.getInstance(allEmailsSet);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -74,9 +74,9 @@ public class FireBaseQuery {
                     user = datas.getValue(Player.class);
                     userid = datas.getKey();
                 }
-                CurrentUser.getInstance(user, userid);
+                CurrentPlayer.getInstance(user, userid);
                 Log.e("userDetails", user.toString());
-                UsersNamesHashmap.getInstance(allEmailsSet);
+
                 mainActivity.begin();
 
             }
@@ -106,10 +106,10 @@ public class FireBaseQuery {
     }
     public static void updateUserFriends(final Context con) {
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        reference.orderByChild("mail/mail").equalTo(CurrentUser.getInstance().getMail().getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.orderByChild("mail/mail").equalTo(CurrentPlayer.getInstance().getMail().getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                reference.child(CurrentUser.getInstance().getUserid()).child("friends").setValue(CurrentUser.getInstance().getFriends());
+                reference.child(CurrentPlayer.getInstance().getUserid()).child("friends").setValue(CurrentPlayer.getInstance().getFriends());
                 Activity a = (Activity) con;
                 a.finish();
 
@@ -125,14 +125,14 @@ public class FireBaseQuery {
     public static void updateUserPictureUri() {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        StorageReference ref = storageReference.child("images/" +CurrentUser.getInstance().getMail().getMail()+"/profile");
+        StorageReference ref = storageReference.child("images/" +CurrentPlayer.getInstance().getMail().getMail()+"/profile");
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users/");
                 final Uri Furi = uri;
-                CurrentUser.getInstance().setPicture(Furi.toString());
-                reference.child(CurrentUser.getInstance().getUserid()).child("picture").setValue(Furi.toString());
+                CurrentPlayer.getInstance().setPicture(Furi.toString());
+                reference.child(CurrentPlayer.getInstance().getUserid()).child("picture").setValue(Furi.toString());
                 Log.e("update pictrue Uri","5");
             }
         }).addOnFailureListener(new OnFailureListener() {
