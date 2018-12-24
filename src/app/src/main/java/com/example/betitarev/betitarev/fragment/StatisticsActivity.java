@@ -55,14 +55,14 @@ public class StatisticsActivity extends Fragment {
         numberOfLose.setTextSize(height * width / 40000);
         numberOfDraw.setTextSize(height * width / 40000);
         numberOfArbitrator.setTextSize(height * width / 40000);
-       /** numberOfWin.setText(numberOfWin.getText()+Integer.toString(
+        numberOfWin.setText(numberOfWin.getText()+Integer.toString(
                 CurrentUser.getInstance().getStatistics().getWinStat().getCounter()));
          numberOfLose.setText(numberOfLose.getText()+Integer.toString(
                  CurrentUser.getInstance().getStatistics().getLoseStat().getCounter()));
          numberOfDraw.setText(numberOfDraw.getText()+Integer.toString(
                  CurrentUser.getInstance().getStatistics().getDrawStat().getCounter()));
          numberOfArbitrator.setText(numberOfArbitrator.getText()+Integer.toString(
-                 CurrentUser.getInstance().getStatistics().getArbitratorStat().getCounter()));**/
+                 CurrentUser.getInstance().getStatistics().getArbitratorStat().getCounter()));
         return view;
     }
 
