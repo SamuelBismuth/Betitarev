@@ -1,88 +1,49 @@
-package com.example.betitarev.betitarev.fragment;
+package com.example.betitarev.betitarev.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
-import com.example.betitarev.betitarev.activities.AnotherProfileActivity;
-import com.example.betitarev.betitarev.activities.EditProfileActivity;
-import com.example.betitarev.betitarev.activities.activities.registration.LoginActivity;
-import com.example.betitarev.betitarev.objects.CurrentUser;
+import com.example.betitarev.betitarev.libraries.FireBaseQuery;
+import com.example.betitarev.betitarev.objects.CurrentPlayer;
+import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Mail;
-import com.example.betitarev.betitarev.objects.User;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import static android.support.constraint.Constraints.TAG;
-import static com.example.betitarev.betitarev.libraries.FireBaseQuery.getCurrentMail;
-import static com.example.betitarev.betitarev.libraries.FireBaseQuery.loadCurrentUser;
-
-
-public class ProfileActivity extends Fragment {
-
+public class AnotherProfileActivity extends AppCompatActivity {
     private static FirebaseAuth auth;
-    private static String Name,mAddFriendName;
-    private static Mail Email, mAddFriendMail;
+    private static String Name;
+    private static Mail Email;
+    private Friend currentFriend;
     private TextView mNameTextView, mEmailTextView;
-    private ImageView mPictureSrc, mEditBtn, mHeaderCoverImage;
-    private Button mSignOutBtn;
-    private ListView mListFriends;
-    private EditText mSearchFriend;
+    private ImageView mPictureSrc;
+    private Button mAddFriendBtn;
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
+    private StorageReference pathReference;
+
     // Hold a reference to the current animator,
     // so that it can be canceled mid-way.
     private Animator mCurrentAnimator;
@@ -92,142 +53,85 @@ public class ProfileActivity extends Fragment {
     // very frequently.
     private int mShortAnimationDuration;
 
-    // Create a storage reference from our app
-    private StorageReference storageRef, pathReference;
-    private FirebaseStorage storage;
-    CurrentUser user;
-    private ArrayAdapter<String> adapterFriend;
-
-
-    public ProfileActivity() {
-        Email = getCurrentMail();
-        user = CurrentUser.getInstance();
-        Name = user.getName() + " " + user.getFamilyName();
-    }
-
-    public static ProfileActivity newInstance() {
-        ProfileActivity fragment = new ProfileActivity();
-        return fragment;
-    }
-
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_another_profile);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                Name = null;
+            } else {
+                Name = extras.getString("Name");
+            }
+        } else {
+            Name = (String) savedInstanceState.getSerializable("Name");
+        }
+        Log.e("test3", "" + UsersNamesHashmap.getAllKeysForValue(Name).size());
+        Email = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
 
-    }
-
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_profile, container, false);
-        auth = FirebaseAuth.getInstance();
-
-        mHeaderCoverImage = view.findViewById(R.id.header_cover_image);
-
-        mNameTextView = view.findViewById(R.id.name);
+        mNameTextView = findViewById(R.id.name);
         mNameTextView.setText(Name);
 
-        mEmailTextView = view.findViewById(R.id.email);
+        mEmailTextView = findViewById(R.id.email);
         mEmailTextView.setText(Email.getMail());
 
-        mListFriends = view.findViewById(R.id.list_friend);
-        mSearchFriend = view.findViewById(R.id.search_friend);
-
-
-        mPictureSrc =  view.findViewById(R.id.profile_image);
+        mPictureSrc = findViewById(R.id.profile_image);
         setProfileImage();
 
-        mSignOutBtn = view.findViewById(R.id.btn_sign_out);
-        mSignOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                auth.signOut();
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
-        HashMap<Mail,String> usernamesHashmap = UsersNamesHashmap.getInstance().getHashmap();
-        List<String> listUserNames = new ArrayList<>(usernamesHashmap.values());
-        adapterFriend = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, listUserNames );
-        mListFriends.setAdapter(adapterFriend);
-        mSearchFriend.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                // When user changed the Text
-                adapterFriend.getFilter().filter(cs);
-            }
-            @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                                          int arg3) {
-            }
-            @Override
-            public void afterTextChanged(Editable arg0) {
-            }
-        });
-
-        mListFriends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Log.e("friendSelected",adapterFriend.getItem(position));
-                mAddFriendName = adapterFriend.getItem(position);
-                Intent intent = new Intent (getActivity(),AnotherProfileActivity.class);
-                intent.putExtra("Name", mAddFriendName);
-                startActivity(intent);
-
-
-            }
-        });
-        mEditBtn = view.findViewById(R.id.edit);
-        mEditBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
-        final ImageView profileImageView = view.findViewById(R.id.profile_image);
+        final ImageView profileImageView = findViewById(R.id.profile_image);
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 zoomImageFromThumb(profileImageView, profileImageView.getDrawable());
             }
         });
+        mAddFriendBtn = (Button) findViewById(R.id.btn_add_friend);
+        mAddFriendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CurrentPlayer.getInstance().getFriends().addFriend(currentFriend);
+                FireBaseQuery.updateUserFriends(view.getContext());
+            }
+        });
+        currentFriend = new Friend(Email, Name);
+        if (CurrentPlayer.getInstance().getFriends().isFriend(currentFriend)) {
+            mAddFriendBtn.setText("UNFRIEND");
+            Log.e("isAlreadyFriend", "yes");
+            mAddFriendBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
+                    CurrentPlayer.getInstance().getFriends().removeFriend(currentFriend);
+                    FireBaseQuery.updateUserFriends(view.getContext());
+                }
+            });
 
-
-        // Retrieve and cache the system's default "short" animation time.
-        mShortAnimationDuration = getResources().getInteger(
-                android.R.integer.config_shortAnimTime);
-
-        // Inflate the layout for this fragment
-
-        return view;
+        }
 
 
     }
-
-
 
     private void setProfileImage() {
-        Glide.with(getContext()).load(user.getPicture()).into(mPictureSrc);
-    }
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+        pathReference = storageRef.child("images/" + Email.getMail() + "/profile");
+        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getApplicationContext()).load(uri).into(mPictureSrc);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e("downloadImage", "failed");
+            }
+        });
 
-    private void loadFragment(Fragment fragment) {
-        // load fragment
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.activity_profile_layout, fragment);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 
     private void zoomImageFromThumb(final View thumbView, Drawable imageResId) {
@@ -238,7 +142,7 @@ public class ProfileActivity extends Fragment {
         }
 
         // Load the high-resolution "zoomed-in" image.
-        final ImageView expandedImageView = (ImageView) getView().findViewById(
+        final ImageView expandedImageView = (ImageView) findViewById(
                 R.id.expanded_image);
         expandedImageView.setImageDrawable(imageResId);
 
@@ -254,7 +158,7 @@ public class ProfileActivity extends Fragment {
         // bounds, since that's the origin for the positioning animation
         // properties (X, Y).
         thumbView.getGlobalVisibleRect(startBounds);
-        getView().findViewById(R.id.activity_profile_layout)
+        findViewById(R.id.activity_profile_layout)
                 .getGlobalVisibleRect(finalBounds, globalOffset);
         startBounds.offset(-globalOffset.x, -globalOffset.y);
         finalBounds.offset(-globalOffset.x, -globalOffset.y);
@@ -370,4 +274,5 @@ public class ProfileActivity extends Fragment {
 
 
     }
+
 }

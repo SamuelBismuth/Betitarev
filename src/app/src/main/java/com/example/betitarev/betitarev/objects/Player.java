@@ -10,11 +10,13 @@ public class Player extends User {
     public Player(String name, String familyName, Mail mail, String pushToken) {
         super(name, familyName, mail, pushToken);
         this.statistics = new Statistics();
+        this.friends = new Friends();
     }
 
     public Player(String name, String familyName, Uri picture, Mail mail, String pushToken) {
         super(name, familyName, picture, mail, pushToken);
         this.statistics = new Statistics();
+        this.friends = new Friends();
     }
 
     public Player(String name, String familyName, Uri picture, Mail mail, Statistics statistics, Friends friends, String pushToken) {

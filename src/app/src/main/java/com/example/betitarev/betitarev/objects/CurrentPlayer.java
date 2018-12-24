@@ -5,6 +5,8 @@ import android.net.Uri;
 // Singleton
 public class CurrentPlayer extends Player {
 
+    private String userid; // path to the picture in our server.
+
     static CurrentPlayer instance = null; // Singleton implementation.
 
     static public CurrentPlayer getInstance(String name, String familyName, Uri picture, Mail mail, Statistics statistics, Friends friends, String pushToken) {
@@ -26,5 +28,14 @@ public class CurrentPlayer extends Player {
     public void updateDatabase() {
 
     }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
 
 }

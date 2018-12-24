@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".fragment.ProfileActivity"
-    tools:showIn="@layout/activity_profile"
+    tools:context=".activities.AnotherProfileActivity"
+    tools:showIn="@layout/activity_another_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
@@ -17,33 +17,16 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:title="Friend Profile"
             android:popupTheme="@style/AppTheme.PopupOverlay"
             android:minHeight="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            tools:targetApi="lollipop">
-            <EditText
-            android:id="@+id/search_friend"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Search Friend"
-            android:drawableLeft = "@drawable/ic_search_black_24dp"
-            android:inputType="textVisiblePassword" />
-        </Toolbar>
-        <ListView
-            android:id="@+id/list_friend"
-            android:layout_below="@+id/toolbar"
-
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="NestedScrolling" />
-
-
-
+            tools:targetApi="lollipop"/>
 
         <ImageView
             android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
-            android:layout_below="@+id/list_friend"
+            android:layout_below="@+id/toolbar"
             android:layout_height="150dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="centerCrop"
@@ -90,22 +73,13 @@
             android:paddingBottom="24dp">
 
 
-            <ImageView
-                android:id="@+id/edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="140dp"
-                android:layout_marginRight="16dp"
-                android:clickable="true"
-                android:src="@android:drawable/ic_menu_edit" />
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="40dp"
                 android:text="Yehonatan Shaag"
                 android:textColor="#fff"
                 android:textSize="24sp"
@@ -145,12 +119,12 @@
 
 
             <Button
-                android:id="@+id/btn_sign_out"
+                android:id="@+id/btn_add_friend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dip"
                 android:background="@color/colorAccent"
-                android:text="@string/btn_sign_out"
+                android:text="@string/add_friend"
                 android:textColor="@android:color/black" />
 
 

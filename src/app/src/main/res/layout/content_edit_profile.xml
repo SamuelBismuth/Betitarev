@@ -32,7 +32,7 @@
             android:elevation="5dp"
             android:padding="20dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/man"
+            android:src="@drawable/change_profile"
             android:clickable="true"
             app:civ_border_color="@color/colorAccent"
             app:civ_border_width="3dp" />
@@ -48,15 +48,15 @@
             android:visibility="invisible" />
 
 
-        <RelativeLayout
-
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin"
             android:id="@+id/profile_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/header_cover_image"
-            android:background="#ebca0707"
-            android:elevation="4dp"
-            android:paddingBottom="24dp">
+            android:layout_below="@+id/header_cover_image">
 
 
 
@@ -64,14 +64,14 @@
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/editFirstNameDesign"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="70dp">
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp">
 
                 <EditText
                     android:id="@+id/editFirstName"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white"
@@ -83,15 +83,13 @@
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/editLastNameDesign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/editFirstNameDesign"
-                android:layout_marginLeft="25dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/editLastName"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:hint="Last Name"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
@@ -101,15 +99,13 @@
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/editOldPasswordDesign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/editLastNameDesign"
-                android:layout_marginLeft="25dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/editOldPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:hint="Old Password"
                     android:imeOptions="actionNext"
                     android:textColor="@android:color/white"
@@ -118,15 +114,12 @@
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/editNewPasswordDesign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/editOldPasswordDesign"
-                android:layout_marginLeft="25dp">
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <EditText
                     android:id="@+id/editNewPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:hint="New Password"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
@@ -136,7 +129,7 @@
             </android.support.design.widget.TextInputLayout>
 
 
-        </RelativeLayout>
+        </LinearLayout>
 
 
         <android.support.constraint.ConstraintLayout
