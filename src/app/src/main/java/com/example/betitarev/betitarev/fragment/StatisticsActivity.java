@@ -51,8 +51,10 @@ public class StatisticsActivity extends Fragment {
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
         Log.i("samjbwdiywvhfv", Integer.toString(height ));
-        numberOfWin.setTextSize(height * width / 6);
-
+        numberOfWin.setTextSize(height * width / 40000);
+        numberOfLose.setTextSize(height * width / 40000);
+        numberOfDraw.setTextSize(height * width / 40000);
+        numberOfArbitrator.setTextSize(height * width / 40000);
         /** numberOfWin.setText("+numberOfWin.getText() + Integer.toString(
                  CurrentUser.getInstance().getStatistics().getWinStat().getCounter()));
          numberOfLose.setText("\n\n"+numberOfLose.getText()+Integer.toString(
