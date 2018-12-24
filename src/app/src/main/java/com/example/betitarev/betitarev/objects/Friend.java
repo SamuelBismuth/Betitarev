@@ -1,9 +1,13 @@
 package com.example.betitarev.betitarev.objects;
 
-public class Friend {
+import android.support.annotation.NonNull;
+
+public class Friend implements Comparable<Friend> {
 
     private Mail mail;
     private String completeName;
+
+    public Friend(){}
 
     public Friend(Mail mail) {
         this.mail = mail;
@@ -24,6 +28,15 @@ public class Friend {
 
     @Override
     public String toString() {
-        return this.getCompleteName();
+        return this.getMail().getMail() +" " + this.getCompleteName();
     }
-}
+
+    @Override
+    public int compareTo(@NonNull Friend friend) {
+        return this.mail.getMail().compareTo(friend.getMail().getMail());
+    }
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof Friend) && (toString().equals(obj.toString()));
+    }
+    }

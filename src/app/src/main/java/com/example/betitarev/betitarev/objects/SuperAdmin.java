@@ -1,7 +1,5 @@
 package com.example.betitarev.betitarev.objects;
 
-import android.net.Uri;
-
 //Singleton
 public class SuperAdmin extends User implements Admin {
 
@@ -9,8 +7,10 @@ public class SuperAdmin extends User implements Admin {
         super(name, familyName, mail, pushToken);
     }
 
-    public SuperAdmin(String name, String familyName, Uri picture, Mail mail, String pushToken) {
+
+    public SuperAdmin(String name, String familyName, String picture, Mail mail, String pushToken) {
         super(name, familyName, picture, mail, pushToken);
+
     }
 
     @Override

@@ -12,7 +12,9 @@
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false" />
+        android:required="false"
+        />
+
 
     <application
         android:allowBackup="true"
@@ -24,7 +26,8 @@
         tools:ignore="ExtraText">
         <activity
             android:name=".activities.activities.registration.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,6 +50,7 @@
             android:name=".activities.EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <service
             android:name=".helper.MyFirebaseMessagingService">
             <intent-filter>
@@ -54,6 +58,11 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".activities.AnotherProfileActivity"
+            android:label="@string/title_activity_another_profile"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
