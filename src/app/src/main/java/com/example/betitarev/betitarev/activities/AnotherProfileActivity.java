@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.libraries.FireBaseQuery;
-import com.example.betitarev.betitarev.objects.CurrentUser;
+import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
@@ -94,19 +94,19 @@ public class AnotherProfileActivity extends AppCompatActivity {
         mAddFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CurrentUser.getInstance().getFriends().addFriend(currentFriend);
+                CurrentPlayer.getInstance().getFriends().addFriend(currentFriend);
                 FireBaseQuery.updateUserFriends(view.getContext());
             }
         });
         currentFriend = new Friend(Email, Name);
-        if(CurrentUser.getInstance().getFriends().isFriend(currentFriend)){
+        if(CurrentPlayer.getInstance().getFriends().isFriend(currentFriend)){
             mAddFriendBtn.setText("UNFRIEND");
             Log.e("isAlreadyFriend", "yes");
             mAddFriendBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    CurrentUser.getInstance().getFriends().removeFriend(currentFriend);
+                    CurrentPlayer.getInstance().getFriends().removeFriend(currentFriend);
                     FireBaseQuery.updateUserFriends(view.getContext());
                 }
             });
