@@ -109,7 +109,7 @@ public abstract class User {
         return userid;
     }
 
-    protected void setUserid(String userid) { this.userid = userid; }
+    public void setUserid(String userid) { this.userid = userid; }
 
     @Override
     public String toString() {
