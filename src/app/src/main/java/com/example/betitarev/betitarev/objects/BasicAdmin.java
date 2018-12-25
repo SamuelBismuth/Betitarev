@@ -16,10 +16,8 @@ public class BasicAdmin extends User implements Admin {
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("notifcations");
         String notifId = mFirebaseDatabase.push().getKey();
-        String message = "";
-        String senderToken = "";
-        String receiverToken = "";
-        Notification notif = new Notification("Bet request!!", message, senderToken, receiverToken);
+        String message = "this is warning before expel.\n please avoid of cheating and\\or unappropriate bets";
+        Notification notif = new Notification("warning before expel:", message, CurrentAdmin.getPushToken(), player.getPushToken());
         mFirebaseDatabase.child(notifId).setValue(notif);
 
         return false;
