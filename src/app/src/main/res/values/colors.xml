@@ -5,7 +5,7 @@
     <color name="colorAccent">#f2fe71</color>
 
     <color name="bgBottomNavigation">#fe485a</color>
-
+    <color name="Gold">#FFD700</color>
     <color name="bg_login">#26ae90</color>
     <color name="bg_register">#2e3237</color>
     <color name="bg_main">#428bca</color>

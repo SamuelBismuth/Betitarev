@@ -191,7 +191,11 @@ public class ProfileActivity extends Fragment {
 
 
     private void setProfileImage() {
+<<<<<<< HEAD
         if(CurrentPlayer.getInstance().getPicture().length()>5)
+=======
+        if (CurrentPlayer.getInstance().getPicture().length()>5)
+>>>>>>> 468ba4df7263b7d0b32c5ce882776517721dd3a5
         Glide.with(getContext()).load(CurrentPlayer.getInstance().getPicture()).into(mPictureSrc);
 //        StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" +Email.getMail()+"/profile");
 //        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
