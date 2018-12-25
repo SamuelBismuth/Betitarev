@@ -40,22 +40,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
         sendNotification(notificationTitle, notificationBody, dataTitle, dataMessage);
+        showAlertDialog(dataTitle, dataMessage);
     }
 
-   /** private void showAlertDialog() {
+   private void showAlertDialog(String dataTitle, String dataMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Message");
         builder.setMessage("title: " + dataTitle + "\n" + "message: " + dataMessage);
         builder.setPositiveButton("OK", null);
         builder.show();
     }
-
-    public void subscribeToTopic(View view) {
-    FirebaseMessaging.getInstance().subscribeToTopic("notifications");
-    Toast.makeText(this, "Subscribed to Topic: Notifications", Toast.LENGTH_SHORT).show();
-    }
-    */
-
 
     /**
      * //     * Create and show a simple notification containing the received FCM message.
