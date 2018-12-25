@@ -7,27 +7,19 @@ public class CurrentPlayer extends Player {
 
     static CurrentPlayer instance = null; // Singleton implementation.
 
-    static public CurrentPlayer getInstance(Player player, String userid) {
+    static public CurrentPlayer getInstance(Player player, String userId) {
         if(instance != null)
             return instance;
-        instance = new CurrentPlayer(player, userid);
+        instance = new CurrentPlayer(player, userId);
         return instance;
     }
 
-    private CurrentPlayer(String name, String familyName, String picture, Mail mail, Statistics statistics, Friends friends, String pushToken) {
-        super(name, familyName, picture, mail, statistics, friends, pushToken);
-    }
-    private CurrentPlayer(Player player, String userid){
-        super(player, userid);
+    private CurrentPlayer(Player player, String userId) {
+        super(player, userId);
     }
 
     public static CurrentPlayer getInstance() {
         return instance;
-    }
-
-    @Override
-    public void updateDatabase() {
-
     }
 
     public void setUserid(String userid) {

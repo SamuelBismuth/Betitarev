@@ -9,17 +9,8 @@ public class Friends {
 
     private List<Friend> friends;
 
-    public Friends(){
+    public Friends() {
         this.friends = new ArrayList<>();
-        this.friends.add(new Friend());
-    }
-
-    public Friends(Friends friends){
-        this.friends = friends.friends;
-    }
-
-    public Friends(List<Friend> friends) {
-        this.friends = friends;
     }
 
     protected int getNumOfFriends() {
@@ -36,18 +27,16 @@ public class Friends {
         try {
             friends.add(friend);
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
     public boolean removeFriend(Friend friend) {
-        try{
+        try {
             friends.remove(friend);
             return true;
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             Log.e("error", e.getMessage());
             return false;
         }

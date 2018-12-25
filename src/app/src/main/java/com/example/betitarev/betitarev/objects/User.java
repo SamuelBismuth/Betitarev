@@ -7,7 +7,6 @@ public abstract class User {
     private Mail mail;
     private String userid;
     private String pushToken;
-
     private Statistics statistics;
     private Friends friends;
 
@@ -27,28 +26,6 @@ public abstract class User {
         this.pushToken = pushToken;
     }
 
-    public User(String name, String familyName, String picture, Mail mail, String pushToken) {
-        this.name = name;
-        this.familyName = familyName;
-        this.mail = mail;
-        this.pushToken = pushToken;
-        this.picture = picture;
-        this.statistics = new Statistics();
-        this.friends = new Friends();
-    }
-
-
-    public User(String name, String familyName, String picture, Mail mail, Statistics statistics, Friends friends, String pushToken) {
-        this.name = name;
-        this.familyName = familyName;
-        this.picture = picture;
-        this.mail = mail;
-        this.pushToken = pushToken;
-        this.friends = friends;
-        this.statistics = statistics;
-
-    }
-
     public User(User user, String userid) {
         this.name = user.getName();
         this.familyName = user.getFamilyName();
@@ -60,8 +37,6 @@ public abstract class User {
         this.userid = userid;
 
     }
-
-    public abstract void updateDatabase();
 
     public String getName() {
         return name;
@@ -98,7 +73,6 @@ public abstract class User {
     public String getCompleteName() {
         return this.getName() + " " + this.getFamilyName();
     }
-
 
     public String getPushToken() {
         return pushToken;
