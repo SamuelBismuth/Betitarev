@@ -62,7 +62,7 @@ public class PlaceBetActivity extends Fragment {
         List<String> friends = new ArrayList<>();
 
         for (Friend friend : CurrentPlayer.getInstance().getFriends().getFriends())
-            friends.add(friend.getCompleteName());
+            friends.add(friend.getFullName());
 
         adapterFriend = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, friends);
         listOfFriend.setAdapter(adapterFriend);
@@ -166,11 +166,11 @@ public class PlaceBetActivity extends Fragment {
             return false;
         if (this.getWithArbitrator().isChecked()) {
             for (Friend friend : CurrentPlayer.getInstance().getFriends().getFriends()) {
-                if (friend.getCompleteName().equals(listOfFriend.getItemAtPosition(0))) {
+                if (friend.getFullName().equals(listOfFriend.getItemAtPosition(0))) {
                     play = true;
                     bettor = friend;
                 }
-                if (friend.getCompleteName().equals(listOfArbitrator.getItemAtPosition(0))) {
+                if (friend.getFullName().equals(listOfArbitrator.getItemAtPosition(0))) {
                     arb = true;
                     arbitrator = friend;
                 }
@@ -179,7 +179,7 @@ public class PlaceBetActivity extends Fragment {
         }
         if (this.getWithoutArbitrator().isChecked())
             for (Friend player : CurrentPlayer.getInstance().getFriends().getFriends())
-                if (player.getCompleteName().equals(listOfFriend.getItemAtPosition(0))) {
+                if (player.getFullName().equals(listOfFriend.getItemAtPosition(0))) {
                     bettor = player;
                     return true;
                 }
@@ -187,9 +187,9 @@ public class PlaceBetActivity extends Fragment {
     }
 
     private void sendNotification(View view) {
-        Log.i("Data I got:", bettor.getCompleteName() + bettor.getMail().getMail());
+        Log.i("Data I got:", bettor.getFullName() + bettor.getMail().getMail());
         if (arbitrator != null)
-            Log.i("If arb", arbitrator.getCompleteName() + arbitrator.getMail().getMail());
+            Log.i("If arb", arbitrator.getFullName() + arbitrator.getMail().getMail());
         sendMessage(); // Change this.
     }
 
