@@ -40,7 +40,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
         sendNotification(notificationTitle, notificationBody, dataTitle, dataMessage);
-        showAlertDialog(dataTitle, dataMessage);
     }
 
    private void showAlertDialog(String dataTitle, String dataMessage) {
