@@ -1,5 +1,8 @@
 package com.example.betitarev.betitarev.objects;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 //Singleton
 public class SuperAdmin extends User implements Admin {
 
@@ -9,6 +12,14 @@ public class SuperAdmin extends User implements Admin {
 
     @Override
     public boolean sendWarning(User player) {
+        DatabaseReference mFirebaseDatabase;
+        FirebaseDatabase mFirebaseInstance;
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+        mFirebaseDatabase = mFirebaseInstance.getReference();
+        String notifId = mFirebaseDatabase.push().getKey();
+        String message = "this is warning before expel.\n please avoid of cheating and\\or unappropriate bets";
+        Notification notif = new Notification("warning before expel:", message, CurrentAdmin.getInstance().getPushToken(), player.getPushToken());
+        mFirebaseDatabase.child(notifId).setValue(notif);
         return false;
     }
 
