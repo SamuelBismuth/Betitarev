@@ -75,7 +75,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
             Name = (String) savedInstanceState.getSerializable("Name");
         }
         Log.e("number of users name","" + UsersNamesHashmap.getAllKeysForValue(Name).size());
-        Friend = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
+        friend = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
 
 
         Email = friend.getMail();
