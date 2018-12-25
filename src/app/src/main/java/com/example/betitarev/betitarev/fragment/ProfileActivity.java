@@ -33,6 +33,7 @@ import com.example.betitarev.betitarev.activities.EditProfileActivity;
 import com.example.betitarev.betitarev.activities.activities.registration.LoginActivity;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Mail;
+import com.example.betitarev.betitarev.objects.User;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
@@ -126,7 +127,7 @@ public class ProfileActivity extends Fragment {
             }
         });
 
-        HashMap<Mail,String> usernamesHashmap = UsersNamesHashmap.getInstance().getHashmap();
+        HashMap<User,String> usernamesHashmap = UsersNamesHashmap.getInstance().getHashmap();
         List<String> listUserNames = new ArrayList<>(usernamesHashmap.values());
         adapterFriend = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, listUserNames );
         mListFriends.setAdapter(adapterFriend);

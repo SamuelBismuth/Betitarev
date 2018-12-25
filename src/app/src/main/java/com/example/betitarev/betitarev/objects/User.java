@@ -37,6 +37,17 @@ public abstract class User {
         this.userid = userid;
 
     }
+    public User(User user) {
+        this.name = user.getName();
+        this.familyName = user.getFamilyName();
+        this.picture = user.getPicture();
+        this.mail = user.getMail();
+        this.pushToken = user.getPushToken();
+        this.friends = user.getFriends();
+        this.statistics = user.getStatistics();
+        this.userid = user.getUserid();
+
+    }
 
     public String getName() {
         return name;

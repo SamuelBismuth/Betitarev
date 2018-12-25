@@ -4,6 +4,12 @@ import android.support.annotation.NonNull;
 
 public class Friend extends User implements Comparable<Friend> {
 
+    public Friend(){}
+
+    public Friend(User user){
+        super(user);
+    }
+
     @Override
     public String toString() {
         return this.getMail().getMail() + " " + this.getCompleteName();

@@ -34,7 +34,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class AnotherProfileActivity extends AppCompatActivity {
-    private static User Friend;
+    private User friend;
     private static FirebaseAuth auth;
     private static String Name;
     private static Mail Email;
@@ -78,12 +78,12 @@ public class AnotherProfileActivity extends AppCompatActivity {
         Friend = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
 
 
-        Email = Friend.getMail();
+        Email = friend.getMail();
         mNameTextView = findViewById(R.id.name);
         mNameTextView.setText(Name);
 
         mEmailTextView = findViewById(R.id.email);
-        mEmailTextView.setText(Friend.getMail().getMail());
+        mEmailTextView.setText(friend.getMail().getMail());
 
         mPictureSrc = findViewById(R.id.profile_image);
         setProfileImage();
@@ -103,7 +103,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
                 FireBaseQuery.updateUserFriends(view.getContext());
             }
         });
-        currentFriend = new Friend(Email, Name);
+        currentFriend = new Friend(friend);
         if (CurrentPlayer.getInstance().getFriends().isFriend(currentFriend)) {
             mAddFriendBtn.setText("UNFRIEND");
             Log.e("isAlreadyFriend", "yes");
