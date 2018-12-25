@@ -7,11 +7,10 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
+import com.example.betitarev.betitarev.activities.ConfirmBetActivity;
 import com.example.betitarev.betitarev.R;
-import com.example.betitarev.betitarev.activities.MainActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -39,25 +38,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
-        sendNotification(notificationTitle, notificationBody, dataTitle, dataMessage);
-    }
-
-   private void showAlertDialog(String dataTitle, String dataMessage) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Message");
-        builder.setMessage("title: " + dataTitle + "\n" + "message: " + dataMessage);
-        builder.setPositiveButton("OK", null);
-        builder.show();
+        sendNotification(notificationTitle, notificationBody);
     }
 
     /**
      * //     * Create and show a simple notification containing the received FCM message.
      * //
      */
-    private void sendNotification(String notificationTitle, String notificationBody, String dataTitle, String dataMessage) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("title", dataTitle);
-        intent.putExtra("message", dataMessage);
+    private void sendNotification(String notificationTitle, String notificationBody) {
+        Intent intent = new Intent(this, ConfirmBetActivity.class);
+        intent.putExtra("title", notificationTitle);
+        intent.putExtra("message", notificationBody);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

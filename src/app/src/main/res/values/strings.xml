@@ -73,5 +73,6 @@
     <string name="msg_token_fmt">Message Token</string>
     <string name="default_notification_channel_id">Default Notif</string>
     <string name="fcm_message">Message</string>
+    <string name="title_activity_confirm_bet">ConfirmBetActivity</string>
 
 </resources>
