@@ -8,4 +8,6 @@
     tools:context=".fragment.OpenedBetActivity"
     tools:showIn="@layout/activity_opened_bet">
 
+
+
 </android.support.constraint.ConstraintLayout>

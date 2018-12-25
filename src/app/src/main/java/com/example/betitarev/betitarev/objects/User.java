@@ -7,7 +7,6 @@ public abstract class User {
     private Mail mail;
     private String userid;
     private String pushToken;
-
     private Statistics statistics;
     private Friends friends;
 
