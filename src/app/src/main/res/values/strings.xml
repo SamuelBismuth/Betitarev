@@ -66,12 +66,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_edit_profile">EditProfileActivity</string>
 
-    <string name="msg_token_fmt">Message Token</string>
-    <string name="default_notification_channel_id">Default Notif</string>
-    <string name="fcm_message">Message</string>
-
     <string name="title_activity_another_file">AnotherFileActivity</string>
     <string name="title_activity_another_profile">AnotherProfileActivity</string>
     <string name="title_activity_add_friend">AddFriendActivity</string>
+
+    <string name="msg_token_fmt">Message Token</string>
+    <string name="default_notification_channel_id">Default Notif</string>
+    <string name="fcm_message">Message</string>
 
 </resources>

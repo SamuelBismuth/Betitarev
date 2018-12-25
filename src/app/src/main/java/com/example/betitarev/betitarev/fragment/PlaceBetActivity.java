@@ -2,7 +2,6 @@ package com.example.betitarev.betitarev.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,7 +23,6 @@ import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Notification;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -196,8 +194,6 @@ public class PlaceBetActivity extends Fragment {
     }
 
 
-
-
     public void sendMessage() {
         // test
         DatabaseReference mFirebaseDatabase;
@@ -205,8 +201,10 @@ public class PlaceBetActivity extends Fragment {
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("notifcations");
         String notifId = mFirebaseDatabase.push().getKey();
-        Notification notif = new Notification("titre de la notif", "message de la notif",
-                "samuelbismuth101@gmail.com", "samuelbismuth101@gmail.com");
+        String message = "";
+        String senderToken = "";
+        String receiverToken = "";
+        Notification notif = new Notification("Bet request!!", message, senderToken, receiverToken);
         mFirebaseDatabase.child(notifId).setValue(notif);
     }
 

@@ -65,16 +65,18 @@ public class AnotherProfileActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            if(extras == null) {
+
+            if (extras == null) {
                 Name = null;
             } else {
                 Name = extras.getString("Name");
             }
         } else {
-            Name= (String) savedInstanceState.getSerializable("Name");
+            Name = (String) savedInstanceState.getSerializable("Name");
         }
         Log.e("number of users name","" + UsersNamesHashmap.getAllKeysForValue(Name).size());
         Friend = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
+
 
         Email = Friend.getMail();
         mNameTextView = findViewById(R.id.name);
@@ -83,7 +85,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
         mEmailTextView = findViewById(R.id.email);
         mEmailTextView.setText(Friend.getMail().getMail());
 
-        mPictureSrc =  findViewById(R.id.profile_image);
+        mPictureSrc = findViewById(R.id.profile_image);
         setProfileImage();
 
         final ImageView profileImageView = findViewById(R.id.profile_image);
@@ -102,7 +104,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
             }
         });
         currentFriend = new Friend(Email, Name);
-        if(CurrentPlayer.getInstance().getFriends().isFriend(currentFriend)){
+        if (CurrentPlayer.getInstance().getFriends().isFriend(currentFriend)) {
             mAddFriendBtn.setText("UNFRIEND");
             Log.e("isAlreadyFriend", "yes");
             mAddFriendBtn.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +117,6 @@ public class AnotherProfileActivity extends AppCompatActivity {
             });
 
         }
-
 
 
     }
@@ -275,8 +276,6 @@ public class AnotherProfileActivity extends AppCompatActivity {
                 mCurrentAnimator = set;
             }
         });
-
-
     }
 
 }

@@ -28,8 +28,6 @@ import java.util.Set;
 
 public class FireBaseQuery {
 
-
-
     private static String userid, name1, familyName1;
     private static Player user;
     private static FirebaseAuth auth;
@@ -37,12 +35,10 @@ public class FireBaseQuery {
     private static FirebaseStorage storage;
     private static StorageReference storageReference;
 
-
     public static Mail getCurrentMail() {
         auth = FirebaseAuth.getInstance();
         return new Mail(auth.getCurrentUser().getEmail());
     }
-
 
     /**
      * Add the statistics and the friends on the database.
@@ -62,6 +58,7 @@ public class FireBaseQuery {
                 }
                 UsersNamesHashmap.getInstance(allUsersSet);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -71,15 +68,12 @@ public class FireBaseQuery {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
-
                     user = datas.getValue(Player.class);
                     userid = datas.getKey();
                 }
                 CurrentPlayer.getInstance(user, userid);
                 Log.e("userDetails", user.toString());
-
                 mainActivity.begin();
-
             }
 
             @Override
@@ -94,10 +88,12 @@ public class FireBaseQuery {
         reference.orderByChild("mail/mail").equalTo(CurrentPlayer.getInstance().getMail().getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                    CurrentPlayer.getInstance().setUserid(datas.getKey());
+                }
                 reference.child(CurrentPlayer.getInstance().getUserid()).child("friends").setValue(CurrentPlayer.getInstance().getFriends());
                 Activity a = (Activity) con;
                 a.finish();
-
             }
 
             @Override
@@ -110,7 +106,7 @@ public class FireBaseQuery {
     public static void updateUserPictureUri() {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        StorageReference ref = storageReference.child("images/" +CurrentPlayer.getInstance().getMail().getMail()+"/profile");
+        StorageReference ref = storageReference.child("images/" + CurrentPlayer.getInstance().getMail().getMail() + "/profile");
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -118,7 +114,7 @@ public class FireBaseQuery {
                 final Uri Furi = uri;
                 CurrentPlayer.getInstance().setPicture(Furi.toString());
                 reference.child(CurrentPlayer.getInstance().getUserid()).child("picture").setValue(Furi.toString());
-                Log.e("update pictrue Uri","5");
+                Log.e("update pictrue Uri", "5");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

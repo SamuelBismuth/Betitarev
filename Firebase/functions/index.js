@@ -1,49 +1,39 @@
 let functions = require('firebase-functions');
 let admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
-exports.sendPush = functions.database.ref('/notifications/{projectId}').onWrite(event => {
-    let projectStateChanged = false;
-    let projectCreated = false;
-    let projectData = event.data.val();
-    if (!event.data.previous.exists()) {
-        projectCreated = true;
-    }
-    if (!projectCreated && event.data.changed()) {
-        projectStateChanged = true;
-    }
-    let msg = 'A project state was changed';
-		if (projectCreated) {
-			msg = `The following new project was added to the project: ${projectData.title}`;
-		}
-    return loadUsers().then(users => {
-        let tokens = [];
-        for (let user of users) {
-            tokens.push(user.pushToken);
-        }
-        let payload = {
-            notification: {
-                title: 'Firebase Notification',
-                body: msg,
-                sound: 'default',
-                badge: '1'
+
+exports.sendPush = functions.database.ref('/notifcations/{pushId}').onWrite((change,context) => 
+{
+    const Id = context.params.pushId;
+
+    const receiverToken = admin.database().ref(`/notifcations/${Id}/receiverToken`).once('value');
+
+    const senderToken = admin.database().ref(`/notifcations/${Id}/senderToken`).once('value');
+
+    const message = admin.database().ref(`/notifcations/${Id}/message`).once('value');
+
+    const title = admin.database().ref(`/notifcations/${Id}/title`).once('value');
+
+    const notif = admin.database().ref(`/notifcations/${Id}`).once('value');
+
+
+    return notif.then(result => 
+    {
+        const receiver_token = result.val().receiverToken;
+        const sender_token = result.val().senderToken;
+        const body = result.val().message;
+        const title = result.val().title
+
+        const payload = {
+            notification : {
+                title : title,
+                body : body,
+                icon : "default"
             }
         };
-        return admin.messaging().sendToDevice(tokens, payload);
+        return admin.messaging().sendToDevice(receiver_token, payload).then(response => {
+            console.log('This was the notification Feature');
+            return null;
+        }); 
     });
 });
-function loadUsers() {
-    let dbRef = admin.database().ref('/users');
-    let defer = new Promise((resolve, reject) => {
-        dbRef.once('value', (snap) => {
-            let data = snap.val();
-            let users = [];
-            for (var property in data) {
-                users.push(data[property]);
-            }
-            resolve(users);
-        }, (err) => {
-            reject(err);
-        });
-    });
-    return defer;
-}

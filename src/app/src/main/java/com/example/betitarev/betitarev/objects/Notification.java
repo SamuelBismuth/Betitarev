@@ -3,13 +3,13 @@ package com.example.betitarev.betitarev.objects;
 public class Notification {
 
     private String title, message;
-    private String senderMail, receiverMail;
+    private String senderToken, receiverToken;
 
-    public Notification(String title, String message, String senderMail, String receiverMail) {
+    public Notification(String title, String message, String senderToken, String receiverToken) {
         this.title = title;
         this.message = message;
-        this.senderMail = senderMail;
-        this.receiverMail = receiverMail;
+        this.senderToken = senderToken;
+        this.receiverToken = receiverToken;
     }
 
     public String getTitle() {
@@ -20,11 +20,11 @@ public class Notification {
         return message;
     }
 
-    public String getSenderMail() {
-        return senderMail;
+    public String getSenderToken() {
+        return senderToken;
     }
 
-    public String getReceiverMail() {
-        return receiverMail;
+    public String getReceiverToken() {
+        return receiverToken;
     }
 }
