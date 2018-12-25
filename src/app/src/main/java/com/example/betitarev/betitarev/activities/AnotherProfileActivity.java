@@ -34,10 +34,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class AnotherProfileActivity extends AppCompatActivity {
-    private User friend;
     private static FirebaseAuth auth;
     private static String Name;
     private static Mail Email;
+    private User friend;
     private Friend currentFriend;
     private TextView mNameTextView, mEmailTextView;
     private ImageView mPictureSrc;
@@ -74,7 +74,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
         } else {
             Name = (String) savedInstanceState.getSerializable("Name");
         }
-        Log.e("number of users name","" + UsersNamesHashmap.getAllKeysForValue(Name).size());
+        Log.e("number of users name", "" + UsersNamesHashmap.getAllKeysForValue(Name).size());
         friend = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
 
 
