@@ -10,7 +10,8 @@ public class Friends {
     private List<Friend> friends;
 
     public Friends(){
-        this.friends = new ArrayList<Friend>();
+        this.friends = new ArrayList<>();
+        this.friends.add(new Friend());
     }
 
     public Friends(Friends friends){

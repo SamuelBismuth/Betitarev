@@ -201,8 +201,10 @@ public class PlaceBetActivity extends Fragment {
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("notifcations");
         String notifId = mFirebaseDatabase.push().getKey();
-        Notification notif = new Notification("titre de la notif", "message de la notif",
-                "samuelbismuth101@gmail.com", "samuelbismuth101@gmail.com");
+        String message = "";
+        String senderToken = "";
+        String receiverToken = "";
+        Notification notif = new Notification("Bet request!!", message, senderToken, receiverToken);
         mFirebaseDatabase.child(notifId).setValue(notif);
     }
 

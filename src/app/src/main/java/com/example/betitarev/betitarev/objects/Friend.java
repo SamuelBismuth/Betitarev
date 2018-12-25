@@ -7,7 +7,13 @@ public class Friend implements Comparable<Friend> {
     private Mail mail;
     private String completeName;
 
-    public Friend(){}
+    /**
+     * TODO: Check this with Jonato.
+     */
+    public Friend(){
+        this.mail = new Mail(" ");
+        this.completeName = " ";
+    }
 
     public Friend(Mail mail) {
         this.mail = mail;

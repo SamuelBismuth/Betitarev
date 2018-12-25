@@ -2,7 +2,7 @@ package com.example.betitarev.betitarev.objects;
 
 public abstract class User {
 
-    private String name, familyName;  // path to the picture in our server.
+    private String name, familyName;
     private String picture;
     private Mail mail;
     private String userid;
@@ -38,9 +38,7 @@ public abstract class User {
     }
 
 
-
     public User(String name, String familyName, String picture, Mail mail, Statistics statistics, Friends friends, String pushToken) {
-
         this.name = name;
         this.familyName = familyName;
         this.picture = picture;
@@ -51,7 +49,7 @@ public abstract class User {
 
     }
 
-    public User(User user, String userid){
+    public User(User user, String userid) {
         this.name = user.getName();
         this.familyName = user.getFamilyName();
         this.picture = user.getPicture();
@@ -62,6 +60,7 @@ public abstract class User {
         this.userid = userid;
 
     }
+
     public abstract void updateDatabase();
 
     public String getName() {
