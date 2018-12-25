@@ -127,7 +127,15 @@
                 android:text="@string/add_friend"
                 android:textColor="@android:color/black" />
 
-
+            <Button
+                android:id="@+id/btn_remove"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:background="@color/colorAccent"
+                android:text="@string/remove_user"
+                android:textColor="@android:color/black" />
         </TableLayout>
+
     </RelativeLayout>
 </ScrollView>

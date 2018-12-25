@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.libraries.FireBaseQuery;
+import com.example.betitarev.betitarev.objects.CurrentAdmin;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Mail;
@@ -45,7 +46,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private StorageReference pathReference;
-
+    private Button btn_remove;
     // Hold a reference to the current animator,
     // so that it can be canceled mid-way.
     private Animator mCurrentAnimator;
@@ -117,8 +118,13 @@ public class AnotherProfileActivity extends AppCompatActivity {
             });
 
         }
-
-
+        //btn_remove properties
+        btn_remove = (Button)findViewById(R.id.btn_remove);
+        if(CurrentAdmin.getInstance().getMail().getMail().endsWith("@betitarev.com"))
+            btn_remove.setVisibility(View.VISIBLE);
+        else
+            btn_remove.setVisibility(View.GONE);
+        
     }
 
     private void setProfileImage() {
