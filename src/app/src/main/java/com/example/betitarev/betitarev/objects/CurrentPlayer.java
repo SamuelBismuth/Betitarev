@@ -2,7 +2,6 @@ package com.example.betitarev.betitarev.objects;
 
 // Singleton
 public class CurrentPlayer extends Player {
-
     static CurrentPlayer instance = null; // Singleton implementation.
 
     static public CurrentPlayer getInstance(Player player, String userid) {
