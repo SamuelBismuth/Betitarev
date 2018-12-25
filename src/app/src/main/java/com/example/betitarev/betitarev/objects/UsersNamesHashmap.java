@@ -1,33 +1,28 @@
 package com.example.betitarev.betitarev.objects;
 
-import android.net.Uri;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.example.betitarev.betitarev.libraries.FireBaseQuery.loadUserNameHashMap;
 
 public class UsersNamesHashmap {
 
 
 
 
-    private HashMap<Mail, String> Hashmap = new HashMap<>();
+    private HashMap<User, String> Hashmap = new HashMap<>();
     static UsersNamesHashmap instance = null; // Singleton implementation.
 
-    public UsersNamesHashmap(Set<Mail> Mails) {
-        for (Mail mail : Mails) {
-            loadUserNameHashMap(mail, this);
-        }
+    public UsersNamesHashmap(Set<User> Users) {
+        for (User user : Users) {
+            this.getHashmap().put(user, user.getCompleteName());        }
     }
-    public static List<Mail> getAllKeysForValue(String value)
+    public static List<User> getAllKeysForValue(String value)
     {
-        List<Mail> listOfKeys = null;
-        HashMap<Mail,String> mapOfWords = UsersNamesHashmap.getInstance().getHashmap();
+        List<User> listOfKeys = null;
+        HashMap<User,String> mapOfWords = UsersNamesHashmap.getInstance().getHashmap();
         //Check if Map contains the given value
         if(mapOfWords.containsValue(value))
         {
@@ -35,7 +30,7 @@ public class UsersNamesHashmap {
             listOfKeys = new ArrayList<>();
 
             // Iterate over each entry of map using entrySet
-            for (Map.Entry<Mail, String> entry : mapOfWords.entrySet())
+            for (Map.Entry<User, String> entry : mapOfWords.entrySet())
             {
                 // Check if value matches with given value
                 if (entry.getValue().equals(value))
@@ -49,10 +44,10 @@ public class UsersNamesHashmap {
         return listOfKeys;
     }
 
-    static public UsersNamesHashmap getInstance(Set<Mail> Mails) {
+    static public UsersNamesHashmap getInstance(Set<User> Users) {
         if(instance != null)
             return instance;
-        instance = new UsersNamesHashmap(Mails);
+        instance = new UsersNamesHashmap(Users);
         return instance;
     }
 
@@ -61,7 +56,7 @@ public class UsersNamesHashmap {
         return instance;
     }
 
-    public HashMap<Mail, String> getHashmap() {
+    public HashMap<User, String> getHashmap() {
         return Hashmap;
     }
 }

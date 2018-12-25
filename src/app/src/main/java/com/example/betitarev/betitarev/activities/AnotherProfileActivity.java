@@ -25,6 +25,7 @@ import com.example.betitarev.betitarev.libraries.FireBaseQuery;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Mail;
+import com.example.betitarev.betitarev.objects.User;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,6 +34,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class AnotherProfileActivity extends AppCompatActivity {
+    private static User Friend;
     private static FirebaseAuth auth;
     private static String Name;
     private static Mail Email;
@@ -64,21 +66,22 @@ public class AnotherProfileActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
-                Name= null;
+                Name = null;
             } else {
-                Name= extras.getString("Name");
+                Name = extras.getString("Name");
             }
         } else {
             Name= (String) savedInstanceState.getSerializable("Name");
         }
-        Log.e("test3","" + UsersNamesHashmap.getAllKeysForValue(Name).size());
-        Email = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
+        Log.e("number of users name","" + UsersNamesHashmap.getAllKeysForValue(Name).size());
+        Friend = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
 
+        Email = Friend.getMail();
         mNameTextView = findViewById(R.id.name);
         mNameTextView.setText(Name);
 
         mEmailTextView = findViewById(R.id.email);
-        mEmailTextView.setText(Email.getMail());
+        mEmailTextView.setText(Friend.getMail().getMail());
 
         mPictureSrc =  findViewById(R.id.profile_image);
         setProfileImage();

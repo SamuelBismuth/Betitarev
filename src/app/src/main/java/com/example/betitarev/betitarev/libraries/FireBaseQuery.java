@@ -10,6 +10,7 @@ import com.example.betitarev.betitarev.activities.MainActivity;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.Player;
+import com.example.betitarev.betitarev.objects.User;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,7 +33,7 @@ public class FireBaseQuery {
     private static String userid, name1, familyName1;
     private static Player user;
     private static FirebaseAuth auth;
-    private static Set<Mail> allEmailsSet = new LinkedHashSet<>();
+    private static Set<User> allUsersSet = new LinkedHashSet<>();
     private static FirebaseStorage storage;
     private static StorageReference storageReference;
 
@@ -55,11 +56,11 @@ public class FireBaseQuery {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
-                    Mail currentMail = new Mail(datas.child("mail/mail").getValue().toString());
-                    Log.e("user", currentMail.getMail());
-                    allEmailsSet.add(currentMail);
+                    Player currentUser = datas.getValue(Player.class);
+                    Log.e("user", currentUser.toString());
+                    allUsersSet.add(currentUser);
                 }
-                UsersNamesHashmap.getInstance(allEmailsSet);
+                UsersNamesHashmap.getInstance(allUsersSet);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -86,24 +87,8 @@ public class FireBaseQuery {
             }
         });
     }
-    public static void loadUserNameHashMap(final Mail mail, final UsersNamesHashmap USH){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        reference.orderByChild("mail/mail").equalTo(mail.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot datas : dataSnapshot.getChildren()) {
-                    name1 = datas.child("name").getValue().toString();
-                    familyName1 = datas.child("familyName").getValue().toString();
-                    USH.getHashmap().put(mail, name1+" "+ familyName1);
 
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
 
-    }
     public static void updateUserFriends(final Context con) {
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.orderByChild("mail/mail").equalTo(CurrentPlayer.getInstance().getMail().getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
