@@ -75,7 +75,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
             Name = (String) savedInstanceState.getSerializable("Name");
         }
         Log.e("number of users name","" + UsersNamesHashmap.getAllKeysForValue(Name).size());
-        Friend = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
+        friend = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
 
 
         Email = friend.getMail();
@@ -103,7 +103,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
                 FireBaseQuery.updateUserFriends(view.getContext());
             }
         });
-        currentFriend = new Friend(friend);
+        currentFriend = new Friend(friend.getName() + " " + friend.getFamilyName(), friend.getMail(), friend.getPushToken());
         if (CurrentPlayer.getInstance().getFriends().isFriend(currentFriend)) {
             mAddFriendBtn.setText("UNFRIEND");
             Log.e("isAlreadyFriend", "yes");

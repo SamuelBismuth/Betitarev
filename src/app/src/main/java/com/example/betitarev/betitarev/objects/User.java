@@ -81,10 +81,6 @@ public abstract class User {
         this.mail = mail;
     }
 
-    public String getCompleteName() {
-        return this.getName() + " " + this.getFamilyName();
-    }
-
     public String getPushToken() {
         return pushToken;
     }
