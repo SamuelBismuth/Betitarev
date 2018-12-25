@@ -17,7 +17,7 @@ public class UsersNamesHashmap {
 
     public UsersNamesHashmap(Set<User> Users) {
         for (User user : Users) {
-            this.getHashmap().put(user, user.getCompleteName());        }
+            this.getHashmap().put(user, user.getName() + " " + user.getFamilyName());        }
     }
     public static List<User> getAllKeysForValue(String value)
     {
