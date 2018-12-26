@@ -146,5 +146,7 @@ public class FireBaseQuery {
         betsReference.child(betId).setValue(bet);
 
     }
+
+
 }
 

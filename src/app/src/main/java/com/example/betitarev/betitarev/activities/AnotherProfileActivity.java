@@ -110,7 +110,6 @@ public class AnotherProfileActivity extends AppCompatActivity {
             mAddFriendBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     CurrentPlayer.getInstance().getFriends().removeFriend(currentFriend);
                     FireBaseQuery.updateUserFriends(view.getContext());
                 }
