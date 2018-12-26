@@ -1,10 +1,14 @@
 package com.example.betitarev.betitarev.objects;
 
+import android.util.Log;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.betitarev.betitarev.libraries.FireBaseQuery.removeUser;
 
 public class BasicAdmin extends User implements Admin {
     static List<String> AdminPushToken;
@@ -30,7 +34,9 @@ public class BasicAdmin extends User implements Admin {
 
     @Override
     public boolean removePlayer(String userid) {
-//        DatabaseReference mFirebaseDatabase;
+        Log.e("removePlayerBasicAdmin", userid+ " this is user id here");
+        removeUser(userid);
+        //        DatabaseReference mFirebaseDatabase;
 //        FirebaseDatabase mFirebaseInstance;
 //        mFirebaseInstance = FirebaseDatabase.getInstance();
 //        mFirebaseDatabase = mFirebaseInstance.getReference();
@@ -41,7 +47,7 @@ public class BasicAdmin extends User implements Admin {
 //      FirebaseDatabase.getInstance().;
 //        node.setValue(null);
 
-        DatabaseReference node = FirebaseDatabase.getInstance().getReference("users");
+     //   DatabaseReference node = FirebaseDatabase.getInstance().getReference("users");
 
         return false;
     }
