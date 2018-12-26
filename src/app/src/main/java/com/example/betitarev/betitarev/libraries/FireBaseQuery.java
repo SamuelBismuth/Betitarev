@@ -139,5 +139,10 @@ public class FireBaseQuery {
         betsReference.child(betId).setValue(bet);
 
     }
+
+    public static void removeUser(String userid){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+        reference.child(userid).removeValue();
+    }
 }
 
