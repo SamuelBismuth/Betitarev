@@ -14,6 +14,8 @@ import com.example.betitarev.betitarev.objects.BetWithoutArbitrator;
 import com.example.betitarev.betitarev.objects.Bettor;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.FictiveMoney;
+import com.example.betitarev.betitarev.objects.Friend;
+import com.example.betitarev.betitarev.objects.Friends;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.Player;
 import com.example.betitarev.betitarev.objects.User;
@@ -93,9 +95,12 @@ public class FireBaseQuery {
     }
 
 
-    public static void updateUserFriends(final Context con) {
+    public static void updateUserFriends(final Context con,User CurrentFriend) {
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.child(CurrentPlayer.getInstance().getUserid()).child("friends").setValue(CurrentPlayer.getInstance().getFriends());
+        Friends CurrentFriendFriends = CurrentFriend.getFriends();
+        CurrentFriendFriends.addFriend(new Friend(CurrentPlayer.getInstance().getName() + " " + CurrentPlayer.getInstance().getFamilyName(), CurrentPlayer.getInstance().getMail(), CurrentPlayer.getInstance().getPushToken()));
+        reference.child(CurrentFriend.getUserid()).child("friends").setValue(CurrentFriendFriends);
         Activity a = (Activity) con;
         a.finish();
 

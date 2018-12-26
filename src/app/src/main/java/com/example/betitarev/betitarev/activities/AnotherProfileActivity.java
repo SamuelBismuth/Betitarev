@@ -111,6 +111,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 CurrentPlayer.getInstance().getFriends().addFriend(currentFriend);
                 FireBaseQuery.updateUserFriends(view.getContext());
+
             }
         });
         currentFriend = new Friend(friend.getName() + " " + friend.getFamilyName(), friend.getMail(), friend.getPushToken());
@@ -121,7 +122,8 @@ public class AnotherProfileActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     CurrentPlayer.getInstance().getFriends().removeFriend(currentFriend);
-                    FireBaseQuery.updateUserFriends(view.getContext());
+                    FireBaseQuery.updateUserFriends(view.getContext(), friend);
+
                 }
             });
         }
