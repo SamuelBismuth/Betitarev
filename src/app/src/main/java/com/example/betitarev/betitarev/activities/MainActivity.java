@@ -1,5 +1,6 @@
 package com.example.betitarev.betitarev.activities;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import com.example.betitarev.betitarev.fragment.OpenedBetActivity;
 import com.example.betitarev.betitarev.fragment.PlaceBetActivity;
 import com.example.betitarev.betitarev.fragment.ProfileActivity;
 import com.example.betitarev.betitarev.fragment.StatisticsActivity;
+import com.example.betitarev.betitarev.helper.FireBaseQuery;
 import com.example.betitarev.betitarev.helper.FragmentHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
     public static AppCompatActivity getActivity() {
         return activity;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        FireBaseQuery.loadCurrentUser(FireBaseQuery.getCurrentMail(), this);
     }
 
     public void begin() {
