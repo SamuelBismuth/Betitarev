@@ -6,15 +6,15 @@ public class CurrentPlayer extends Player {
 
     static CurrentPlayer instance = null; // Singleton implementation.
 
-    static public CurrentPlayer getInstance(Player player, String userId) {
+    static public CurrentPlayer getInstance(Player player) {
         if(instance != null)
             return instance;
-        instance = new CurrentPlayer(player, userId);
+        instance = new CurrentPlayer(player);
         return instance;
     }
 
-    private CurrentPlayer(Player player, String userId) {
-        super(player, userId);
+    private CurrentPlayer(Player player) {
+        super(player);
     }
 
     public static CurrentPlayer getInstance() {

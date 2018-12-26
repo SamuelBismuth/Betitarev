@@ -8,9 +8,12 @@ public class Player extends User {
         super(name, familyName, mail, pushToken);
     }
 
-    public Player(Player player, String userid) {
-        super(player, userid);
+    public Player(Player player) {
+        super(player);
     }
 
 
+    public Player(String name, String familyName, Mail email, String userId, String pushToken) {
+        super(name,familyName,email,userId,pushToken);
+    }
 }
