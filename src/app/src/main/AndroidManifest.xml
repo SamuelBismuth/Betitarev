@@ -60,6 +60,10 @@
             </intent-filter>
         </service>
 
+        <activity
+            android:name=".activities.ConfirmBetActivity"
+            android:label="@string/title_activity_confirm_bet"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

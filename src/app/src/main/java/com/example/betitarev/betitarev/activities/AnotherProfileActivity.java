@@ -36,10 +36,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class AnotherProfileActivity extends AppCompatActivity {
-    private User friend;
     private static FirebaseAuth auth;
     private static String Name;
     private static Mail Email;
+    private User friend;
     private Friend currentFriend;
     private TextView mNameTextView, mEmailTextView;
     private ImageView mPictureSrc;
@@ -76,7 +76,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
         } else {
             Name = (String) savedInstanceState.getSerializable("Name");
         }
-        Log.e("number of users name","" + UsersNamesHashmap.getAllKeysForValue(Name).size());
+        Log.e("number of users name", "" + UsersNamesHashmap.getAllKeysForValue(Name).size());
         friend = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
 
 
@@ -97,6 +97,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
                 zoomImageFromThumb(profileImageView, profileImageView.getDrawable());
             }
         });
+
         mAddFriendBtn = (Button) findViewById(R.id.btn_add_friend);
         mAddFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,35 +113,40 @@ public class AnotherProfileActivity extends AppCompatActivity {
             mAddFriendBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     CurrentPlayer.getInstance().getFriends().removeFriend(currentFriend);
                     FireBaseQuery.updateUserFriends(view.getContext());
                 }
             });
-
         }
+
         //btn_remove properties
-        btn_remove = (Button)findViewById(R.id.btn_remove);
+        btn_remove = (Button) findViewById(R.id.btn_remove);
         try {
             if (CurrentPlayer.getInstance().getMail().getMail().endsWith("betitarev.com")) {
                 btn_remove.setVisibility(View.VISIBLE);
                 // need to think how to do this line: we need to insert some how basic admin//CurrentAdmin.getInstance(CurrentPlayer.getInstance().get,CurrentPlayer.getInstance().getUserid());
                 Log.e("removebutton", "failed");
-                BasicAdmin ba= new BasicAdmin(CurrentPlayer.getInstance().getName(),CurrentPlayer.getInstance().getName(),CurrentPlayer.getInstance().getMail(),CurrentPlayer.getInstance().getPushToken());
-                CurrentAdmin.getInstance(ba,ba.getUserid());
+                BasicAdmin ba = new BasicAdmin(CurrentPlayer.getInstance().getName(), CurrentPlayer.getInstance().getName(), CurrentPlayer.getInstance().getMail(), CurrentPlayer.getInstance().getPushToken());
             }
-        }catch (Exception e){btn_remove.setVisibility(View.GONE);Log.e("removebuttonincatch", "oof");}
-
-        btn_remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("removebuttoninclick", "click recognized");
-               // getAllKeysForValue(currentFriend.)
-               // CurrentAdmin.getInstance().removePlayer(currentFriend.get);
-            }
-        });
+        } catch (Exception e) {
+            btn_remove.setVisibility(View.GONE);
+            Log.e("removebuttonincatch", "oof");
+        }
 
     }
+
+
+    /**  btn_remove.setOnClickListener(new View.OnClickListener()
+
+    {
+        @Override
+        public void onClick (View v){
+        Log.e("removebuttoninclick", "click recognized");
+        // getAllKeysForValue(currentFriend.)
+        // CurrentAdmin.getInstance().removePlayer(currentFriend.get);
+    }
+    };**/
+
 
     private void setProfileImage() {
         storage = FirebaseStorage.getInstance();
