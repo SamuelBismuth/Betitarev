@@ -56,6 +56,10 @@ public class UsersNamesHashmap {
         return instance;
     }
 
+    public static void reset() {
+        instance = null;
+    }
+
     public HashMap<User, String> getHashmap() {
         return Hashmap;
     }

@@ -122,6 +122,7 @@ public class ProfileActivity extends Fragment {
             public void onClick(View view) {
                 auth.signOut();
                 CurrentPlayer.signOut();
+                UsersNamesHashmap.reset();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
 
