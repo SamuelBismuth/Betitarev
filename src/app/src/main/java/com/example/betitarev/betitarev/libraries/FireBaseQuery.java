@@ -7,7 +7,13 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.betitarev.betitarev.activities.MainActivity;
+import com.example.betitarev.betitarev.objects.Arbitrator;
+import com.example.betitarev.betitarev.objects.Bet;
+import com.example.betitarev.betitarev.objects.BetWithArbitrator;
+import com.example.betitarev.betitarev.objects.BetWithoutArbitrator;
+import com.example.betitarev.betitarev.objects.Bettor;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
+import com.example.betitarev.betitarev.objects.FictiveMoney;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.Player;
 import com.example.betitarev.betitarev.objects.User;
@@ -115,6 +121,23 @@ public class FireBaseQuery {
                 Log.e("downloadImage", "failed");
             }
         });
+    }
+
+    public static void placeNewBetWithArb(String bettor1, String bettor2, String arb,  String betPhrase, String betValue) {
+
+        Bet bet = new BetWithArbitrator(new Bettor(UsersNamesHashmap.getAllKeysForValue(bettor1).get(0)),new Bettor(UsersNamesHashmap.getAllKeysForValue(bettor2).get(0)),betPhrase,new FictiveMoney(Integer.parseInt(betValue)),new Arbitrator(UsersNamesHashmap.getAllKeysForValue(arb).get(0)));
+        DatabaseReference betsReference = FirebaseDatabase.getInstance().getReference("bets");
+        String betId = betsReference.push().getKey();
+        betsReference.child(betId).setValue(bet);
+
+    }
+
+    public static void placeNewBetWithoutArb(String bettor1, String bettor2,  String betPhrase, String betValue) {
+        Bet bet = new BetWithoutArbitrator(new Bettor(UsersNamesHashmap.getAllKeysForValue(bettor1).get(0)),new Bettor(UsersNamesHashmap.getAllKeysForValue(bettor2).get(0)),betPhrase,new FictiveMoney(Integer.parseInt(betValue)));
+        DatabaseReference betsReference = FirebaseDatabase.getInstance().getReference("bets");
+        String betId = betsReference.push().getKey();
+        betsReference.child(betId).setValue(bet);
+
     }
 }
 
