@@ -1,3 +1,4 @@
+
 <resources>
     <string name="app_name">Betitarev</string>
     <string name="action_sign_in_short">Register</string>
@@ -76,3 +77,4 @@
     <string name="title_activity_confirm_bet">ConfirmBetActivity</string>
 
 </resources>
+

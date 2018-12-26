@@ -4,8 +4,8 @@ public class BetWithArbitrator extends Bet {
 
     private Arbitrator arbitrator;
 
-    public BetWithArbitrator(Bettor player1, Bettor player2, String phrase, Arbitrator arbitrator) {
-        super(player1, player2, phrase);
+    public BetWithArbitrator(Bettor player1, Bettor player2, String phrase,  FictiveMoney fictiveMoney, Arbitrator arbitrator) {
+        super(player1, player2, phrase, fictiveMoney);
         this.arbitrator = arbitrator;
     }
 

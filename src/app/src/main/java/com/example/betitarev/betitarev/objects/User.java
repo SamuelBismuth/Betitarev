@@ -120,6 +120,8 @@ public abstract class User {
         return userid;
     }
 
+    public void setUserid(String userid) { this.userid = userid; }
+
     @Override
     public String toString() {
         return "User{" +

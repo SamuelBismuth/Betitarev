@@ -18,6 +18,8 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.helper.FragmentHelper;
+import com.example.betitarev.betitarev.libraries.FireBaseQuery;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Notification;
@@ -36,6 +38,7 @@ public class PlaceBetActivity extends Fragment {
     private ListView listOfFriend, listOfArbitrator;
     private EditText searchFriend, searchArbitrator;
     private Friend bettor, arbitrator;
+    private boolean isWithArb;
 
     public PlaceBetActivity() {
     }
@@ -60,6 +63,9 @@ public class PlaceBetActivity extends Fragment {
         RadioGroup radioGroup = view.findViewById(R.id.radio_group);
         Button sendRequestButton = view.findViewById(R.id.send_request);
         List<String> friends = new ArrayList<>();
+
+        isWithArb = false;
+
 
         for (Friend friend : CurrentPlayer.getInstance().getFriends().getFriends())
             friends.add(friend.getFullName());
@@ -106,10 +112,12 @@ public class PlaceBetActivity extends Fragment {
                     case R.id.with_arb:
                         listOfArbitrator.setVisibility(View.VISIBLE);
                         searchArbitrator.setVisibility(View.VISIBLE);
+                        isWithArb = true;
                         break;
                     case R.id.without_arb:
                         listOfArbitrator.setVisibility(View.GONE);
                         searchArbitrator.setVisibility(View.GONE);
+                        isWithArb = false;
                         break;
                 }
             }
@@ -138,16 +146,30 @@ public class PlaceBetActivity extends Fragment {
                 // Clear everything, send the request, and move to another fragment maybe?
                 if (isInRules()) {
                     sendNotification(v);
+                    pushDataBase();
                     clearAll(v);
                 } else
                     Toast.makeText(getActivity(), "You need to fill all the fields!", Toast.LENGTH_SHORT).show();
-                Log.i("Onclick", "Need to implement it");
+
             }
         });
 
         return view;
     }
 
+    private void pushDataBase() {
+        String bettor1 = CurrentPlayer.getInstance().getName()+ " " + CurrentPlayer.getInstance().getFamilyName();
+        String bettor2 = bettor.getFullName();
+
+        if(!isWithArb) {
+            String arb = arbitrator.getFullName();
+            FireBaseQuery.placeNewBetWithArb(bettor1, bettor2, arb, betPhrase.getText().toString(), betValue.getText().toString());
+        }
+        else{
+
+            FireBaseQuery.placeNewBetWithoutArb(bettor1, bettor2, betPhrase.getText().toString(), betValue.getText().toString());
+        }
+    }
 
     /**
      * This method check if either all the required files are full or not.
@@ -209,6 +231,7 @@ public class PlaceBetActivity extends Fragment {
     }
 
     private void clearAll(View view) {
+        FragmentHelper.loadFragment(new OpenedBetActivity());
     }
 
     public EditText getBetPhrase() {

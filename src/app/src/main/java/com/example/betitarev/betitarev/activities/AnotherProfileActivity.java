@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -21,7 +22,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.fragment.ProfileActivity;
+import com.example.betitarev.betitarev.helper.FragmentHelper;
 import com.example.betitarev.betitarev.libraries.FireBaseQuery;
+import com.example.betitarev.betitarev.objects.BasicAdmin;
+import com.example.betitarev.betitarev.objects.CurrentAdmin;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Mail;
@@ -32,6 +37,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+
+
+
 
 public class AnotherProfileActivity extends AppCompatActivity {
     private static FirebaseAuth auth;
@@ -45,7 +54,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private StorageReference pathReference;
-
+    private Button btn_remove;
     // Hold a reference to the current animator,
     // so that it can be canceled mid-way.
     private Animator mCurrentAnimator;
@@ -76,7 +85,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
         }
         Log.e("number of users name", "" + UsersNamesHashmap.getAllKeysForValue(Name).size());
         friend = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
-
+        Log.e("in another...", friend.getUserid()+"this is userid here");
 
         Email = friend.getMail();
         mNameTextView = findViewById(R.id.name);
@@ -116,8 +125,38 @@ public class AnotherProfileActivity extends AppCompatActivity {
                 }
             });
         }
-    }
 
+        //btn_remove properties
+        btn_remove = (Button) findViewById(R.id.btn_remove);
+        try {
+            if (CurrentPlayer.getInstance().getMail().getMail().endsWith("betitarev.com")) {
+                btn_remove.setVisibility(View.VISIBLE);
+                // need to think how to do this line: we need to insert some how basic admin//CurrentAdmin.getInstance(CurrentPlayer.getInstance().get,CurrentPlayer.getInstance().getUserid());
+                Log.e("removebutton", "failed");
+                BasicAdmin ba = new BasicAdmin(CurrentPlayer.getInstance().getName(), CurrentPlayer.getInstance().getName(), CurrentPlayer.getInstance().getMail(), CurrentPlayer.getInstance().getPushToken());
+                CurrentAdmin.getInstance(ba, ba.getUserid());
+            }
+        } catch (Exception e) {
+            btn_remove.setVisibility(View.GONE);
+            Log.e("removebuttonincatch", "oof");
+        }
+
+        btn_remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("setonclick", "inside");
+                Intent intent = new Intent(AnotherProfileActivity.this,MainActivity.class);
+                Log.e("setonclick", "inside1");
+                startActivity(intent);
+                Log.e("setonclick", "inside2");
+
+                Log.e("setonclick", friend.getUserid()+"this is userid here");
+                CurrentAdmin.getInstance().removePlayer(friend.getUserid());
+                Log.e("setonclick", "removed another player");
+            }
+        });
+
+    }
 
 
     private void setProfileImage() {
