@@ -140,6 +140,9 @@ public class FireBaseQuery {
 
     }
 
-
+    public static void removeUser(String userid){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+        reference.child(userid).removeValue();
+    }
 }
 
