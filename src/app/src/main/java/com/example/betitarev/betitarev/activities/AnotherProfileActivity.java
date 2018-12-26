@@ -153,7 +153,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
                 Log.e("setonclick", "inside2");
 
                 Log.e("setonclick", friend.getUserid()+"this is userid here");
-                CurrentAdmin.getInstance().removePlayer(friend.getUserid());
+                CurrentAdmin.getInstance().removePlayer(friend);
                 Log.e("setonclick", "removed another player");
             }
         });
