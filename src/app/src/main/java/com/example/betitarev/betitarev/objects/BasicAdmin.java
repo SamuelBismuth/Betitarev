@@ -11,10 +11,10 @@ public class BasicAdmin extends User implements Admin {
     public BasicAdmin(String name, String familyName, Mail mail, String pushToken) {
         super(name, familyName, mail, pushToken);
         if(AdminPushToken==null)
-            AdminPushToken= new ArrayList<>();
+            AdminPushToken= new ArrayList<String>();
         AdminPushToken.add(pushToken);
     }
-
+    public BasicAdmin(BasicAdmin ba, String userid){super(ba,userid);}
     @Override
     public boolean sendWarning(User player) {
         DatabaseReference mFirebaseDatabase;
@@ -29,13 +29,20 @@ public class BasicAdmin extends User implements Admin {
     }
 
     @Override
-    public boolean removePlayer(User player) {
-        DatabaseReference mFirebaseDatabase;
-        FirebaseDatabase mFirebaseInstance;
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference();
-        if(!AdminPushToken.contains(player.getPushToken()))
-            mFirebaseDatabase.child(player.getPushToken()).removeValue();
+    public boolean removePlayer(String userid) {
+//        DatabaseReference mFirebaseDatabase;
+//        FirebaseDatabase mFirebaseInstance;
+//        mFirebaseInstance = FirebaseDatabase.getInstance();
+//        mFirebaseDatabase = mFirebaseInstance.getReference();
+//        if(!AdminPushToken.contains(pushToken))
+//            mFirebaseDatabase.child(pushToken).removeValue();
+
+
+//      FirebaseDatabase.getInstance().;
+//        node.setValue(null);
+
+        DatabaseReference node = FirebaseDatabase.getInstance().getReference("users");
+
         return false;
     }
 

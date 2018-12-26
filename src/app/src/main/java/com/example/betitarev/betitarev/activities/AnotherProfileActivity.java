@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.libraries.FireBaseQuery;
+import com.example.betitarev.betitarev.objects.BasicAdmin;
 import com.example.betitarev.betitarev.objects.CurrentAdmin;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Friend;
@@ -120,11 +121,25 @@ public class AnotherProfileActivity extends AppCompatActivity {
         }
         //btn_remove properties
         btn_remove = (Button)findViewById(R.id.btn_remove);
-        if(CurrentAdmin.getInstance().getMail().getMail().endsWith("@betitarev.com"))
-            btn_remove.setVisibility(View.VISIBLE);
-        else
-            btn_remove.setVisibility(View.GONE);
-        
+        try {
+            if (CurrentPlayer.getInstance().getMail().getMail().endsWith("betitarev.com")) {
+                btn_remove.setVisibility(View.VISIBLE);
+                // need to think how to do this line: we need to insert some how basic admin//CurrentAdmin.getInstance(CurrentPlayer.getInstance().get,CurrentPlayer.getInstance().getUserid());
+                Log.e("removebutton", "failed");
+                BasicAdmin ba= new BasicAdmin(CurrentPlayer.getInstance().getName(),CurrentPlayer.getInstance().getName(),CurrentPlayer.getInstance().getMail(),CurrentPlayer.getInstance().getPushToken());
+                CurrentAdmin.getInstance(ba,ba.getUserid());
+            }
+        }catch (Exception e){btn_remove.setVisibility(View.GONE);Log.e("removebuttonincatch", "oof");}
+
+        btn_remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("removebuttoninclick", "click recognized");
+                getAllKeysForValue(currentFriend.)
+                CurrentAdmin.getInstance().removePlayer(currentFriend.get);
+            }
+        });
+
     }
 
     private void setProfileImage() {
