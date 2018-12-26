@@ -135,8 +135,8 @@ public class AnotherProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e("removebuttoninclick", "click recognized");
-                getAllKeysForValue(currentFriend.)
-                CurrentAdmin.getInstance().removePlayer(currentFriend.get);
+               // getAllKeysForValue(currentFriend.)
+               // CurrentAdmin.getInstance().removePlayer(currentFriend.get);
             }
         });
 
