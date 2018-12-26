@@ -124,7 +124,7 @@ public class PlaceBetActivity extends Fragment {
         listOfFriend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                searchFriend.setText(listOfFriend.getItemAtPosition(0).toString());
+                searchFriend.setText(listOfFriend.getItemAtPosition(i).toString());
                 searchFriend.clearFocus();
                 betPhrase.requestFocus();
             }
@@ -133,7 +133,7 @@ public class PlaceBetActivity extends Fragment {
         listOfArbitrator.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                searchArbitrator.setText(listOfArbitrator.getItemAtPosition(0).toString());
+                searchArbitrator.setText(listOfArbitrator.getItemAtPosition(i).toString());
                 listOfArbitrator.clearFocus();
             }
         });
