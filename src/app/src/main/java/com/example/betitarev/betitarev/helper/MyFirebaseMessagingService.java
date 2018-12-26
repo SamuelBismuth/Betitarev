@@ -21,30 +21,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         String notificationTitle = null, notificationBody = null;
-        String dataTitle = null, dataMessage = null;
-
-        // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData().get("message"));
-            dataTitle = remoteMessage.getData().get("title");
-            dataMessage = remoteMessage.getData().get("message");
-        }
-
-        // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
             notificationTitle = remoteMessage.getNotification().getTitle();
             notificationBody = remoteMessage.getNotification().getBody();
         }
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
         sendNotification(notificationTitle, notificationBody);
     }
 
-    /**
-     * //     * Create and show a simple notification containing the received FCM message.
-     * //
-     */
     private void sendNotification(String notificationTitle, String notificationBody) {
         Intent intent = new Intent(this, ConfirmBetActivity.class);
         intent.putExtra("title", notificationTitle);
@@ -54,7 +38,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationBody)

@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.betitarev.betitarev.libraries.FireBaseQuery.getCurrentMail;
+import static com.example.betitarev.betitarev.helper.FireBaseQuery.getCurrentMail;
 
 
 public class ProfileActivity extends Fragment {

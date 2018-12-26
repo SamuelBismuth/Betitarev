@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
-import com.example.betitarev.betitarev.libraries.FireBaseQuery;
+import com.example.betitarev.betitarev.helper.FireBaseQuery;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Mail;

@@ -1,4 +1,4 @@
-package com.example.betitarev.betitarev.libraries;
+package com.example.betitarev.betitarev.helper;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +12,7 @@ import com.example.betitarev.betitarev.objects.Bet;
 import com.example.betitarev.betitarev.objects.BetWithArbitrator;
 import com.example.betitarev.betitarev.objects.BetWithoutArbitrator;
 import com.example.betitarev.betitarev.objects.Bettor;
+import com.example.betitarev.betitarev.objects.BettorStatus;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.FictiveMoney;
 import com.example.betitarev.betitarev.objects.Mail;
@@ -64,7 +65,7 @@ public class FireBaseQuery {
                     Player currentUser = datas.getValue(Player.class);
                     Log.e("user", currentUser.toString());
                     if (!currentUser.getMail().getMail().equals(email.getMail()))
-                    allUsersSet.add(currentUser);
+                        allUsersSet.add(currentUser);
                 }
                 UsersNamesHashmap.getInstance(allUsersSet);
             }
@@ -102,7 +103,6 @@ public class FireBaseQuery {
 
     }
 
-
     public static void updateUserPictureUri() {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -123,24 +123,24 @@ public class FireBaseQuery {
         });
     }
 
-    public static void placeNewBetWithArb(String bettor1, String bettor2, String arb,  String betPhrase, String betValue) {
-
-        Bet bet = new BetWithArbitrator(new Bettor(UsersNamesHashmap.getAllKeysForValue(bettor1).get(0)),new Bettor(UsersNamesHashmap.getAllKeysForValue(bettor2).get(0)),betPhrase,new FictiveMoney(Integer.parseInt(betValue)),new Arbitrator(UsersNamesHashmap.getAllKeysForValue(arb).get(0)));
+    public static void placeNewBetWithArb(String bettor2, String arb, String betPhrase, String betValue) {
+        Bet bet = new BetWithArbitrator(new Bettor(CurrentPlayer.getInstance(), BettorStatus.Confirmed),
+                new Bettor(UsersNamesHashmap.getAllKeysForValue(bettor2).get(0), BettorStatus.NotConfirmed), betPhrase, new FictiveMoney(Integer.parseInt(betValue)),
+                new Arbitrator(UsersNamesHashmap.getAllKeysForValue(arb).get(0)));
         DatabaseReference betsReference = FirebaseDatabase.getInstance().getReference("bets");
         String betId = betsReference.push().getKey();
         betsReference.child(betId).setValue(bet);
-
     }
 
-    public static void placeNewBetWithoutArb(String bettor1, String bettor2,  String betPhrase, String betValue) {
-        Bet bet = new BetWithoutArbitrator(new Bettor(UsersNamesHashmap.getAllKeysForValue(bettor1).get(0)),new Bettor(UsersNamesHashmap.getAllKeysForValue(bettor2).get(0)),betPhrase,new FictiveMoney(Integer.parseInt(betValue)));
+    public static void placeNewBetWithoutArb(String bettor2, String betPhrase, String betValue) {
+        Bet bet = new BetWithoutArbitrator(new Bettor(CurrentPlayer.getInstance(), BettorStatus.Confirmed),
+                new Bettor(UsersNamesHashmap.getAllKeysForValue(bettor2).get(0), BettorStatus.NotConfirmed), betPhrase, new FictiveMoney(Integer.parseInt(betValue)));
         DatabaseReference betsReference = FirebaseDatabase.getInstance().getReference("bets");
         String betId = betsReference.push().getKey();
         betsReference.child(betId).setValue(bet);
-
     }
 
-    public static void removeUser(String userid){
+    public static void removeUser(String userid) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.child(userid).removeValue();
     }

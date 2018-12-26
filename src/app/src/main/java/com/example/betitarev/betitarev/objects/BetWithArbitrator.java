@@ -9,11 +9,6 @@ public class BetWithArbitrator extends Bet {
         this.arbitrator = arbitrator;
     }
 
-    public BetWithArbitrator(Bettor player1, Bettor player2, FictiveMoney fictiveMoney, Arbitrator arbitrator) {
-        super(player1, player2, fictiveMoney);
-        this.arbitrator = arbitrator;
-    }
-
     @Override
     protected Bettor appointWinner() {
         return null;

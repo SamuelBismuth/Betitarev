@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
-import com.example.betitarev.betitarev.libraries.FireBaseQuery;
+import com.example.betitarev.betitarev.helper.FireBaseQuery;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,7 +34,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 
-import static com.example.betitarev.betitarev.libraries.FireBaseQuery.getCurrentMail;
+import static com.example.betitarev.betitarev.helper.FireBaseQuery.getCurrentMail;
 
 public class EditProfileActivity extends AppCompatActivity {
 

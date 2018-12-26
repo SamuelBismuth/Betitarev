@@ -1,12 +1,8 @@
 package com.example.betitarev.betitarev.activities;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -16,7 +12,6 @@ import com.example.betitarev.betitarev.fragment.PlaceBetActivity;
 import com.example.betitarev.betitarev.fragment.ProfileActivity;
 import com.example.betitarev.betitarev.fragment.StatisticsActivity;
 import com.example.betitarev.betitarev.helper.FragmentHelper;
-import com.example.betitarev.betitarev.libraries.FireBaseQuery;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,12 +45,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        FireBaseQuery.loadCurrentUser(FireBaseQuery.getCurrentMail(), this);
+    public static AppCompatActivity getActivity() {
+        return activity;
     }
 
     public void begin() {
@@ -63,11 +54,6 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         FragmentHelper.loadFragment(new PlaceBetActivity());
-    }
-
-
-    public static AppCompatActivity getActivity() {
-        return activity;
     }
 
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,8 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.helper.FireBaseQuery;
 import com.example.betitarev.betitarev.helper.FragmentHelper;
-import com.example.betitarev.betitarev.libraries.FireBaseQuery;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Notification;
@@ -65,7 +64,6 @@ public class PlaceBetActivity extends Fragment {
         List<String> friends = new ArrayList<>();
 
         isWithArb = false;
-
 
         for (Friend friend : CurrentPlayer.getInstance().getFriends().getFriends())
             friends.add(friend.getFullName());
@@ -150,25 +148,9 @@ public class PlaceBetActivity extends Fragment {
                     clearAll(v);
                 } else
                     Toast.makeText(getActivity(), "You need to fill all the fields!", Toast.LENGTH_SHORT).show();
-
             }
         });
-
         return view;
-    }
-
-    private void pushDataBase() {
-        String bettor1 = CurrentPlayer.getInstance().getName()+ " " + CurrentPlayer.getInstance().getFamilyName();
-        String bettor2 = bettor.getFullName();
-
-        if(!isWithArb) {
-            String arb = arbitrator.getFullName();
-            FireBaseQuery.placeNewBetWithArb(bettor1, bettor2, arb, betPhrase.getText().toString(), betValue.getText().toString());
-        }
-        else{
-
-            FireBaseQuery.placeNewBetWithoutArb(bettor1, bettor2, betPhrase.getText().toString(), betValue.getText().toString());
-        }
     }
 
     /**
@@ -184,7 +166,7 @@ public class PlaceBetActivity extends Fragment {
      */
     private boolean isInRules() {
         boolean arb = false, play = false;
-        if (this.getBetPhrase().getText() == null || this.getBetValue().getText() == null)
+        if (this.getBetPhrase().getText() == null)
             return false;
         if (this.getWithArbitrator().isChecked()) {
             for (Friend friend : CurrentPlayer.getInstance().getFriends().getFriends()) {
@@ -209,24 +191,34 @@ public class PlaceBetActivity extends Fragment {
     }
 
     private void sendNotification(View view) {
-        Log.i("Data I got:", bettor.getFullName() + bettor.getMail().getMail());
+        sendMessage(new Notification("Bet Request",
+                betPhrase.getText().toString() + " " + betValue.getText().toString(),
+                CurrentPlayer.getInstance().getPushToken(),
+                bettor.getPushToken()));
         if (arbitrator != null)
-            Log.i("If arb", arbitrator.getFullName() + arbitrator.getMail().getMail());
-        sendMessage(); // Change this.
+            sendMessage(new Notification("Arbitrator Request",
+                    CurrentPlayer.getInstance().getName() + " " + CurrentPlayer.getInstance().getFamilyName() +
+                            " want to bet against " + bettor.getFullName() + " on " + betPhrase.getText().toString(),
+                    CurrentPlayer.getInstance().getPushToken(),
+                    arbitrator.getPushToken()));
     }
 
+    private void pushDataBase() {
+        String bettor2 = bettor.getFullName();
+        if (isWithArb) {
+            String arb = arbitrator.getFullName();
+            FireBaseQuery.placeNewBetWithArb(bettor2, arb, betPhrase.getText().toString(), betValue.getText().toString());
+        } else {
+            FireBaseQuery.placeNewBetWithoutArb(bettor2, betPhrase.getText().toString(), betValue.getText().toString());
+        }
+    }
 
-    public void sendMessage() {
-        // test
+    public void sendMessage(Notification notif) {
         DatabaseReference mFirebaseDatabase;
         FirebaseDatabase mFirebaseInstance;
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("notifcations");
         String notifId = mFirebaseDatabase.push().getKey();
-        String message = betPhrase.getText().toString() + " "+ betValue.getText().toString();
-        String senderToken = CurrentPlayer.getInstance().getPushToken();
-        String receiverToken = bettor.getPushToken();
-        Notification notif = new Notification("Bet request!!", message, senderToken, receiverToken);
         mFirebaseDatabase.child(notifId).setValue(notif);
     }
 
