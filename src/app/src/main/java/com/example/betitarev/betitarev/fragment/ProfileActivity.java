@@ -121,6 +121,7 @@ public class ProfileActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 auth.signOut();
+                CurrentPlayer.signOut();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
 
