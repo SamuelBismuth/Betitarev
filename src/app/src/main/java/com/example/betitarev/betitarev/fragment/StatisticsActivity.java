@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.helper.FragmentHelper;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 
 //for graph
@@ -91,21 +92,11 @@ public class StatisticsActivity extends Fragment{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new PlaceBetActivity());
+                FragmentHelper.loadFragment(new PlaceBetActivity());
             }
         });
 
         return view;
     }
-
-    private void loadFragment(Fragment fragment) {
-        // load fragment
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-
 
 }

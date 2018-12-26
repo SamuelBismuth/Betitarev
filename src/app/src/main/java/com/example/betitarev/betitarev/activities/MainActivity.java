@@ -15,9 +15,12 @@ import com.example.betitarev.betitarev.fragment.OpenedBetActivity;
 import com.example.betitarev.betitarev.fragment.PlaceBetActivity;
 import com.example.betitarev.betitarev.fragment.ProfileActivity;
 import com.example.betitarev.betitarev.fragment.StatisticsActivity;
+import com.example.betitarev.betitarev.helper.FragmentHelper;
 import com.example.betitarev.betitarev.libraries.FireBaseQuery;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static AppCompatActivity activity;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -28,19 +31,19 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_place_bet:
                     fragment = new PlaceBetActivity();
-                    loadFragment(fragment);
+                    FragmentHelper.loadFragment(fragment);
                     return true;
                 case R.id.navigation_opened_bet:
                     fragment = new OpenedBetActivity();
-                    loadFragment(fragment);
+                    FragmentHelper.loadFragment(fragment);
                     return true;
                 case R.id.navigation_statistics:
                     fragment = new StatisticsActivity();
-                    loadFragment(fragment);
+                    FragmentHelper.loadFragment(fragment);
                     return true;
                 case R.id.navigation_profile:
                     fragment = new ProfileActivity();
-                    loadFragment(fragment);
+                    FragmentHelper.loadFragment(fragment);
                     return true;
             }
             return false;
@@ -56,22 +59,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void begin() {
+        activity = this;
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        loadFragment(new PlaceBetActivity());
+        FragmentHelper.loadFragment(new PlaceBetActivity());
     }
 
-    /**
-     * loading fragment into FrameLayout
-     *
-     * @param fragment
-     */
-    private void loadFragment(Fragment fragment) {
-        // load fragment
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+
+    public static AppCompatActivity getActivity() {
+        return activity;
     }
 
 }
