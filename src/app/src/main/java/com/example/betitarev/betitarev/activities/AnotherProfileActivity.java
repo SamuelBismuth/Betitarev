@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -21,6 +22,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.fragment.ProfileActivity;
+import com.example.betitarev.betitarev.helper.FragmentHelper;
 import com.example.betitarev.betitarev.libraries.FireBaseQuery;
 import com.example.betitarev.betitarev.objects.BasicAdmin;
 import com.example.betitarev.betitarev.objects.CurrentAdmin;
@@ -34,6 +37,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+
+
+
 
 public class AnotherProfileActivity extends AppCompatActivity {
     private static FirebaseAuth auth;
@@ -78,7 +85,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
         }
         Log.e("number of users name", "" + UsersNamesHashmap.getAllKeysForValue(Name).size());
         friend = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
-
+        Log.e("in another...", friend.getUserid()+"this is userid here");
 
         Email = friend.getMail();
         mNameTextView = findViewById(R.id.name);
@@ -134,19 +141,22 @@ public class AnotherProfileActivity extends AppCompatActivity {
             Log.e("removebuttonincatch", "oof");
         }
 
+        btn_remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("setonclick", "inside");
+                Intent intent = new Intent(AnotherProfileActivity.this,MainActivity.class);
+                Log.e("setonclick", "inside1");
+                startActivity(intent);
+                Log.e("setonclick", "inside2");
+
+                Log.e("setonclick", friend.getUserid()+"this is userid here");
+                CurrentAdmin.getInstance().removePlayer(friend.getUserid());
+                Log.e("setonclick", "removed another player");
+            }
+        });
+
     }
-
-
-    /**  btn_remove.setOnClickListener(new View.OnClickListener()
-
-    {
-        @Override
-        public void onClick (View v){
-        Log.e("removebuttoninclick", "click recognized");
-        // getAllKeysForValue(currentFriend.)
-        // CurrentAdmin.getInstance().removePlayer(currentFriend.get);
-    }
-    };**/
 
 
     private void setProfileImage() {
