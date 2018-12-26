@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_height="match_parent"
     tools:context=".fragment.PlaceBetActivity"
-    tools:showIn="@layout/activity_place_bet">
+    tools:showIn="@layout/activity_place_bet"
+    >
 
-    <TableLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="1">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin">
 
         <Toolbar
             android:id="@+id/toolbar"
@@ -23,38 +27,62 @@
             android:title="@string/title_place_bet"
             tools:targetApi="lollipop" />
 
-        <EditText
-            android:id="@+id/search_friend"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/search_bettor"
-            android:inputType="textVisiblePassword" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/search_friend"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/search_bettor"
+                android:inputType="textVisiblePassword"
+                android:padding="16dp"/>
+
+        </android.support.design.widget.TextInputLayout>
 
         <ListView
             android:id="@+id/list_friend"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="NestedScrolling" />
+            android:layout_height="48dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+             />
 
-        <EditText
-            android:id="@+id/bet_phrase"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:hint="@string/bet_phrase"
-            android:inputType="text" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/bet_phrase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/bet_phrase"
+                android:inputType="text"
+                android:padding="16dp"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/bet_value"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:hint="@string/bet_value"
-            android:inputType="text" />
+            android:inputType="numberDecimal"
+            android:padding="16dp"
+            android:text="0"/>
+
+        </android.support.design.widget.TextInputLayout>
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <RadioButton
                 android:id="@+id/without_arb"
@@ -81,16 +109,19 @@
         <ListView
             android:id="@+id/list_arbitrator"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:visibility="gone"
-            tools:ignore="NestedScrolling" />
+             />
+
 
         <Button
             android:id="@+id/send_request"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="@string/send_request" />
-
+            android:layout_height="wrap_content"
+            android:text="@string/send_request"
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"/>
         <!-- This button fix the issue of the scroll view but this is not the best
         solution implementation we could have, maybe we're able to fix the problem
         with another solution. -->
@@ -99,6 +130,7 @@
             android:layout_height="wrap_content"
             android:visibility="invisible" />
 
-    </TableLayout>
+    </LinearLayout>
 
-</ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

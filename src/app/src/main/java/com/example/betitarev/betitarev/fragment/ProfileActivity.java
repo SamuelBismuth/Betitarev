@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.betitarev.betitarev.libraries.FireBaseQuery.getCurrentMail;
+import static com.example.betitarev.betitarev.helper.FireBaseQuery.getCurrentMail;
 
 
 public class ProfileActivity extends Fragment {
@@ -121,6 +121,8 @@ public class ProfileActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 auth.signOut();
+                CurrentPlayer.signOut();
+                UsersNamesHashmap.reset();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
 

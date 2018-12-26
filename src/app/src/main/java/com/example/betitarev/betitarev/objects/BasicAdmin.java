@@ -8,7 +8,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.betitarev.betitarev.libraries.FireBaseQuery.removeUser;
+import static com.example.betitarev.betitarev.helper.FireBaseQuery.removeUser;
 
 public class BasicAdmin extends User implements Admin {
     static List<String> AdminPushToken;

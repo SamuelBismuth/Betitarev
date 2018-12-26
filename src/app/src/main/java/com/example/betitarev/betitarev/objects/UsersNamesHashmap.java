@@ -1,5 +1,7 @@
 package com.example.betitarev.betitarev.objects;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,43 +11,29 @@ import java.util.Set;
 
 public class UsersNamesHashmap {
 
-
-
-
-    private HashMap<User, String> Hashmap = new HashMap<>();
     static UsersNamesHashmap instance = null; // Singleton implementation.
+    private HashMap<User, String> Hashmap = new HashMap<>();
 
-    public UsersNamesHashmap(Set<User> Users) {
+    private UsersNamesHashmap(Set<User> Users) {
         for (User user : Users) {
-            this.getHashmap().put(user, user.getName() + " " + user.getFamilyName());        }
-    }
-    public static List<User> getAllKeysForValue(String value)
-    {
-        List<User> listOfKeys = null;
-        HashMap<User,String> mapOfWords = UsersNamesHashmap.getInstance().getHashmap();
-        //Check if Map contains the given value
-        if(mapOfWords.containsValue(value))
-        {
-            // Create an Empty List
-            listOfKeys = new ArrayList<>();
-
-            // Iterate over each entry of map using entrySet
-            for (Map.Entry<User, String> entry : mapOfWords.entrySet())
-            {
-                // Check if value matches with given value
-                if (entry.getValue().equals(value))
-                {
-                    // Store the key from entry to the list
-                    listOfKeys.add(entry.getKey());
-                }
-            }
+            this.getHashmap().put(user, user.getName() + " " + user.getFamilyName());
         }
-        // Return the list of keys whose value matches with given value.
+    }
+
+    public static List<User> getAllKeysForValue(String value) {
+        List<User> listOfKeys = null;
+        HashMap<User, String> mapOfWords = UsersNamesHashmap.getInstance().getHashmap();
+        if (mapOfWords.containsValue(value)) {
+            listOfKeys = new ArrayList<>();
+            for (Map.Entry<User, String> entry : mapOfWords.entrySet())
+                if (entry.getValue().equals(value))
+                    listOfKeys.add(entry.getKey());
+        }
         return listOfKeys;
     }
 
     static public UsersNamesHashmap getInstance(Set<User> Users) {
-        if(instance != null)
+        if (instance != null)
             return instance;
         instance = new UsersNamesHashmap(Users);
         return instance;
@@ -54,6 +42,10 @@ public class UsersNamesHashmap {
 
     public static UsersNamesHashmap getInstance() {
         return instance;
+    }
+
+    public static void reset() {
+        instance = null;
     }
 
     public HashMap<User, String> getHashmap() {

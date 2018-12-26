@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.activities.MainActivity;
-import com.example.betitarev.betitarev.libraries.FireBaseQuery;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.Player;
 import com.example.betitarev.betitarev.objects.User;

@@ -20,6 +20,7 @@ public class CurrentPlayer extends Player {
     public static CurrentPlayer getInstance() {
         return instance;
     }
+    public static void signOut(){instance = null;}
 
 
 
