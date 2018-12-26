@@ -12,4 +12,8 @@ public class Arbitrator implements BetRole {
     public boolean acceptQuery(Bet bet) {
         return false;
     }
+
+    public User getUser() {
+        return user;
+    }
 }
