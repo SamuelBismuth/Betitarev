@@ -13,6 +13,4 @@
         android:descendantFocusability="afterDescendants"
         android:paddingTop="0dp" />
 
-
-
 </RelativeLayout>

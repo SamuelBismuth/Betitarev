@@ -118,6 +118,7 @@ public abstract class User {
                 ", mail=" + mail +
                 ", statistics=" + statistics +
                 ", friends=" + friends +
+                ", userid =" + userid +
                 '}';
 
     }

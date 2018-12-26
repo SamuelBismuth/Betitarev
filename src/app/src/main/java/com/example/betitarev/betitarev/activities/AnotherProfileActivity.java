@@ -95,6 +95,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
                 zoomImageFromThumb(profileImageView, profileImageView.getDrawable());
             }
         });
+
         mAddFriendBtn = (Button) findViewById(R.id.btn_add_friend);
         mAddFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,11 +115,10 @@ public class AnotherProfileActivity extends AppCompatActivity {
                     FireBaseQuery.updateUserFriends(view.getContext());
                 }
             });
-
         }
-
-
     }
+
+
 
     private void setProfileImage() {
         storage = FirebaseStorage.getInstance();
