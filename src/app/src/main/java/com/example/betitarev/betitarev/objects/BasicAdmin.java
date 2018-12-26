@@ -34,17 +34,16 @@ public class BasicAdmin extends User implements Admin {
 
     @Override
     public boolean removePlayer(User user) {
-        Friend this_user= new Friend(user.getName() + " " + user.getFamilyName(), user.getMail(), user.getPushToken());
+        Friend the_user= new Friend(user.getName() + " " + user.getFamilyName(), user.getMail(), user.getPushToken());
+        // remove relations between this admin to the user
+        if(CurrentPlayer.getInstance().getFriends().isFriend(the_user))
+            CurrentPlayer.getInstance().getFriends().removeFriend(the_user);
+
         for(Friend friend : user.getFriends().getFriends())
         {
-            if(!friend.getFullName().equals(CurrentAdmin.getInstance().getName()+" "+CurrentAdmin.getInstance().getFamilyName())) {
-                User friendOfFriend = UsersNamesHashmap.getAllKeysForValue(friend.getFullName()).get(0);
+                User friendOfTheUser = UsersNamesHashmap.getAllKeysForValue(friend.getFullName()).get(0);
                 Log.e("hhhhhhh", "one success");
-                friendOfFriend.getFriends().removeFriend(this_user);
-            }
-            else{
-                CurrentAdmin.getInstance().getFriends().removeFriend(this_user);
-            }
+                friendOfTheUser.getFriends().removeFriend(the_user);
         }
 
         removeUser(user.getUserid());
