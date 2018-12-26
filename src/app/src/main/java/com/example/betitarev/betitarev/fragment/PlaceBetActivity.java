@@ -1,6 +1,7 @@
 package com.example.betitarev.betitarev.fragment;
 
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -223,6 +224,8 @@ public class PlaceBetActivity extends Fragment {
     }
 
     private void clearAll(View view) {
+        BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
+        navigation.setSelectedItemId(R.id.navigation_opened_bet);
         FragmentHelper.loadFragment(new OpenedBetActivity());
     }
 

@@ -1,26 +1,27 @@
 package com.example.betitarev.betitarev.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.helper.FragmentHelper;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 
-//for graph
-import android.graphics.Color;
 import java.util.ArrayList;
 import java.util.List;
+
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.view.PieChartView;
 
-import android.support.v4.app.FragmentTransaction;
+//for graph
 
 
 
@@ -92,6 +93,8 @@ public class StatisticsActivity extends Fragment{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
+                navigation.setSelectedItemId(R.id.navigation_place_bet);
                 FragmentHelper.loadFragment(new PlaceBetActivity());
             }
         });
