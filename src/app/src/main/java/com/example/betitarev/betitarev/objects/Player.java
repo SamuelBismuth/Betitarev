@@ -8,8 +8,8 @@ public class Player extends User {
         super(name, familyName, mail, pushToken);
     }
 
-    public Player(Player player, String userid) {
-        super(player, userid);
+    public Player(Player player) {
+        super(player);
     }
 
 

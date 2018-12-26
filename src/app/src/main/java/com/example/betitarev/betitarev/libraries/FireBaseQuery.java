@@ -73,10 +73,9 @@ public class FireBaseQuery {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
                     user = datas.getValue(Player.class);
-                    userid = datas.getKey();
                 }
 
-                CurrentPlayer.getInstance(user, userid);
+                CurrentPlayer.getInstance(user);
                 Log.e("userDetails", user.toString());
                 mainActivity.begin();
             }
