@@ -16,7 +16,7 @@ public abstract class User {
     public User() {
     }
 
-    public User(String name, String familyName, Mail mail, String pushToken) {
+    public User(String name, String familyName, Mail mail,String userId, String pushToken) {
         this.name = name;
         this.familyName = familyName;
         this.mail = mail;
@@ -24,6 +24,7 @@ public abstract class User {
         this.statistics = new Statistics();
         this.friends = new Friends();
         this.pushToken = pushToken;
+        this.userid = userId;
     }
 
     public User(User user, String userid) {
@@ -47,6 +48,16 @@ public abstract class User {
         this.statistics = user.getStatistics();
         this.userid = user.getUserid();
 
+    }
+
+    public User(String name, String familyName, Mail mail, String pushToken) {
+        this.name = name;
+        this.familyName = familyName;
+        this.mail = mail;
+        this.picture = " ";
+        this.statistics = new Statistics();
+        this.friends = new Friends();
+        this.pushToken = pushToken;
     }
 
     public String getName() {
