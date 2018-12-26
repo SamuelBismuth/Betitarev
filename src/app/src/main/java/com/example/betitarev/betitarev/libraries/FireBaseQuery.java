@@ -98,9 +98,7 @@ public class FireBaseQuery {
     public static void updateUserFriends(final Context con,User CurrentFriend) {
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.child(CurrentPlayer.getInstance().getUserid()).child("friends").setValue(CurrentPlayer.getInstance().getFriends());
-        Friends CurrentFriendFriends = CurrentFriend.getFriends();
-        CurrentFriendFriends.addFriend(new Friend(CurrentPlayer.getInstance().getName() + " " + CurrentPlayer.getInstance().getFamilyName(), CurrentPlayer.getInstance().getMail(), CurrentPlayer.getInstance().getPushToken()));
-        reference.child(CurrentFriend.getUserid()).child("friends").setValue(CurrentFriendFriends);
+        reference.child(CurrentFriend.getUserid()).child("friends").setValue(CurrentFriend.getFriends());
         Activity a = (Activity) con;
         a.finish();
 

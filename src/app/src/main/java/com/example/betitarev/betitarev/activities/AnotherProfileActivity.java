@@ -29,6 +29,7 @@ import com.example.betitarev.betitarev.objects.BasicAdmin;
 import com.example.betitarev.betitarev.objects.CurrentAdmin;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Friend;
+import com.example.betitarev.betitarev.objects.Friends;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.User;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
@@ -110,6 +111,8 @@ public class AnotherProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 CurrentPlayer.getInstance().getFriends().addFriend(currentFriend);
+                Friends CurrentFriendFriends = friend.getFriends();
+                CurrentFriendFriends.addFriend(new Friend(CurrentPlayer.getInstance().getName() + " " + CurrentPlayer.getInstance().getFamilyName(), CurrentPlayer.getInstance().getMail(), CurrentPlayer.getInstance().getPushToken()));
                 FireBaseQuery.updateUserFriends(view.getContext(), friend);
 
             }
@@ -122,6 +125,8 @@ public class AnotherProfileActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     CurrentPlayer.getInstance().getFriends().removeFriend(currentFriend);
+                    Friends CurrentFriendFriends = friend.getFriends();
+                    CurrentFriendFriends.removeFriend(new Friend(CurrentPlayer.getInstance().getName() + " " + CurrentPlayer.getInstance().getFamilyName(), CurrentPlayer.getInstance().getMail(), CurrentPlayer.getInstance().getPushToken()));
                     FireBaseQuery.updateUserFriends(view.getContext(), friend);
 
                 }
