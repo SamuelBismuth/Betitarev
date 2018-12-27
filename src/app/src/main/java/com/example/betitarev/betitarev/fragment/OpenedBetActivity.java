@@ -65,7 +65,6 @@ public class OpenedBetActivity extends Fragment {
 
         // specify an adapter (see also next example)
 
-        Log.e("in open..", Integer.toString(CurrentUserBets.getInstance().getBets().size()));
         mAdapter = new Adapter(CurrentUserBets.getInstance().getBets());
         mRecyclerView.setAdapter(mAdapter);
         Log.e("in open..", "2");

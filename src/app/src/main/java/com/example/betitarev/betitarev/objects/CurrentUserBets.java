@@ -3,6 +3,7 @@ package com.example.betitarev.betitarev.objects;
 import java.util.List;
 
 public class CurrentUserBets {
+
     private static CurrentUserBets instance = null; // Singleton implementation.
     private List<Bet> bets;
 
@@ -10,7 +11,13 @@ public class CurrentUserBets {
         this.bets = Bets;
     }
 
-    public static CurrentUserBets getInstance() {
+    public static CurrentUserBets getInstance(List<Bet> bets) {
+        if (instance == null)
+            instance = new CurrentUserBets(bets);
+        return instance;
+    }
+
+    public static  CurrentUserBets getInstance() {
         return instance;
     }
 
