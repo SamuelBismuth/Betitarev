@@ -2,16 +2,18 @@ package com.example.betitarev.betitarev.activities;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+<<<<<<< HEAD
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+=======
+import android.view.ContextThemeWrapper;
+>>>>>>> 5548262a2af14fdc4b0ac59272f28a7bf26cfc84
 
 import com.example.betitarev.betitarev.R;
 
@@ -27,7 +29,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
-                String Name = null;
+
             }
             else {
                 showAlertDialog(extras.getString("title"), extras.getString("message"));

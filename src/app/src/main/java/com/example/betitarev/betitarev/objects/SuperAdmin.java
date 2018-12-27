@@ -24,7 +24,7 @@ public class SuperAdmin extends User implements Admin {
     }
 
     @Override
-    public boolean removePlayer(String userid) {
+    public boolean removePlayer(User user) {
         DatabaseReference mFirebaseDatabase;
         FirebaseDatabase mFirebaseInstance;
         mFirebaseInstance = FirebaseDatabase.getInstance();

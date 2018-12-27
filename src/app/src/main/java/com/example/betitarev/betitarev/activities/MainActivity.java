@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FireBaseQuery.loadCurrentUser(FireBaseQuery.getCurrentMail(), this);
+        FireBaseQuery.loadInitialData(FireBaseQuery.getCurrentMail(), this);
     }
 
     public void begin() {

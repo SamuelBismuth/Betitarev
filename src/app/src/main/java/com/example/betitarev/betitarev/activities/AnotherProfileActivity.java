@@ -28,6 +28,7 @@ import com.example.betitarev.betitarev.objects.CurrentAdmin;
 import com.example.betitarev.betitarev.helper.FireBaseQuery;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Friend;
+import com.example.betitarev.betitarev.objects.Friends;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.User;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
@@ -109,7 +110,10 @@ public class AnotherProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 CurrentPlayer.getInstance().getFriends().addFriend(currentFriend);
-                FireBaseQuery.updateUserFriends(view.getContext());
+                Friends CurrentFriendFriends = friend.getFriends();
+                CurrentFriendFriends.addFriend(new Friend(CurrentPlayer.getInstance().getName() + " " + CurrentPlayer.getInstance().getFamilyName(), CurrentPlayer.getInstance().getMail(), CurrentPlayer.getInstance().getPushToken()));
+                FireBaseQuery.updateUserFriends(view.getContext(), friend);
+
             }
         });
         currentFriend = new Friend(friend.getName() + " " + friend.getFamilyName(), friend.getMail(), friend.getPushToken());
@@ -120,7 +124,10 @@ public class AnotherProfileActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     CurrentPlayer.getInstance().getFriends().removeFriend(currentFriend);
-                    FireBaseQuery.updateUserFriends(view.getContext());
+                    Friends CurrentFriendFriends = friend.getFriends();
+                    CurrentFriendFriends.removeFriend(new Friend(CurrentPlayer.getInstance().getName() + " " + CurrentPlayer.getInstance().getFamilyName(), CurrentPlayer.getInstance().getMail(), CurrentPlayer.getInstance().getPushToken()));
+                    FireBaseQuery.updateUserFriends(view.getContext(), friend);
+
                 }
             });
         }
@@ -129,12 +136,15 @@ public class AnotherProfileActivity extends AppCompatActivity {
         btn_remove = (Button) findViewById(R.id.btn_remove);
         try {
             if (CurrentPlayer.getInstance().getMail().getMail().endsWith("betitarev.com")) {
+                Log.e("removebutton", "mail: "+CurrentPlayer.getInstance().getMail().getMail().endsWith("betitarev.com"));
                 btn_remove.setVisibility(View.VISIBLE);
                 // need to think how to do this line: we need to insert some how basic admin//CurrentAdmin.getInstance(CurrentPlayer.getInstance().get,CurrentPlayer.getInstance().getUserid());
                 Log.e("removebutton", "failed");
                 BasicAdmin ba = new BasicAdmin(CurrentPlayer.getInstance().getName(), CurrentPlayer.getInstance().getName(), CurrentPlayer.getInstance().getMail(), CurrentPlayer.getInstance().getPushToken());
                 CurrentAdmin.getInstance(ba, ba.getUserid());
             }
+            else
+                btn_remove.setVisibility(View.GONE);
         } catch (Exception e) {
             btn_remove.setVisibility(View.GONE);
             Log.e("removebuttonincatch", "oof");
@@ -150,7 +160,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
                 Log.e("setonclick", "inside2");
 
                 Log.e("setonclick", friend.getUserid()+"this is userid here");
-                CurrentAdmin.getInstance().removePlayer(friend.getUserid());
+                CurrentAdmin.getInstance().removePlayer(friend);
                 Log.e("setonclick", "removed another player");
             }
         });
