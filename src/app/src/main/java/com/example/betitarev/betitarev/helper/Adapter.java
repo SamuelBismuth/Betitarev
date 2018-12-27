@@ -72,7 +72,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         if(position%2==0)
             holder.mTextView.setBackgroundColor(Color.rgb(242, 254, 47));
         else
-            holder.mTextView.setBackgroundColor(R.color.btn_logut_bg);
+            holder.mTextView.setBackgroundColor(Color.rgb(0, 61, 7));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
