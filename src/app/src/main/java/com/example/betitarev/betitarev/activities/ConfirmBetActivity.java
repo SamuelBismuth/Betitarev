@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.helper.FireBaseQuery;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ConfirmBetActivity extends AppCompatActivity {
 
@@ -32,7 +34,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
                 this.dataMessage = extras.getString("message");
             }
         }
-        if(dataTitle.equals("Bet Request"))
+        if(dataTitle.contains("Bet"))
             showAlertDialogPlayer();
         else
             showAlertDialogArb();
@@ -45,6 +47,8 @@ public class ConfirmBetActivity extends AppCompatActivity {
         builder.setPositiveButton("Player1", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Log.i("Winner", "the winner is the player 1");
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
+                reference.child(betId).child("winner").setValue("Player 1");
                 ConfirmBetActivity.this.finish();
                 dialog.dismiss();
             }
@@ -52,6 +56,8 @@ public class ConfirmBetActivity extends AppCompatActivity {
         builder.setNegativeButton("Player2", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Log.i("Winner", "the winner is the player 2");
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
+                reference.child(betId).child("winner").setValue("Player 2");
                 ConfirmBetActivity.this.finish();
                 dialog.dismiss();
             }

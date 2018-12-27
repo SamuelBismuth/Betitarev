@@ -6,6 +6,7 @@ public class Bet {
     private String phrase;
     private FictiveMoney fictiveMoney;
     private Arbitrator arbitrator;
+    private String winner;
 
 
     public Bet() {}
@@ -16,6 +17,7 @@ public class Bet {
         this.fictiveMoney = fictiveMoney;
         this.phrase = phrase;
         this.arbitrator = arbitrator;
+        this.winner = " ";
     }
 
     public Bettor getPlayer1() {
@@ -38,4 +40,7 @@ public class Bet {
         return fictiveMoney;
     }
 
+    public String getWinner() {
+        return winner;
+    }
 }
