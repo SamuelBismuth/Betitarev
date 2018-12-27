@@ -2,10 +2,11 @@ package com.example.betitarev.betitarev.objects;
 
 public class Bettor implements BetRole {
 
-    private User user;
+    private Player user;
     private BettorStatus bettorStatus;
+    public Bettor(){}
 
-    public Bettor(User user, BettorStatus bettorStatus) {
+    public Bettor(Player user, BettorStatus bettorStatus) {
         this.user = user;
         this.bettorStatus = bettorStatus;
     }
@@ -15,7 +16,7 @@ public class Bettor implements BetRole {
         return false;
     }
 
-    public User getUser() {
+    public Player getUser() {
         return user;
     }
 

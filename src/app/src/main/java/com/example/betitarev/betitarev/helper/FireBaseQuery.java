@@ -134,7 +134,7 @@ public class FireBaseQuery {
 
     public static void placeNewBetWithArb(String bettor2, String arb, String betPhrase, String betValue) {
         Bet bet = new BetWithArbitrator(new Bettor(CurrentPlayer.getInstance(), BettorStatus.Confirmed),
-                new Bettor(UsersNamesHashmap.getAllKeysForValue(bettor2).get(0), BettorStatus.NotConfirmed), betPhrase, new FictiveMoney(Integer.parseInt(betValue)),
+                new Bettor(new Player(UsersNamesHashmap.getAllKeysForValue(bettor2).get(0)), BettorStatus.NotConfirmed), betPhrase, new FictiveMoney(Integer.parseInt(betValue)),
                 new Arbitrator(UsersNamesHashmap.getAllKeysForValue(arb).get(0)));
         DatabaseReference betsReference = FirebaseDatabase.getInstance().getReference("bets");
         String betId = betsReference.push().getKey();
@@ -144,7 +144,7 @@ public class FireBaseQuery {
 
     public static void placeNewBetWithoutArb(String bettor2, String betPhrase, String betValue) {
         Bet bet = new BetWithoutArbitrator(new Bettor(CurrentPlayer.getInstance(), BettorStatus.Confirmed),
-                new Bettor(UsersNamesHashmap.getAllKeysForValue(bettor2).get(0), BettorStatus.NotConfirmed), betPhrase, new FictiveMoney(Integer.parseInt(betValue)));
+                new Bettor(new Player(UsersNamesHashmap.getAllKeysForValue(bettor2).get(0)), BettorStatus.NotConfirmed), betPhrase, new FictiveMoney(Integer.parseInt(betValue)));
         DatabaseReference betsReference = FirebaseDatabase.getInstance().getReference("bets");
         String betId = betsReference.push().getKey();
         betsReference.child(betId).setValue(bet);

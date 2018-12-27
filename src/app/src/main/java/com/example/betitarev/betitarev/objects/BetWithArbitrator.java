@@ -6,10 +6,6 @@ public class BetWithArbitrator extends Bet {
         super(player1, player2, phrase, fictiveMoney,arbitrator);
     }
 
-    @Override
-    protected Bettor appointWinner() {
-        return null;
-    }
 
 
 }
