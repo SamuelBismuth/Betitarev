@@ -215,9 +215,11 @@ public class FireBaseQuery {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
                     Bet bet = datas.getValue(Bet.class);
-                    if (bet.getPlayer1().getUser().getMail().getMail().equals(CurrentPlayer.getInstance().getMail().getMail()) || bet.getPlayer2().getUser().getMail().getMail().equals(CurrentPlayer.getInstance().getMail().getMail())) {
+                    if (bet.getPlayer1().getUser().getMail().getMail().equals(CurrentPlayer.getInstance()
+                            .getMail().getMail()) || bet.getPlayer2().getUser().getMail().getMail().
+                            equals(CurrentPlayer.getInstance().getMail().getMail())) {
                         bets.add(bet);
-                        Log.e("bet added", bet.toString());
+                        Log.d("bet added", bet.getPhrase());
                     }
                     if (bet.getArbitrator() != null) {
                         if (bet.getArbitrator().getUser().getMail().getMail().equals(CurrentPlayer.getInstance().getMail().getMail())) {
