@@ -55,7 +55,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
                 "\npharse: "+b.getPhrase()+
                 "\nmoney: "+Integer.toString(b.getFictiveMoney().getAmount()));
         holder.mTextView.setTextColor(Color.BLACK);
-        //holder.mTextView.
+        if(position%2==0)
+            holder.mTextView.setBackgroundColor(Color.BLUE);
+        else
+            holder.mTextView.setBackgroundColor(Color.WHITE);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
