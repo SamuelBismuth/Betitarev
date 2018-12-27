@@ -5,14 +5,14 @@ public abstract class Bet {
     private Bettor player1, player2;
     private String phrase;
     private FictiveMoney fictiveMoney;
-    private BettorStatus status;
+    private BetStatus status;
 
     public Bet(Bettor player1, Bettor player2, String phrase, FictiveMoney fictiveMoney) {
         this.player1 = player1;
         this.player2 = player2;
         this.fictiveMoney = fictiveMoney;
         this.phrase = phrase;
-        this.status = BettorStatus.NotConfirmed;
+        this.status = BetStatus.OnProcess;
     }
 
     protected abstract Bettor appointWinner();  // Can be draw.
@@ -33,7 +33,7 @@ public abstract class Bet {
         return fictiveMoney;
     }
 
-    public BettorStatus getStatus() {
+    public BetStatus getStatus() {
         return status;
     }
 }
