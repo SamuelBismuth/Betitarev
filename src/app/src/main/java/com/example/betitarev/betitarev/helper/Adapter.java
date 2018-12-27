@@ -67,7 +67,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         holder.mTextView.setText("bettor 1: "+b.getPlayer1().getUser().getName()+", guess: "+b.getPlayer1().getGuessing()+
                 "\nbettor 2: "+b.getPlayer2().getUser().getName()+", guess: "+b.getPlayer2().getGuessing()+
                 "\npharse: "+b.getPhrase()+
-                "\nmoney: "+Integer.toString(b.getFictiveMoney().getAmount()));
+                "\nmoney: "+Integer.toString(b.getFictiveMoney().getAmount())+
+                "\nwinner: " +b.getWinner());
         holder.mTextView.setTextColor(Color.BLACK);
         if(position%2==0)
             holder.mTextView.setBackgroundColor(Color.rgb(242, 254, 47));

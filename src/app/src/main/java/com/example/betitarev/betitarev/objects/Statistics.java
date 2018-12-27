@@ -8,14 +8,14 @@ public class Statistics {
         this.winStat = new Statistic(0);
         this.loseStat = new Statistic(0);
         this.drawStat = new Statistic(0);
-        ArbitratorStat = new Statistic(0);
+        this.ArbitratorStat = new Statistic(0);
     }
 
     public Statistics(Statistic winStat, Statistic loseStat, Statistic drawStat, Statistic arbitratorStat) {
         this.winStat = winStat;
         this.loseStat = loseStat;
         this.drawStat = drawStat;
-        ArbitratorStat = arbitratorStat;
+        this.ArbitratorStat = arbitratorStat;
     }
 
     protected int getNumberOfGames() {
