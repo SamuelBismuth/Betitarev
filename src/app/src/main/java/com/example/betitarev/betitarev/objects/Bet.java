@@ -8,25 +8,16 @@ public class Bet {
     private BetStatus status;
     private Arbitrator arbitrator;
 
-    public Bet(){}
 
-    public Bet(Bettor player1, Bettor player2, String phrase, FictiveMoney fictiveMoney) {
+    public Bet() {}
+
+    public Bet(Bettor player1, Bettor player2, String phrase, FictiveMoney fictiveMoney, BetStatus status) {
         this.player1 = player1;
         this.player2 = player2;
         this.fictiveMoney = fictiveMoney;
         this.phrase = phrase;
-        this.status = BetStatus.OnProcess;
+        this.status = status;
     }
-    public Bet(Bettor player1, Bettor player2, String phrase, FictiveMoney fictiveMoney, Arbitrator arbitrator) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.fictiveMoney = fictiveMoney;
-        this.phrase = phrase;
-        this.status = BetStatus.OnProcess;
-        this.arbitrator = arbitrator;
-    }
-
-
 
     public Bettor getPlayer1() {
         return player1;

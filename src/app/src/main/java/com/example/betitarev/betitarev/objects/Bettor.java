@@ -4,11 +4,14 @@ public class Bettor implements BetRole {
 
     private Player user;
     private BettorStatus bettorStatus;
-    public Bettor(){}
+    private String value;
 
-    public Bettor(Player user, BettorStatus bettorStatus) {
+    public Bettor() {}
+
+    public Bettor(Player user, BettorStatus bettorStatus, String value) {
         this.user = user;
         this.bettorStatus = bettorStatus;
+        this.value = value;
     }
 
     @Override
@@ -22,5 +25,9 @@ public class Bettor implements BetRole {
 
     public BettorStatus getBettorStatus() {
         return bettorStatus;
+    }
+
+    public String getValue() {
+        return value;
     }
 }
