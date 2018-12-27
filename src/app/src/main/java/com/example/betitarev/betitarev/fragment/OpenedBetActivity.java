@@ -60,12 +60,12 @@ public class OpenedBetActivity extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        Log.e("in removeUser", CurrentUserBets.getInstance().getBets().toString());
+        Log.e("in open..", CurrentUserBets.getInstance().getBets().toString());
         mAdapter = new Adapter(CurrentUserBets.getInstance().getBets());
         mRecyclerView.setAdapter(mAdapter);
-
+        Log.e("in open..", "2");
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.activity_opened_bet, container, false);
+        return view;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
