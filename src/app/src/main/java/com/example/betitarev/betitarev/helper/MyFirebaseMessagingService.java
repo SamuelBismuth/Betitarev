@@ -63,7 +63,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 "Phrase: " + bet.getPhrase() + "\n" +
                         "PLayer 1 guesssing: " + bet.getPlayer1().getGuessing() + "\n" +
                         "Player2 guessing: " + bet.getPlayer2().getGuessing(),
-                bet.getArbitrator().getUser().getPushToken(), "betitarevToken", betId));
+                "betitarevToken", bet.getArbitrator().getUser().getPushToken(), betId));
     }
 
 }
