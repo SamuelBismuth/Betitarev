@@ -4,14 +4,14 @@ public class Bettor implements BetRole {
 
     private Player user;
     private BettorStatus bettorStatus;
-    private String value;
+    private String guessing;
 
     public Bettor() {}
 
-    public Bettor(Player user, BettorStatus bettorStatus, String value) {
+    public Bettor(Player user, BettorStatus bettorStatus, String guessing) {
         this.user = user;
         this.bettorStatus = bettorStatus;
-        this.value = value;
+        this.guessing = guessing;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class Bettor implements BetRole {
         return bettorStatus;
     }
 
-    public String getValue() {
-        return value;
+    public String getGuessing() {
+        return guessing;
     }
 }
