@@ -5,7 +5,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.View;
 
 import com.example.betitarev.betitarev.activities.MainActivity;
 import com.example.betitarev.betitarev.objects.Arbitrator;
@@ -15,6 +14,7 @@ import com.example.betitarev.betitarev.objects.BetWithoutArbitrator;
 import com.example.betitarev.betitarev.objects.Bettor;
 import com.example.betitarev.betitarev.objects.BettorStatus;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
+import com.example.betitarev.betitarev.objects.CurrentUserBets;
 import com.example.betitarev.betitarev.objects.FictiveMoney;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.Notification;
@@ -32,7 +32,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class FireBaseQuery {
@@ -41,6 +43,7 @@ public class FireBaseQuery {
     private static Player user;
     private static FirebaseAuth auth;
     private static Set<User> allUsersSet = new LinkedHashSet<>();
+    private static List<Bet> bets = new ArrayList<>();
     private static FirebaseStorage storage;
     private static StorageReference storageReference;
 
@@ -85,6 +88,7 @@ public class FireBaseQuery {
                 }
 
                 CurrentPlayer.getInstance(user);
+                loadCurrentBets();
                 Log.e("userDetails", user.toString());
                 mainActivity.begin();
             }
@@ -177,5 +181,27 @@ public class FireBaseQuery {
         Log.e("in removeUser", userid+" this is userid");
         reference.child(userid).removeValue();
     }
+    private static void loadCurrentBets(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                    Bet bet = datas.getValue(Bet.class);
+                    if(bet.getPlayer1().getUser().getMail().getMail().equals(CurrentPlayer.getInstance().getMail().getMail())||bet.getPlayer2().getUser().getMail().getMail().equals(CurrentPlayer.getInstance().getMail().getMail())){
+                        bets.add(bet);
+                    }
+                }
+                CurrentUserBets.getInstance(bets);
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+    }
+
+
 }
 
