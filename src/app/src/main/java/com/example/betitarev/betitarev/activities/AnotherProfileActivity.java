@@ -136,12 +136,15 @@ public class AnotherProfileActivity extends AppCompatActivity {
         btn_remove = (Button) findViewById(R.id.btn_remove);
         try {
             if (CurrentPlayer.getInstance().getMail().getMail().endsWith("betitarev.com")) {
+                Log.e("removebutton", "mail: "+CurrentPlayer.getInstance().getMail().getMail().endsWith("betitarev.com"));
                 btn_remove.setVisibility(View.VISIBLE);
                 // need to think how to do this line: we need to insert some how basic admin//CurrentAdmin.getInstance(CurrentPlayer.getInstance().get,CurrentPlayer.getInstance().getUserid());
                 Log.e("removebutton", "failed");
                 BasicAdmin ba = new BasicAdmin(CurrentPlayer.getInstance().getName(), CurrentPlayer.getInstance().getName(), CurrentPlayer.getInstance().getMail(), CurrentPlayer.getInstance().getPushToken());
                 CurrentAdmin.getInstance(ba, ba.getUserid());
             }
+            else
+                btn_remove.setVisibility(View.GONE);
         } catch (Exception e) {
             btn_remove.setVisibility(View.GONE);
             Log.e("removebuttonincatch", "oof");
