@@ -1,5 +1,6 @@
 package com.example.betitarev.betitarev.helper;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -50,6 +51,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
@@ -68,9 +70,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
                 "\nmoney: "+Integer.toString(b.getFictiveMoney().getAmount()));
         holder.mTextView.setTextColor(Color.BLACK);
         if(position%2==0)
-            holder.mTextView.setBackgroundColor(Color.BLUE);
+            holder.mTextView.setBackgroundColor(Color.rgb(242, 254, 47));
         else
-            holder.mTextView.setBackgroundColor(Color.WHITE);
+            holder.mTextView.setBackgroundColor(R.color.btn_logut_bg);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

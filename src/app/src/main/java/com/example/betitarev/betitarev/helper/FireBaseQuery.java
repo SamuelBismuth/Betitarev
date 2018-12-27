@@ -39,7 +39,6 @@ import java.util.Set;
 
 public class FireBaseQuery {
 
-    private static String userid, name1, familyName1;
     private static Player user;
     private static FirebaseAuth auth;
     private static Set<User> allUsersSet = new LinkedHashSet<>();
@@ -203,7 +202,7 @@ public class FireBaseQuery {
     public static void setBetValue(Bet bet, String value, String betId) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
         reference.child(betId).child("player2/guessing").setValue(value);
-
+        bet.getPlayer2().setGuessing(value);
         MyFirebaseMessagingService.sendMessageForTheAnswer(bet, betId);
 
     }
@@ -254,6 +253,7 @@ public class FireBaseQuery {
                                 reference.child(userid).child("statistics/loseStat/counter").setValue((currentUser.getStatistics().getLoseStat().getCounter() + 1));
                                 break;
                             case 2:
+                                Log.d("hereiam", "heene");
                                 reference.child(userid).child("statistics/arbitratorStat/counter").setValue((currentUser.getStatistics().getArbitratorStat().getCounter() + 1));
                                 break;
                         }

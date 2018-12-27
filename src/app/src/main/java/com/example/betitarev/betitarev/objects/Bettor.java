@@ -25,4 +25,8 @@ public class Bettor implements BetRole {
     public String getGuessing() {
         return guessing;
     }
+
+    public void setGuessing(String guessing) {
+        this.guessing = guessing;
+    }
 }
