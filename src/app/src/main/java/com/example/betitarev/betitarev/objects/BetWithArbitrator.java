@@ -12,4 +12,8 @@ public class BetWithArbitrator extends Bet {
     public Arbitrator getArbitrator() {
         return arbitrator;
     }
+
+
+
+
 }

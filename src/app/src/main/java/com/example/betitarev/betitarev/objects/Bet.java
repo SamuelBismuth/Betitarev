@@ -6,6 +6,8 @@ public class Bet {
     private String phrase;
     private FictiveMoney fictiveMoney;
     private BetStatus status;
+    private Arbitrator arbitrator;
+
 
     public Bet() {}
 
@@ -27,6 +29,10 @@ public class Bet {
 
     public String getPhrase() {
         return phrase;
+    }
+
+    public Arbitrator getArbitrator() {
+        return arbitrator;
     }
 
     public FictiveMoney getFictiveMoney() {
