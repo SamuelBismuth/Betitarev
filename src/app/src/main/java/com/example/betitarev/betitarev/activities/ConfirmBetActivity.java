@@ -11,8 +11,11 @@ import android.widget.LinearLayout;
 
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.helper.FireBaseQuery;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ConfirmBetActivity extends AppCompatActivity {
 
@@ -34,7 +37,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
                 this.dataMessage = extras.getString("message");
             }
         }
-        if(dataTitle.contains("Bet"))
+        if (dataTitle.contains("Bet"))
             showAlertDialogPlayer();
         else
             showAlertDialogArb();
@@ -49,6 +52,20 @@ public class ConfirmBetActivity extends AppCompatActivity {
                 Log.i("Winner", "the winner is the player 1");
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
                 reference.child(betId).child("winner").setValue("Player 1");
+                reference.child(betId).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String userIdWinner = dataSnapshot.child("player1/user/userid").getValue().toString();
+                        String userIdLoser = dataSnapshot.child("player2/user/userid").getValue().toString();
+                        FireBaseQuery.updateStats(userIdWinner, 0);
+                        FireBaseQuery.updateStats(userIdLoser, 1);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        System.out.println("The read failed: " + databaseError.getCode());
+                    }
+                });
                 ConfirmBetActivity.this.finish();
                 dialog.dismiss();
             }
@@ -58,11 +75,38 @@ public class ConfirmBetActivity extends AppCompatActivity {
                 Log.i("Winner", "the winner is the player 2");
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
                 reference.child(betId).child("winner").setValue("Player 2");
+                reference.child(betId).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String userIdWinner = dataSnapshot.child("player2/user/userid").getValue().toString();
+                        String userIdLoser = dataSnapshot.child("player1/user/userid").getValue().toString();
+                        FireBaseQuery.updateStats(userIdWinner, 0);
+                        FireBaseQuery.updateStats(userIdLoser, 1);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        System.out.println("The read failed: " + databaseError.getCode());
+                    }
+                });
                 ConfirmBetActivity.this.finish();
                 dialog.dismiss();
             }
         });
         builder.show();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
+        reference.child(betId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String userIdArbitrator = dataSnapshot.child("arbitrator/user/userid").getValue().toString();
+                FireBaseQuery.updateStats(userIdArbitrator, 2);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
     }
 
     private void showAlertDialogPlayer() {

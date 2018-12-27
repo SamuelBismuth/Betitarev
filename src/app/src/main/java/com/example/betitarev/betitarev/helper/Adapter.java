@@ -1,4 +1,4 @@
-package com.example.betitarev.betitarev.fragment;
+package com.example.betitarev.betitarev.helper;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

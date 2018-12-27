@@ -233,5 +233,35 @@ public class FireBaseQuery {
             }
         });
     }
+
+    public static void updateStats(final String userid, final int status) {
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                    if (datas.getKey().equals(userid)) {
+                        Player currentUser = datas.getValue(Player.class);
+                        switch (status) {
+                            case 0:
+                                reference.child(userid).child("statistics/winStat/counter").setValue((currentUser.getStatistics().getWinStat().getCounter() + 1));
+                                break;
+                            case 1:
+                                reference.child(userid).child("statistics/loseStat/counter").setValue((currentUser.getStatistics().getLoseStat().getCounter() + 1));
+                                break;
+                            case 2:
+                                reference.child(userid).child("statistics/arbitratorStat/counter").setValue((currentUser.getStatistics().getArbitratorStat().getCounter() + 1));
+                                break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+    }
 }
 
