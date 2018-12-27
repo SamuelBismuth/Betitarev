@@ -49,15 +49,16 @@ public class ConfirmBetActivity extends AppCompatActivity {
         builder.setTitle("Message");
         builder.setMessage("title: " + dataTitle + "\n" + "message: " + dataMessage);
         builder.setPositiveButton("OK", onOk(input));
-        builder.setNegativeButton("Reject", OnReject());
+        builder.setNegativeButton("Reject", OnReject("LUeMOc223fCXIXRVmM4"));
         builder.setView(input);
         builder.show();
     }
 
-    private DialogInterface.OnClickListener OnReject() {
+    private DialogInterface.OnClickListener OnReject(String betid) {
         Log.i("Sam2", "On reject, we're deleting the bet from the database.");
         Log.i("sam3", betId);
         // need to be redirected to the place a bet activity.
+
         return null;
     }
 
