@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.betitarev.betitarev.activities.MainActivity;
 import com.example.betitarev.betitarev.objects.Arbitrator;
+import com.example.betitarev.betitarev.objects.Bank;
 import com.example.betitarev.betitarev.objects.Bet;
 import com.example.betitarev.betitarev.objects.BetWithArbitrator;
 import com.example.betitarev.betitarev.objects.BetWithoutArbitrator;
@@ -265,6 +266,24 @@ public class FireBaseQuery {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
+    }
+    public static void getBank(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Bank");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot bank : dataSnapshot.getChildren()) {
+                    Bank.getInstance(bank.getValue(Bank.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 }
