@@ -42,7 +42,7 @@ public class OpenedBetActivity extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,19 +53,12 @@ public class OpenedBetActivity extends Fragment {
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
+        //mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ////my bets list
 
-       // List<Bet> bets;
-        //bets=new ArrayList<Bet>() ;
-        //bets.add(new Bet());
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // specify an adapter (see also next example)
         Log.e("in removeUser", CurrentUserBets.getInstance().getBets().toString());
         mAdapter = new Adapter(CurrentUserBets.getInstance().getBets());
