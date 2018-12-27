@@ -93,7 +93,11 @@ public class FireBaseQuery {
         });
     }
 
-
+    public static void changeBetStatus(String betid)
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
+        reference.child(betid).child("status").setValue("Deleted");
+    }
     public static void updateUserFriends(final Context con) {
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.child(CurrentPlayer.getInstance().getUserid()).child("friends").setValue(CurrentPlayer.getInstance().getFriends());
