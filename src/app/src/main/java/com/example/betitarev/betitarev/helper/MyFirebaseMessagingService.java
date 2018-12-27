@@ -58,7 +58,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     protected static void sendMessageForTheAnswer(Bet bet, String betId) {
-        Log.i("hello", "here");
         FireBaseQuery.sendMessage( new Notification("Answer for the bet",
                 "Phrase: " + bet.getPhrase() + "\n" +
                         "PLayer 1 guesssing: " + bet.getPlayer1().getGuessing() + "\n" +

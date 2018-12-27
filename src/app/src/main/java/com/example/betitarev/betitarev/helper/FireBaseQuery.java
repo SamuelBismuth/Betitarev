@@ -202,7 +202,7 @@ public class FireBaseQuery {
 
     public static void setBetValue(Bet bet, String value, String betId) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
-        reference.child(betId).child("player2/value").setValue(value);
+        reference.child(betId).child("player2/guessing").setValue(value);
         MyFirebaseMessagingService.sendMessageForTheAnswer(bet, betId);
     }
 
