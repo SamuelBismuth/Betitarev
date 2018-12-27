@@ -98,7 +98,8 @@ public class FireBaseQuery {
     public static void changeBetStatus(String betid)
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
-        reference.child(betid).child("status").setValue("Deleted");
+        reference.child(betid).child("status").setValue(2);
+        Log.e("statbet", reference.child(betid).child("status").getKey());
     }
     public static void updateUserFriends(final Context con) {
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
