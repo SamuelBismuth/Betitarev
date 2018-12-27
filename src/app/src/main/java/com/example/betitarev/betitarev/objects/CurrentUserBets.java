@@ -23,4 +23,8 @@ public class CurrentUserBets {
     public void addBet(Bet bet){
         Bets.add(bet);
     }
+
+    public List<Bet> getBets() {
+        return Bets;
+    }
 }
