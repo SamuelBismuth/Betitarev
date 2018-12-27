@@ -213,18 +213,6 @@ public class FireBaseQuery {
         Log.d("betId2", betId);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
         reference.child(betId).child("player2/value").setValue(value);
-        switch (bet.getStatus()) {
-            case Deleted:
-                Log.i("sam5", "the bet have been deleted");
-                break;
-            case WaitForTwo:
-                reference.child(betId).child("status").setValue(1);
-                break;
-            case WaitForOne:
-                reference.child(betId).child("status").setValue(0);
-                sendMessageForTheAnswer();
-                break;
-        }
     }
 
     private static void sendMessageForTheAnswer() {
