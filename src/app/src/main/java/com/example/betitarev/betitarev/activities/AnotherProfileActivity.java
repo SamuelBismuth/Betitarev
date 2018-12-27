@@ -22,10 +22,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
-
+import com.example.betitarev.betitarev.helper.FireBaseQuery;
 import com.example.betitarev.betitarev.objects.BasicAdmin;
 import com.example.betitarev.betitarev.objects.CurrentAdmin;
-import com.example.betitarev.betitarev.helper.FireBaseQuery;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Friend;
 import com.example.betitarev.betitarev.objects.Friends;
@@ -37,9 +36,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-
-
 
 
 public class AnotherProfileActivity extends AppCompatActivity {
@@ -85,7 +81,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
         }
         Log.e("number of users name", "" + UsersNamesHashmap.getAllKeysForValue(Name).size());
         friend = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
-        Log.e("in another...", friend.getUserid()+"this is userid here");
+        Log.e("in another...", friend.getUserid() + "this is userid here");
 
         Email = friend.getMail();
         mNameTextView = findViewById(R.id.name);
@@ -136,14 +132,13 @@ public class AnotherProfileActivity extends AppCompatActivity {
         btn_remove = (Button) findViewById(R.id.btn_remove);
         try {
             if (CurrentPlayer.getInstance().getMail().getMail().endsWith("betitarev.com")) {
-                Log.e("removebutton", "mail: "+CurrentPlayer.getInstance().getMail().getMail().endsWith("betitarev.com"));
+                Log.e("removebutton", "mail: " + CurrentPlayer.getInstance().getMail().getMail().endsWith("betitarev.com"));
                 btn_remove.setVisibility(View.VISIBLE);
                 // need to think how to do this line: we need to insert some how basic admin//CurrentAdmin.getInstance(CurrentPlayer.getInstance().get,CurrentPlayer.getInstance().getUserid());
                 Log.e("removebutton", "failed");
                 BasicAdmin ba = new BasicAdmin(CurrentPlayer.getInstance().getName(), CurrentPlayer.getInstance().getName(), CurrentPlayer.getInstance().getMail(), CurrentPlayer.getInstance().getPushToken());
                 CurrentAdmin.getInstance(ba, ba.getUserid());
-            }
-            else
+            } else
                 btn_remove.setVisibility(View.GONE);
         } catch (Exception e) {
             btn_remove.setVisibility(View.GONE);
@@ -154,12 +149,12 @@ public class AnotherProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.e("setonclick", "inside");
-                Intent intent = new Intent(AnotherProfileActivity.this,MainActivity.class);
+                Intent intent = new Intent(AnotherProfileActivity.this, MainActivity.class);
                 Log.e("setonclick", "inside1");
                 startActivity(intent);
                 Log.e("setonclick", "inside2");
 
-                Log.e("setonclick", friend.getUserid()+"this is userid here");
+                Log.e("setonclick", friend.getUserid() + "this is userid here");
                 CurrentAdmin.getInstance().removePlayer(friend);
                 Log.e("setonclick", "removed another player");
             }

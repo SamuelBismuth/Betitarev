@@ -1,7 +1,5 @@
 package com.example.betitarev.betitarev.objects;
 
-import java.util.ArrayList;
-
 public class User {
 
     private String name, familyName;
@@ -17,7 +15,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, String familyName, Mail mail,String userId, String pushToken) {
+    public User(String name, String familyName, Mail mail, String userId, String pushToken) {
         this.name = name;
         this.familyName = familyName;
         this.mail = mail;
@@ -39,6 +37,7 @@ public class User {
         this.userid = userid;
 
     }
+
     public User(User user) {
         this.name = user.getName();
         this.familyName = user.getFamilyName();
@@ -121,7 +120,9 @@ public class User {
         return userid;
     }
 
-    public void setUserid(String userid) { this.userid = userid; }
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
 
     @Override
     public String toString() {

@@ -6,21 +6,22 @@ public class CurrentUserBets {
     private static CurrentUserBets instance = null; // Singleton implementation.
     private List<Bet> Bets;
 
+    private CurrentUserBets(List<Bet> Bets) {
+        this.Bets = Bets;
+    }
+
     static public CurrentUserBets getInstance(List<Bet> Bets) {
-        if(instance != null)
+        if (instance != null)
             return instance;
         instance = new CurrentUserBets(Bets);
         return instance;
     }
 
-    private CurrentUserBets(List<Bet> Bets) {
-        this.Bets = Bets;
-    }
-
     public static CurrentUserBets getInstance() {
         return instance;
     }
-    public void addBet(Bet bet){
+
+    public void addBet(Bet bet) {
         Bets.add(bet);
     }
 }

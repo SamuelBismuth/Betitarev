@@ -49,7 +49,7 @@ import static com.example.betitarev.betitarev.helper.FireBaseQuery.getCurrentMai
 public class ProfileActivity extends Fragment {
 
     private static FirebaseAuth auth;
-    private static String Name,mAddFriendName;
+    private static String Name, mAddFriendName;
     private static Mail Email, mAddFriendMail;
     private TextView mNameTextView, mEmailTextView;
     private ImageView mPictureSrc, mEditBtn, mHeaderCoverImage;
@@ -94,7 +94,6 @@ public class ProfileActivity extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -113,7 +112,7 @@ public class ProfileActivity extends Fragment {
         mSearchFriend = view.findViewById(R.id.search_friend);
 
 
-        mPictureSrc =  view.findViewById(R.id.profile_image);
+        mPictureSrc = view.findViewById(R.id.profile_image);
         setProfileImage();
 
         mSignOutBtn = view.findViewById(R.id.btn_sign_out);
@@ -129,9 +128,9 @@ public class ProfileActivity extends Fragment {
             }
         });
 
-        HashMap<User,String> usernamesHashmap = UsersNamesHashmap.getInstance().getHashmap();
+        HashMap<User, String> usernamesHashmap = UsersNamesHashmap.getInstance().getHashmap();
         List<String> listUserNames = new ArrayList<>(usernamesHashmap.values());
-        adapterFriend = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, listUserNames );
+        adapterFriend = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.user_name, listUserNames);
         mListFriends.setAdapter(adapterFriend);
         mSearchFriend.addTextChangedListener(new TextWatcher() {
             @Override
@@ -139,10 +138,12 @@ public class ProfileActivity extends Fragment {
                 // When user changed the Text
                 adapterFriend.getFilter().filter(cs);
             }
+
             @Override
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
                                           int arg3) {
             }
+
             @Override
             public void afterTextChanged(Editable arg0) {
             }
@@ -151,9 +152,9 @@ public class ProfileActivity extends Fragment {
         mListFriends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Log.e("friendSelected",adapterFriend.getItem(position));
+                Log.e("friendSelected", adapterFriend.getItem(position));
                 mAddFriendName = adapterFriend.getItem(position);
-                Intent intent = new Intent (getActivity(),AnotherProfileActivity.class);
+                Intent intent = new Intent(getActivity(), AnotherProfileActivity.class);
                 intent.putExtra("Name", mAddFriendName);
                 startActivity(intent);
 
@@ -179,7 +180,6 @@ public class ProfileActivity extends Fragment {
         });
 
 
-
         // Retrieve and cache the system's default "short" animation time.
         mShortAnimationDuration = getResources().getInteger(
                 android.R.integer.config_shortAnimTime);
@@ -192,11 +192,10 @@ public class ProfileActivity extends Fragment {
     }
 
 
-
     private void setProfileImage() {
 
-        if (CurrentPlayer.getInstance().getPicture().length()>5)
-        Glide.with(getContext()).load(CurrentPlayer.getInstance().getPicture()).into(mPictureSrc);
+        if (CurrentPlayer.getInstance().getPicture().length() > 5)
+            Glide.with(getContext()).load(CurrentPlayer.getInstance().getPicture()).into(mPictureSrc);
 //        StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" +Email.getMail()+"/profile");
 //        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 //            @Override

@@ -1,12 +1,10 @@
 package com.example.betitarev.betitarev.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +18,10 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
-import com.example.betitarev.betitarev.activities.ConfirmBetActivity;
 import com.example.betitarev.betitarev.helper.FireBaseQuery;
 import com.example.betitarev.betitarev.helper.FragmentHelper;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Friend;
-import com.example.betitarev.betitarev.objects.Notification;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,7 +150,6 @@ public class PlaceBetActivity extends Fragment {
         });
         return view;
     }
-
 
 
     /**

@@ -12,13 +12,18 @@ import static com.example.betitarev.betitarev.helper.FireBaseQuery.removeUser;
 
 public class BasicAdmin extends User implements Admin {
     static List<String> AdminPushToken;
+
     public BasicAdmin(String name, String familyName, Mail mail, String pushToken) {
         super(name, familyName, mail, pushToken);
-        if(AdminPushToken==null)
-            AdminPushToken= new ArrayList<String>();
+        if (AdminPushToken == null)
+            AdminPushToken = new ArrayList<String>();
         AdminPushToken.add(pushToken);
     }
-    public BasicAdmin(BasicAdmin ba, String userid){super(ba,userid);}
+
+    public BasicAdmin(BasicAdmin ba, String userid) {
+        super(ba, userid);
+    }
+
     @Override
     public boolean sendWarning(User player) {
         DatabaseReference mFirebaseDatabase;
@@ -34,16 +39,15 @@ public class BasicAdmin extends User implements Admin {
 
     @Override
     public boolean removePlayer(User user) {
-        Friend the_user= new Friend(user.getName() + " " + user.getFamilyName(), user.getMail(), user.getPushToken());
+        Friend the_user = new Friend(user.getName() + " " + user.getFamilyName(), user.getMail(), user.getPushToken());
         // remove relations between this admin to the user
-        if(CurrentPlayer.getInstance().getFriends().isFriend(the_user))
+        if (CurrentPlayer.getInstance().getFriends().isFriend(the_user))
             CurrentPlayer.getInstance().getFriends().removeFriend(the_user);
 
-        for(Friend friend : user.getFriends().getFriends())
-        {
-                User friendOfTheUser = UsersNamesHashmap.getAllKeysForValue(friend.getFullName()).get(0);
-                Log.e("hhhhhhh", "one success");
-                friendOfTheUser.getFriends().removeFriend(the_user);
+        for (Friend friend : user.getFriends().getFriends()) {
+            User friendOfTheUser = UsersNamesHashmap.getAllKeysForValue(friend.getFullName()).get(0);
+            Log.e("hhhhhhh", "one success");
+            friendOfTheUser.getFriends().removeFriend(the_user);
         }
 
         removeUser(user.getUserid());
@@ -58,7 +62,7 @@ public class BasicAdmin extends User implements Admin {
 //      FirebaseDatabase.getInstance().;
 //        node.setValue(null);
 
-     //   DatabaseReference node = FirebaseDatabase.getInstance().getReference("users");
+        //   DatabaseReference node = FirebaseDatabase.getInstance().getReference("users");
 
         return false;
     }

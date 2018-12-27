@@ -18,7 +18,7 @@ public class Statistics {
         ArbitratorStat = arbitratorStat;
     }
 
-    protected int getNumberOfGames(){
+    protected int getNumberOfGames() {
         return 0;
     }
 

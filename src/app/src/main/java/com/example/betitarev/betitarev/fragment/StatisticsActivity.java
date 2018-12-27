@@ -24,11 +24,7 @@ import lecho.lib.hellocharts.view.PieChartView;
 //for graph
 
 
-
-
-
-
-public class StatisticsActivity extends Fragment{
+public class StatisticsActivity extends Fragment {
 
     private TextView numberOfWin, numberOfLose, numberOfDraw, numberOfArbitrator;
     private PieChartView pieChartView;
@@ -60,10 +56,10 @@ public class StatisticsActivity extends Fragment{
         View view = inflater.inflate(R.layout.activity_statistics, container, false);
 
 
-        int win=CurrentPlayer.getInstance().getStatistics().getWinStat().getCounter();
-        int lose=CurrentPlayer.getInstance().getStatistics().getLoseStat().getCounter();
-        int draw=CurrentPlayer.getInstance().getStatistics().getDrawStat().getCounter();
-        int arbitrator=CurrentPlayer.getInstance().getStatistics().getArbitratorStat().getCounter();
+        int win = CurrentPlayer.getInstance().getStatistics().getWinStat().getCounter();
+        int lose = CurrentPlayer.getInstance().getStatistics().getLoseStat().getCounter();
+        int draw = CurrentPlayer.getInstance().getStatistics().getDrawStat().getCounter();
+        int arbitrator = CurrentPlayer.getInstance().getStatistics().getArbitratorStat().getCounter();
 
         //pie chart of participation in bets
         pieChartView = view.findViewById(R.id.chart);
@@ -77,14 +73,14 @@ public class StatisticsActivity extends Fragment{
         pieChartData.setHasCenterCircle(true).setCenterText1("Bet's participation").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
         pieChartView.setPieChartData(pieChartData);
 
-        tv = (TextView)view.findViewById(R.id.bet_invite);
-        btn = (Button)view.findViewById(R.id.btn);
+        tv = (TextView) view.findViewById(R.id.bet_invite);
+        btn = (Button) view.findViewById(R.id.btn);
         //condition: if current player does not participat on bets - invite him to
-        if (win==0 && lose==0 && draw==0 && arbitrator==0){
+        if (win == 0 && lose == 0 && draw == 0 && arbitrator == 0) {
             btn.setVisibility(View.VISIBLE);
             tv.setVisibility(View.VISIBLE);
             pieChartView.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             btn.setVisibility(View.INVISIBLE);
             tv.setVisibility(View.INVISIBLE);
             pieChartView.setVisibility(View.VISIBLE);

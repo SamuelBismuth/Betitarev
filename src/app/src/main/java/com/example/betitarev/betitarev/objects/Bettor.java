@@ -5,7 +5,8 @@ public class Bettor implements BetRole {
     private Player user;
     private String guessing;
 
-    public Bettor() {}
+    public Bettor() {
+    }
 
     public Bettor(Player user, String guessing) {
         this.user = user;

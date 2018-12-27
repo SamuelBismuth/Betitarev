@@ -4,7 +4,8 @@ public class Arbitrator implements BetRole {
 
     private User user;
 
-    public Arbitrator() {}
+    public Arbitrator() {
+    }
 
     public Arbitrator(User user) {
         this.user = user;

@@ -58,11 +58,11 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        inputFirstName =  findViewById(R.id.editFirstName);
-        inputLastName =  findViewById(R.id.editLastName);
+        inputFirstName = findViewById(R.id.editFirstName);
+        inputLastName = findViewById(R.id.editLastName);
         inputOldPassword = findViewById(R.id.editOldPassword);
-        inputNewPassword =  findViewById(R.id.editNewPassword);
-        btnSaveChanges =  findViewById(R.id.btn_save_changes);
+        inputNewPassword = findViewById(R.id.editNewPassword);
+        btnSaveChanges = findViewById(R.id.btn_save_changes);
         auth = FirebaseAuth.getInstance();
         Email = getCurrentMail();
         user = CurrentPlayer.getInstance();
@@ -70,7 +70,7 @@ public class EditProfileActivity extends AppCompatActivity {
         inputLastName.setText(user.getFamilyName());
 
 
-        ImageView editProfileImage = (ImageView) findViewById(R.id.edit_profile_image) ;
+        ImageView editProfileImage = (ImageView) findViewById(R.id.edit_profile_image);
         editProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +89,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 if (changedProfileImage) {
                     uploadImage();
                 }
-                if (inputOldPassword.getText().toString().length()>=1) {
+                if (inputOldPassword.getText().toString().length() >= 1) {
                     updatePassword(inputOldPassword.getText().toString(), inputNewPassword.getText().toString());
                 }
                 finish();
@@ -108,15 +108,15 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (!task.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(),"Something went wrong. Please try again later",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Something went wrong. Please try again later", Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(getApplicationContext(),"Password Successfully Modified",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Password Successfully Modified", Toast.LENGTH_LONG).show();
 
                             }
                         }
                     });
                 } else {
-                    Toast.makeText(getApplicationContext(),"Authentication Failed",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Authentication Failed", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -125,7 +125,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private void uploadImage() {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        StorageReference ref = storageReference.child("images/" +Email.getMail()+"/profile");
+        StorageReference ref = storageReference.child("images/" + Email.getMail() + "/profile");
         mImageView.setDrawingCacheEnabled(true);
         mImageView.buildDrawingCache();
         Bitmap bitmap = mImageView.getDrawingCache();
@@ -139,17 +139,17 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
 
-
     private void updateNameData(final String firstName, final String lastName) {
         reference = FirebaseDatabase.getInstance().getReference().child("users");
         reference.orderByChild("mail/mail").equalTo(Email.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot datas: dataSnapshot.getChildren()){
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
                     datas.child("name").getRef().setValue(firstName);
                     datas.child("familyName").getRef().setValue(lastName);
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -166,6 +166,7 @@ public class EditProfileActivity extends AppCompatActivity {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {

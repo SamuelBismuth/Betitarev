@@ -2,13 +2,14 @@ package com.example.betitarev.betitarev.objects;
 
 import android.support.annotation.NonNull;
 
-public class Friend  implements Comparable<Friend> {
+public class Friend implements Comparable<Friend> {
     private String fullName, pushToken;
     private Mail mail;
 
-    public Friend(){}
+    public Friend() {
+    }
 
-    public Friend(String fullName, Mail mail, String token){
+    public Friend(String fullName, Mail mail, String token) {
         this.fullName = fullName;
         this.mail = mail;
         this.pushToken = token;
