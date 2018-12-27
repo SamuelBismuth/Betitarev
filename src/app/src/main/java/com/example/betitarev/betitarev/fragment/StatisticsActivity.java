@@ -56,22 +56,26 @@ public class StatisticsActivity extends Fragment {
         View view = inflater.inflate(R.layout.activity_statistics, container, false);
 
 
-        int win = CurrentPlayer.getInstance().getStatistics().getWinStat().getCounter();
-        int lose = CurrentPlayer.getInstance().getStatistics().getLoseStat().getCounter();
-        int draw = CurrentPlayer.getInstance().getStatistics().getDrawStat().getCounter();
-        int arbitrator = CurrentPlayer.getInstance().getStatistics().getArbitratorStat().getCounter();
+
+        int win=CurrentPlayer.getInstance().getStatistics().getWinStat().getCounter();
+        int lose=CurrentPlayer.getInstance().getStatistics().getLoseStat().getCounter();
+        int draw=CurrentPlayer.getInstance().getStatistics().getDrawStat().getCounter();
+        int arbitrator=CurrentPlayer.getInstance().getStatistics().getArbitratorStat().getCounter();
+        int total=win+lose+draw+arbitrator;
+
 
         //pie chart of participation in bets
         pieChartView = view.findViewById(R.id.chart);
         List pieData = new ArrayList<>();
-        pieData.add(new SliceValue(win, Color.GREEN).setLabel("win"));
-        pieData.add(new SliceValue(lose, Color.RED).setLabel("lose"));
-        pieData.add(new SliceValue(draw, Color.YELLOW).setLabel("draw"));
-        pieData.add(new SliceValue(arbitrator, Color.BLUE).setLabel("arbitrator"));
+        pieData.add(new SliceValue(win, Color.GREEN).setLabel("win:"+Integer.toString(win)));
+        pieData.add(new SliceValue(lose, Color.RED).setLabel("lose:"+Integer.toString(lose)));
+        pieData.add(new SliceValue(draw, Color.YELLOW).setLabel("draw:"+Integer.toString(draw)));
+        pieData.add(new SliceValue(arbitrator, Color.BLUE).setLabel("arbitrator:"+Integer.toString(arbitrator)));
         PieChartData pieChartData = new PieChartData(pieData);
         pieChartData.setHasLabels(true).setValueLabelTextSize(14);
-        pieChartData.setHasCenterCircle(true).setCenterText1("Bet's participation").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
+        pieChartData.setHasCenterCircle(true).setCenterText1("Bet's participation:"+Integer.toString(total)).setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
         pieChartView.setPieChartData(pieChartData);
+        
 
         tv = (TextView) view.findViewById(R.id.bet_invite);
         btn = (Button) view.findViewById(R.id.btn);

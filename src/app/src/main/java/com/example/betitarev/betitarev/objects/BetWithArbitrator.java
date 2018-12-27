@@ -9,9 +9,13 @@ public class BetWithArbitrator extends Bet {
         this.arbitrator = arbitrator;
     }
 
+
+    @Override
     public Arbitrator getArbitrator() {
         return arbitrator;
     }
 
 
 }
+
+

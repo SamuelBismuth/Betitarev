@@ -15,4 +15,6 @@
 
     <include layout="@layout/content_opened_bet" />
 
+
+
 </android.support.design.widget.CoordinatorLayout>

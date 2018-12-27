@@ -22,7 +22,6 @@ public class Bettor implements BetRole {
         return user;
     }
 
-
     public String getGuessing() {
         return guessing;
     }
