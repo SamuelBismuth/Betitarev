@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 
 import com.example.betitarev.betitarev.activities.MainActivity;
 import com.example.betitarev.betitarev.objects.Arbitrator;
@@ -16,6 +17,7 @@ import com.example.betitarev.betitarev.objects.BettorStatus;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.FictiveMoney;
 import com.example.betitarev.betitarev.objects.Mail;
+import com.example.betitarev.betitarev.objects.Notification;
 import com.example.betitarev.betitarev.objects.Player;
 import com.example.betitarev.betitarev.objects.User;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
@@ -133,6 +135,7 @@ public class FireBaseQuery {
         DatabaseReference betsReference = FirebaseDatabase.getInstance().getReference("bets");
         String betId = betsReference.push().getKey();
         betsReference.child(betId).setValue(bet);
+        createNotification(bet, betId, true);
     }
 
     public static void placeNewBetWithoutArb(String bettor2, String betPhrase, String betValue) {
@@ -141,6 +144,32 @@ public class FireBaseQuery {
         DatabaseReference betsReference = FirebaseDatabase.getInstance().getReference("bets");
         String betId = betsReference.push().getKey();
         betsReference.child(betId).setValue(bet);
+        createNotification(bet, betId, false);
+    }
+
+    private static void createNotification(Bet bet, String betId, boolean flag) {
+        sendMessage(new Notification("Bet Request",
+                bet.getPhrase(),
+                bet.getPlayer1().getUser().getPushToken(),
+                bet.getPlayer2().getUser().getPushToken(),
+                betId));
+        if (flag)
+            sendMessage(new Notification("Arbitrator Request",
+                    bet.getPlayer1().getUser().getName() + " " + bet.getPlayer1().getUser().getFamilyName() +
+                            " want to bet against " + bet.getPlayer2().getUser().getName() + " " + bet.getPlayer2().getUser().getFamilyName()
+                            + " on " + bet.getPhrase(),
+                    bet.getPlayer1().getUser().getPushToken(),
+                    bet.getPlayer2().getUser().getPushToken(),
+                    betId));
+    }
+
+    public static void sendMessage(Notification notif) {
+        DatabaseReference mFirebaseDatabase;
+        FirebaseDatabase mFirebaseInstance;
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+        mFirebaseDatabase = mFirebaseInstance.getReference("notifcations");
+        String notifId = mFirebaseDatabase.push().getKey();
+        mFirebaseDatabase.child(notifId).setValue(notif);
     }
 
     public static void removeUser(String userid) {

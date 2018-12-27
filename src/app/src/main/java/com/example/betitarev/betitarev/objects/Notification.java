@@ -4,12 +4,14 @@ public class Notification {
 
     private String title, message;
     private String senderToken, receiverToken;
+    private String betId;
 
-    public Notification(String title, String message, String senderToken, String receiverToken) {
+    public Notification(String title, String message, String senderToken, String receiverToken, String betId) {
         this.title = title;
         this.message = message;
         this.senderToken = senderToken;
         this.receiverToken = receiverToken;
+        this.betId = betId;
     }
 
     public String getTitle() {
@@ -26,5 +28,9 @@ public class Notification {
 
     public String getReceiverToken() {
         return receiverToken;
+    }
+
+    public String getBetId() {
+        return betId;
     }
 }

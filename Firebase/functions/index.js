@@ -12,12 +12,13 @@ exports.sendPush = functions.database.ref('/notifcations/{pushId}').onWrite((cha
         const receiver_token = result.val().receiverToken;
         const sender_token = result.val().senderToken;
         const body = result.val().message;
-        const title = result.val().title
+        const title = result.val().title;
+        const betId = result.val().betId;
 
         const payload = {
             notification : {
                 title : title,
-                body : body,
+                body : body  + "split" + betId,
                 icon : "default"
             }
         };
