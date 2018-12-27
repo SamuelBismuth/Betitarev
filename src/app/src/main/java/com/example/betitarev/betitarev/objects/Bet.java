@@ -5,18 +5,17 @@ public class Bet {
     private Bettor player1, player2;
     private String phrase;
     private FictiveMoney fictiveMoney;
-    private BetStatus status;
     private Arbitrator arbitrator;
 
 
     public Bet() {}
 
-    public Bet(Bettor player1, Bettor player2, String phrase, FictiveMoney fictiveMoney, BetStatus status) {
+    public Bet(Bettor player1, Bettor player2, String phrase, FictiveMoney fictiveMoney, Arbitrator arbitrator) {
         this.player1 = player1;
         this.player2 = player2;
         this.fictiveMoney = fictiveMoney;
         this.phrase = phrase;
-        this.status = status;
+        this.arbitrator = arbitrator;
     }
 
     public Bettor getPlayer1() {
@@ -39,7 +38,4 @@ public class Bet {
         return fictiveMoney;
     }
 
-    public BetStatus getStatus() {
-        return status;
-    }
 }

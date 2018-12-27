@@ -11,6 +11,8 @@ import android.util.Log;
 
 import com.example.betitarev.betitarev.activities.ConfirmBetActivity;
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.objects.Bet;
+import com.example.betitarev.betitarev.objects.Notification;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -28,7 +30,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             betId = messageSplited[1];
             notificationTitle = remoteMessage.getNotification().getTitle();
         }
-        sendNotification(notificationTitle, notificationBody, betId);
+            sendNotification(notificationTitle, notificationBody, betId);
     }
 
     private void sendNotification(String notificationTitle, String notificationBody, String betId) {
@@ -53,6 +55,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
+
+    protected static void sendMessageForTheAnswer(Bet bet, String betId) {
+        new Notification("Answer for the bet",
+                "Phrase: " + bet.getPhrase() + "\n" +
+                "PLayer 1 guesssing: " + bet.getPlayer1().getGuessing() + "\n" +
+                "Player2 guessing: " + bet.getPlayer2().getGuessing(),
+                bet.getArbitrator().getUser().getPushToken(), "betitarevToken", betId);
     }
 
 }
