@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.activities.MainActivity;
+import com.example.betitarev.betitarev.objects.Account;
+import com.example.betitarev.betitarev.objects.Bank;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.Player;
 import com.example.betitarev.betitarev.objects.User;
@@ -25,6 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+
+import static com.example.betitarev.betitarev.helper.FireBaseQuery.getBank;
+import static com.example.betitarev.betitarev.helper.FireBaseQuery.updateBank;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -152,6 +157,9 @@ public class SignupActivity extends AppCompatActivity {
     private void createUser(String name, String familyName, Mail email, String pushToken) {
         this.userId = mFirebaseDatabase.push().getKey();
         User user = new Player(name, familyName, email, userId, pushToken);
+        getBank();
+        Bank.getInstance().addAccount(new Account(user));
+        updateBank();
         mFirebaseDatabase.child(userId).setValue(user);
     }
 

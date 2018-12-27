@@ -283,8 +283,22 @@ public class FireBaseQuery {
 
             }
         });
+    }
+    public static void updateBank(){
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Bank");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot bank : dataSnapshot.getChildren()) {
+                    reference.child(bank.getKey()).setValue(Bank.getInstance());
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
     }
 }
 
