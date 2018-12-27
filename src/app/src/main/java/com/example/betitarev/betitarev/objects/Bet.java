@@ -17,14 +17,6 @@ public class Bet {
         this.phrase = phrase;
         this.arbitrator = arbitrator;
     }
-    public Bet(Bettor player1, Bettor player2, String phrase, FictiveMoney fictiveMoney, BetStatus status, Arbitrator arbitrator) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.fictiveMoney = fictiveMoney;
-        this.phrase = phrase;
-        this.status = status;
-        this.arbitrator =arbitrator;
-    }
 
     public Bettor getPlayer1() {
         return player1;
