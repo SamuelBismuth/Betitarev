@@ -32,11 +32,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
     // Create new views (invoked by the layout manager)
     @Override
-    public Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                     int viewType) {
+    public Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         TextView v = (TextView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item, parent, false);
+                .inflate(R.layout.activity_opened_bet, parent, false);
 
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
