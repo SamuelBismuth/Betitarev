@@ -2,33 +2,24 @@ package com.example.betitarev.betitarev.activities;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.betitarev.betitarev.R;
-import com.example.betitarev.betitarev.fragment.PlaceBetActivity;
-import com.example.betitarev.betitarev.helper.FragmentHelper;
-
-import static com.example.betitarev.betitarev.activities.MainActivity.getActivity;
-import static com.example.betitarev.betitarev.helper.FireBaseQuery.changeBetStatus;
-import static com.example.betitarev.betitarev.helper.FragmentHelper.loadFragment;
+import com.example.betitarev.betitarev.helper.FireBaseQuery;
 
 public class ConfirmBetActivity extends AppCompatActivity {
 
-    private String betId;
+    private String betId, dataTitle, dataMessage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("samyyyy1", "Confirm bet act");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_bet);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -37,16 +28,16 @@ public class ConfirmBetActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
-                String Name = null;
-            }
-            else {
+            } else {
                 this.betId = extras.getString("betId");
-                showAlertDialog(extras.getString("title"), extras.getString("message"));
+                this.dataTitle = extras.getString("title");
+                this.dataMessage = extras.getString("message");
             }
         }
+        showAlertDialog();
     }
 
-    private void showAlertDialog(String dataTitle, String dataMessage) {
+    private void showAlertDialog() {
         final EditText input = new EditText(ConfirmBetActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -56,25 +47,20 @@ public class ConfirmBetActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Message");
         builder.setMessage("title: " + dataTitle + "\n" + "message: " + dataMessage);
-        builder.setPositiveButton("OK", onOk(input));
-        builder.setNegativeButton("Reject", OnReject(betId));
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                FireBaseQuery.getBetById(betId, input.getText().toString());
+                ConfirmBetActivity.this.finish();
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("Reject", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                ConfirmBetActivity.this.finish();
+                dialog.dismiss();
+            }
+        });
         builder.setView(input);
         builder.show();
     }
-
-    private DialogInterface.OnClickListener OnReject(String betid) {
-        Log.i("Sam2", "On reject, we're deleting the bet from the database.");
-        Log.i("sam3", betId);
-        // need to be redirected to the place a bet activity.
-        changeBetStatus(betid);
-        return null;
-    }
-
-    private DialogInterface.OnClickListener onOk(EditText input) {
-        Log.i("Sam1", "On ok");
-        Log.i("sam4", betId);
-        return null;
-    }
-
-
 }

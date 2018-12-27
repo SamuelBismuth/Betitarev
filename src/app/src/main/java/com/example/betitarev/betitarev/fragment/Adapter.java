@@ -51,7 +51,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
                 ", bettor 2: "+mDataset.get(position).getPlayer2()+
                 "\npharse: "+mDataset.get(position).getPhrase()+
                 ", money: "+mDataset.get(position).getFictiveMoney()+
-                "\nstatus: "+mDataset.get(position).getStetus().toString());
+                "\nstatus: "+mDataset.get(position).getStatus().toString());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

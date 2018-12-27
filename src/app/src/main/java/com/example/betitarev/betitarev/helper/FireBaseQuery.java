@@ -5,16 +5,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.View;
 
 import com.example.betitarev.betitarev.activities.MainActivity;
 import com.example.betitarev.betitarev.objects.Arbitrator;
 import com.example.betitarev.betitarev.objects.Bet;
+import com.example.betitarev.betitarev.objects.BetStatus;
 import com.example.betitarev.betitarev.objects.BetWithArbitrator;
 import com.example.betitarev.betitarev.objects.BetWithoutArbitrator;
 import com.example.betitarev.betitarev.objects.Bettor;
 import com.example.betitarev.betitarev.objects.BettorStatus;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
+import com.example.betitarev.betitarev.objects.CurrentUserBets;
 import com.example.betitarev.betitarev.objects.FictiveMoney;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.Notification;
@@ -32,8 +33,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+
+import static com.example.betitarev.betitarev.objects.BetStatus.WaitForOne;
 
 public class FireBaseQuery {
 
@@ -41,6 +46,7 @@ public class FireBaseQuery {
     private static Player user;
     private static FirebaseAuth auth;
     private static Set<User> allUsersSet = new LinkedHashSet<>();
+    private static List<Bet> bets = new ArrayList<>();
     private static FirebaseStorage storage;
     private static StorageReference storageReference;
 
@@ -56,8 +62,6 @@ public class FireBaseQuery {
      * @param email
      * @param mainActivity
      */
-
-
     public static void loadCurrentUser(final Mail email, final MainActivity mainActivity) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -85,6 +89,7 @@ public class FireBaseQuery {
                 }
 
                 CurrentPlayer.getInstance(user);
+                //loadCurrentBets();
                 Log.e("userDetails", user.toString());
                 mainActivity.begin();
             }
@@ -95,8 +100,7 @@ public class FireBaseQuery {
         });
     }
 
-    public static void changeBetStatus(String betid)
-    {
+    public static void changeBetStatus(String betid) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
         reference.child(betid).child("status").setValue(2);
         //Log.e("statbet", reference.child(betid).getRoot().toString());
@@ -130,19 +134,21 @@ public class FireBaseQuery {
         });
     }
 
-    public static void placeNewBetWithArb(String bettor2, String arb, String betPhrase, String betValue) {
-        Bet bet = new BetWithArbitrator(new Bettor(CurrentPlayer.getInstance(), BettorStatus.Confirmed),
-                new Bettor(UsersNamesHashmap.getAllKeysForValue(bettor2).get(0), BettorStatus.NotConfirmed), betPhrase, new FictiveMoney(Integer.parseInt(betValue)),
-                new Arbitrator(UsersNamesHashmap.getAllKeysForValue(arb).get(0)));
+    public static void placeNewBetWithArb(String bettor2, String arb, String betPhrase, String betValue, String betGuessing) {
+        Bet bet = new BetWithArbitrator(new Bettor(CurrentPlayer.getInstance(), BettorStatus.Confirmed, betGuessing),
+                new Bettor((Player) UsersNamesHashmap.getAllKeysForValue(bettor2).get(0), BettorStatus.NotConfirmed, " "),
+                betPhrase, new FictiveMoney(Integer.parseInt(betValue)),
+                new Arbitrator(UsersNamesHashmap.getAllKeysForValue(arb).get(0)), BetStatus.WaitForTwo);
         DatabaseReference betsReference = FirebaseDatabase.getInstance().getReference("bets");
         String betId = betsReference.push().getKey();
         betsReference.child(betId).setValue(bet);
         createNotification(bet, betId, true);
     }
 
-    public static void placeNewBetWithoutArb(String bettor2, String betPhrase, String betValue) {
-        Bet bet = new BetWithoutArbitrator(new Bettor(CurrentPlayer.getInstance(), BettorStatus.Confirmed),
-                new Bettor(UsersNamesHashmap.getAllKeysForValue(bettor2).get(0), BettorStatus.NotConfirmed), betPhrase, new FictiveMoney(Integer.parseInt(betValue)));
+    public static void placeNewBetWithoutArb(String bettor2, String betPhrase, String betValue, String betGuessing) {
+        Bet bet = new BetWithoutArbitrator(new Bettor(CurrentPlayer.getInstance(), BettorStatus.Confirmed, betGuessing),
+                new Bettor((Player) UsersNamesHashmap.getAllKeysForValue(bettor2).get(0), BettorStatus.NotConfirmed, " "),
+                betPhrase, new FictiveMoney(Integer.parseInt(betValue)), WaitForOne);
         DatabaseReference betsReference = FirebaseDatabase.getInstance().getReference("bets");
         String betId = betsReference.push().getKey();
         betsReference.child(betId).setValue(bet);
@@ -176,8 +182,77 @@ public class FireBaseQuery {
 
     public static void removeUser(String userid) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        Log.e("in removeUser", userid+" this is userid");
+        Log.e("in removeUser", userid + " this is userid");
         reference.child(userid).removeValue();
+    }
+
+    public static void getBetById(final String betId, final String value) {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot bet : dataSnapshot.getChildren()) {
+                    if (bet.getKey().equals(betId)) {
+                        setBetValue(bet.getValue(Bet.class), value, betId);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public static void setBetValue(Bet bet, String value, String betId) {
+        Log.d("value2", value);
+        Log.d("betId2", betId);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
+        reference.child(betId).child("player2/value").setValue(value);
+        switch (bet.getStatus()) {
+            case Deleted:
+                Log.i("sam5", "the bet have been deleted");
+                break;
+            case WaitForTwo:
+                reference.child(betId).child("status").setValue(1);
+                break;
+            case WaitForOne:
+                reference.child(betId).child("status").setValue(0);
+                sendMessageForTheAnswer();
+                break;
+        }
+    }
+
+    private static void sendMessageForTheAnswer() {
+        Log.i("Accepted", "Everyone accepted we want the arbitrator confirm the bet");
+    }
+
+    private static void loadCurrentBets() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                    Bet bet = datas.getValue(Bet.class);
+                    if (bet.getPlayer1().getUser().getMail().getMail().equals(CurrentPlayer.getInstance().getMail().getMail()) || bet.getPlayer2().getUser().getMail().getMail().equals(CurrentPlayer.getInstance().getMail().getMail())) {
+                        bets.add(bet);
+                        Log.e("bet added", bet.toString());
+                    }
+                    if (bet.getArbitrator() != null) {
+                        if (bet.getArbitrator().getUser().getMail().getMail().equals(CurrentPlayer.getInstance().getMail().getMail())) {
+                            bets.add(bet);
+                            Log.e("bet added", bet.toString());
+                        }
+                    }
+                }
+                CurrentUserBets.getInstance(bets);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 }
 
