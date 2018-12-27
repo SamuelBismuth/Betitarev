@@ -17,6 +17,9 @@ public abstract class Bet {
 
     protected abstract Bettor appointWinner();  // Can be draw.
 
+    public BetStatus getStetus(){
+        return status;
+    }
     public Bettor getPlayer1() {
         return player1;
     }
