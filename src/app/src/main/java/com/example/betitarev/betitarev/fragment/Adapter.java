@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     private List<Bet> mDataset;
-    String[] myDataset={"sksksk","sjsjsj","nnnnnnnn"};
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -48,6 +48,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+        if(position==mDataset.size()) {
+            holder.mTextView.setText("\n");
+            return;
+        }
+
         Bet b=mDataset.get(position);
 
         holder.mTextView.setText("bettor 1: "+b.getPlayer1().getUser().getName()+", guess: "+b.getPlayer1().getGuessing()+
@@ -64,7 +69,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return myDataset.length;
+        return mDataset.size() + 1;
     }
 }
 
