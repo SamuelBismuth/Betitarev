@@ -190,6 +190,13 @@ public class FireBaseQuery {
                     Bet bet = datas.getValue(Bet.class);
                     if(bet.getPlayer1().getUser().getMail().getMail().equals(CurrentPlayer.getInstance().getMail().getMail())||bet.getPlayer2().getUser().getMail().getMail().equals(CurrentPlayer.getInstance().getMail().getMail())){
                         bets.add(bet);
+                        Log.e("bet added", bet.toString());
+                    }
+                    if(bet.getArbitrator()!=null){
+                        if(bet.getArbitrator().getUser().getMail().getMail().equals(CurrentPlayer.getInstance().getMail().getMail())){
+                            bets.add(bet);
+                            Log.e("bet added", bet.toString());
+                        }
                     }
                 }
                 CurrentUserBets.getInstance(bets);
