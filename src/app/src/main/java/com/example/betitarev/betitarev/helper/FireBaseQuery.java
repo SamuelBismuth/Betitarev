@@ -88,7 +88,7 @@ public class FireBaseQuery {
                 }
 
                 CurrentPlayer.getInstance(user);
-                //loadCurrentBets();
+                loadCurrentBets();
                 Log.e("userDetails", user.toString());
                 mainActivity.begin();
             }
