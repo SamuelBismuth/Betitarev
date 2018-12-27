@@ -139,6 +139,7 @@ public class FireBaseQuery {
         DatabaseReference betsReference = FirebaseDatabase.getInstance().getReference("bets");
         String betId = betsReference.push().getKey();
         betsReference.child(betId).setValue(bet);
+        CurrentUserBets.getInstance().addBet(bet);
         createNotification(bet, betId, true);
     }
 
@@ -148,6 +149,7 @@ public class FireBaseQuery {
         DatabaseReference betsReference = FirebaseDatabase.getInstance().getReference("bets");
         String betId = betsReference.push().getKey();
         betsReference.child(betId).setValue(bet);
+        CurrentUserBets.getInstance().addBet(bet);
         createNotification(bet, betId, false);
     }
 

@@ -20,4 +20,7 @@ public class CurrentUserBets {
     public static CurrentUserBets getInstance() {
         return instance;
     }
+    public void addBet(Bet bet){
+        Bets.add(bet);
+    }
 }
