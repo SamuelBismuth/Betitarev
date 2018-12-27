@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.example.betitarev.betitarev.R;
 
+import static com.example.betitarev.betitarev.helper.FireBaseQuery.changeBetStatus;
+
 public class ConfirmBetActivity extends AppCompatActivity {
 
     @Override
@@ -46,7 +48,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
         builder.setTitle("Message");
         builder.setMessage("title: " + dataTitle + "\n" + "message: " + dataMessage);
         builder.setPositiveButton("OK", onOk(input));
-        builder.setNegativeButton("Reject", OnReject("LUeMOc223fCXIXRVmM4"));
+        builder.setNegativeButton("Reject", OnReject("LUivRmMAjzByXFM3OjP"));
         builder.setView(input);
         builder.show();
     }
@@ -54,7 +56,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
     private DialogInterface.OnClickListener OnReject(String betid) {
         Log.i("Sam2", "On reject, we're deleting the bet from the database.");
         // need to be redirected to the place a bet activity.
-
+        changeBetStatus(betid);
         return null;
     }
 
