@@ -99,8 +99,9 @@ public class FireBaseQuery {
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
         reference.child(betid).child("status").setValue(2);
-        Log.e("statbet", reference.child(betid).child("status").getKey());
+        //Log.e("statbet", reference.child(betid).getRoot().toString());
     }
+
     public static void updateUserFriends(final Context con) {
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.child(CurrentPlayer.getInstance().getUserid()).child("friends").setValue(CurrentPlayer.getInstance().getFriends());
