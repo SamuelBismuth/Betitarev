@@ -17,11 +17,13 @@ import com.example.betitarev.betitarev.R;
 
 public class ConfirmBetActivity extends AppCompatActivity {
 
+    private String betId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_bet);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if (savedInstanceState == null) {
@@ -30,6 +32,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
                 String Name = null;
             }
             else {
+                this.betId = extras.getString("betId");
                 showAlertDialog(extras.getString("title"), extras.getString("message"));
             }
         }
@@ -53,13 +56,14 @@ public class ConfirmBetActivity extends AppCompatActivity {
 
     private DialogInterface.OnClickListener OnReject() {
         Log.i("Sam2", "On reject, we're deleting the bet from the database.");
+        Log.i("sam3", betId);
         // need to be redirected to the place a bet activity.
         return null;
     }
 
     private DialogInterface.OnClickListener onOk(EditText input) {
         Log.i("Sam1", "On ok");
-
+        Log.i("sam4", betId);
         return null;
     }
 

@@ -144,7 +144,6 @@ public class PlaceBetActivity extends Fragment {
             public void onClick(View v) {
                 // Clear everything, send the request, and move to another fragment maybe?
                 if (isInRules()) {
-                    sendNotification(v);
                     pushDataBase();
                     clearAll(v);
                 } else
@@ -191,19 +190,6 @@ public class PlaceBetActivity extends Fragment {
         return false;
     }
 
-    private void sendNotification(View view) {
-        sendMessage(new Notification("Bet Request",
-                betPhrase.getText().toString() + " " + betValue.getText().toString(),
-                CurrentPlayer.getInstance().getPushToken(),
-                bettor.getPushToken()));
-        if (arbitrator != null)
-            sendMessage(new Notification("Arbitrator Request",
-                    CurrentPlayer.getInstance().getName() + " " + CurrentPlayer.getInstance().getFamilyName() +
-                            " want to bet against " + bettor.getFullName() + " on " + betPhrase.getText().toString(),
-                    CurrentPlayer.getInstance().getPushToken(),
-                    arbitrator.getPushToken()));
-    }
-
     private void pushDataBase() {
         String bettor2 = bettor.getFullName();
         if (isWithArb) {
@@ -212,15 +198,6 @@ public class PlaceBetActivity extends Fragment {
         } else {
             FireBaseQuery.placeNewBetWithoutArb(bettor2, betPhrase.getText().toString(), betValue.getText().toString());
         }
-    }
-
-    public void sendMessage(Notification notif) {
-        DatabaseReference mFirebaseDatabase;
-        FirebaseDatabase mFirebaseInstance;
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("notifcations");
-        String notifId = mFirebaseDatabase.push().getKey();
-        mFirebaseDatabase.child(notifId).setValue(notif);
     }
 
     private void clearAll(View view) {
