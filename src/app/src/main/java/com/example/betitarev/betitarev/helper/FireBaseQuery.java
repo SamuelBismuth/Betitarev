@@ -229,7 +229,7 @@ public class FireBaseQuery {
                         }
                     }
                 }
-                CurrentUserBets.getInstance(bets);
+                CurrentUserBets.getInstance();
             }
 
             @Override
