@@ -2,12 +2,16 @@ package com.example.betitarev.betitarev.objects;
 
 public class Bettor implements BetRole {
 
-    private User user;
+    private Player user;
     private BettorStatus bettorStatus;
+    private String guessing;
 
-    public Bettor(User user, BettorStatus bettorStatus) {
+    public Bettor() {}
+
+    public Bettor(Player user, BettorStatus bettorStatus, String guessing) {
         this.user = user;
         this.bettorStatus = bettorStatus;
+        this.guessing = guessing;
     }
 
     @Override
@@ -15,11 +19,15 @@ public class Bettor implements BetRole {
         return false;
     }
 
-    public User getUser() {
+    public Player getUser() {
         return user;
     }
 
     public BettorStatus getBettorStatus() {
         return bettorStatus;
+    }
+
+    public String getGuessing() {
+        return guessing;
     }
 }

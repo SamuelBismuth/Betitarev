@@ -1,10 +1,12 @@
 package com.example.betitarev.betitarev.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.activities.ConfirmBetActivity;
 import com.example.betitarev.betitarev.helper.FireBaseQuery;
 import com.example.betitarev.betitarev.helper.FragmentHelper;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
@@ -33,7 +36,7 @@ import java.util.List;
 public class PlaceBetActivity extends Fragment {
 
     ArrayAdapter<String> adapterFriend, adapterArbitrator;
-    private EditText betPhrase, betValue;
+    private EditText betPhrase, betValue, betGuessing;
     private RadioButton withArbitrator, withoutArbitrator;
     private ListView listOfFriend, listOfArbitrator;
     private EditText searchFriend, searchArbitrator;
@@ -54,6 +57,7 @@ public class PlaceBetActivity extends Fragment {
         View view = inflater.inflate(R.layout.activity_place_bet, container, false);
         betPhrase = view.findViewById(R.id.bet_phrase);
         betValue = view.findViewById(R.id.bet_value);
+        betGuessing = view.findViewById(R.id.bet_guessing);
         withArbitrator = view.findViewById(R.id.with_arb);
         withoutArbitrator = view.findViewById(R.id.without_arb);
         listOfFriend = view.findViewById(R.id.list_friend);
@@ -144,7 +148,6 @@ public class PlaceBetActivity extends Fragment {
             public void onClick(View v) {
                 // Clear everything, send the request, and move to another fragment maybe?
                 if (isInRules()) {
-                    sendNotification(v);
                     pushDataBase();
                     clearAll(v);
                 } else
@@ -153,6 +156,8 @@ public class PlaceBetActivity extends Fragment {
         });
         return view;
     }
+
+
 
     /**
      * This method check if either all the required files are full or not.
@@ -167,7 +172,7 @@ public class PlaceBetActivity extends Fragment {
      */
     private boolean isInRules() {
         boolean arb = false, play = false;
-        if (this.getBetPhrase().getText() == null)
+        if (this.getBetPhrase().getText() == null || this.getBetGuessing() == null)
             return false;
         if (this.getWithArbitrator().isChecked()) {
             for (Friend friend : CurrentPlayer.getInstance().getFriends().getFriends()) {
@@ -191,36 +196,14 @@ public class PlaceBetActivity extends Fragment {
         return false;
     }
 
-    private void sendNotification(View view) {
-        sendMessage(new Notification("Bet Request",
-                betPhrase.getText().toString() + " " + betValue.getText().toString(),
-                CurrentPlayer.getInstance().getPushToken(),
-                bettor.getPushToken()));
-        if (arbitrator != null)
-            sendMessage(new Notification("Arbitrator Request",
-                    CurrentPlayer.getInstance().getName() + " " + CurrentPlayer.getInstance().getFamilyName() +
-                            " want to bet against " + bettor.getFullName() + " on " + betPhrase.getText().toString(),
-                    CurrentPlayer.getInstance().getPushToken(),
-                    arbitrator.getPushToken()));
-    }
-
     private void pushDataBase() {
         String bettor2 = bettor.getFullName();
         if (isWithArb) {
             String arb = arbitrator.getFullName();
-            FireBaseQuery.placeNewBetWithArb(bettor2, arb, betPhrase.getText().toString(), betValue.getText().toString());
+            FireBaseQuery.placeNewBetWithArb(bettor2, arb, betPhrase.getText().toString(), betValue.getText().toString(), this.getBetGuessing().getText().toString());
         } else {
-            FireBaseQuery.placeNewBetWithoutArb(bettor2, betPhrase.getText().toString(), betValue.getText().toString());
+            FireBaseQuery.placeNewBetWithoutArb(bettor2, betPhrase.getText().toString(), betValue.getText().toString(), this.getBetGuessing().getText().toString());
         }
-    }
-
-    public void sendMessage(Notification notif) {
-        DatabaseReference mFirebaseDatabase;
-        FirebaseDatabase mFirebaseInstance;
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("notifcations");
-        String notifId = mFirebaseDatabase.push().getKey();
-        mFirebaseDatabase.child(notifId).setValue(notif);
     }
 
     private void clearAll(View view) {
@@ -251,6 +234,10 @@ public class PlaceBetActivity extends Fragment {
 
     public ListView getListOfFriend() {
         return listOfFriend;
+    }
+
+    public EditText getBetGuessing() {
+        return betGuessing;
     }
 
     public ListView getListOfArbitrator() {

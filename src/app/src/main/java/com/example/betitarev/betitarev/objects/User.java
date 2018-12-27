@@ -1,5 +1,7 @@
 package com.example.betitarev.betitarev.objects;
 
+import java.util.ArrayList;
+
 public abstract class User {
 
     private String name, familyName;
@@ -9,7 +11,6 @@ public abstract class User {
     private String pushToken;
     private Statistics statistics;
     private Friends friends;
-
 
     // Default constructor required for calls to
     // DataSnapshot.getValue(User.class)
