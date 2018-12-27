@@ -16,10 +16,8 @@ public class ConfirmBetActivity extends AppCompatActivity {
 
     private String betId, dataTitle, dataMessage;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("samyyyy1", "Confirm bet act");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_bet);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -34,10 +32,34 @@ public class ConfirmBetActivity extends AppCompatActivity {
                 this.dataMessage = extras.getString("message");
             }
         }
-        showAlertDialog();
+        if(dataTitle.equals("Bet Request"))
+            showAlertDialogPlayer();
+        else
+            showAlertDialogArb();
     }
 
-    private void showAlertDialog() {
+    private void showAlertDialogArb() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Answer");
+        builder.setMessage("title: " + dataTitle + "\n" + "message: " + dataMessage);
+        builder.setPositiveButton("Player1", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Log.i("Winner", "the winner is the player 1");
+                ConfirmBetActivity.this.finish();
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("Player2", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Log.i("Winner", "the winner is the player 2");
+                ConfirmBetActivity.this.finish();
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+    private void showAlertDialogPlayer() {
         final EditText input = new EditText(ConfirmBetActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,

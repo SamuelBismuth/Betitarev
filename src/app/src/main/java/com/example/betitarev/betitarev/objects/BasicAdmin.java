@@ -33,9 +33,20 @@ public class BasicAdmin extends User implements Admin {
     }
 
     @Override
-    public boolean removePlayer(String userid) {
-        Log.e("removePlayerBasicAdmin", userid+ " this is user id here");
-        removeUser(userid);
+    public boolean removePlayer(User user) {
+        Friend the_user= new Friend(user.getName() + " " + user.getFamilyName(), user.getMail(), user.getPushToken());
+        // remove relations between this admin to the user
+        if(CurrentPlayer.getInstance().getFriends().isFriend(the_user))
+            CurrentPlayer.getInstance().getFriends().removeFriend(the_user);
+
+        for(Friend friend : user.getFriends().getFriends())
+        {
+                User friendOfTheUser = UsersNamesHashmap.getAllKeysForValue(friend.getFullName()).get(0);
+                Log.e("hhhhhhh", "one success");
+                friendOfTheUser.getFriends().removeFriend(the_user);
+        }
+
+        removeUser(user.getUserid());
         //        DatabaseReference mFirebaseDatabase;
 //        FirebaseDatabase mFirebaseInstance;
 //        mFirebaseInstance = FirebaseDatabase.getInstance();

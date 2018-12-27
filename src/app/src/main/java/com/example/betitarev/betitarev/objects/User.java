@@ -2,7 +2,7 @@ package com.example.betitarev.betitarev.objects;
 
 import java.util.ArrayList;
 
-public abstract class User {
+public class User {
 
     private String name, familyName;
     private String picture;
