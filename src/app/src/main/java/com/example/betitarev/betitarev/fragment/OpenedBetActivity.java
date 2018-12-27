@@ -17,6 +17,7 @@ import com.example.betitarev.betitarev.objects.Bet;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.CurrentUserBets;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -56,7 +57,13 @@ public class OpenedBetActivity extends Fragment {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////my bets list
 
+        List<Bet> bets;
+        bets=new ArrayList<Bet>() ;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // specify an adapter (see also next example)
         mAdapter = new Adapter(CurrentUserBets.getInstance().getBets());
         mRecyclerView.setAdapter(mAdapter);
