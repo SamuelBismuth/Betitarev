@@ -88,7 +88,7 @@ public class FireBaseQuery {
                 }
 
                 CurrentPlayer.getInstance(user);
-                //loadCurrentBets();
+                loadCurrentBets();
                 Log.e("userDetails", user.toString());
                 mainActivity.begin();
             }
@@ -153,7 +153,7 @@ public class FireBaseQuery {
         DatabaseReference betsReference = FirebaseDatabase.getInstance().getReference("bets");
         String betId = betsReference.push().getKey();
         betsReference.child(betId).setValue(bet);
-        //CurrentUserBets.getInstance().addBet(bet);
+        CurrentUserBets.getInstance().addBet(bet);
         createNotification(bet, betId);
     }
 
@@ -188,6 +188,7 @@ public class FireBaseQuery {
                 for (DataSnapshot bet : dataSnapshot.getChildren()) {
                     if (bet.getKey().equals(betId)) {
                         setBetValue(bet.getValue(Bet.class), value, betId);
+                        CurrentUserBets.getInstance().addBet(bet.getValue(Bet.class));
                     }
                 }
             }
