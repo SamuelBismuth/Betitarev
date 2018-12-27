@@ -2,8 +2,10 @@ package com.example.betitarev.betitarev.activities;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,8 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.betitarev.betitarev.R;
+import com.example.betitarev.betitarev.fragment.PlaceBetActivity;
+import com.example.betitarev.betitarev.helper.FragmentHelper;
 
+import static com.example.betitarev.betitarev.activities.MainActivity.getActivity;
 import static com.example.betitarev.betitarev.helper.FireBaseQuery.changeBetStatus;
+import static com.example.betitarev.betitarev.helper.FragmentHelper.loadFragment;
 
 public class ConfirmBetActivity extends AppCompatActivity {
 
@@ -51,7 +57,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
         builder.setTitle("Message");
         builder.setMessage("title: " + dataTitle + "\n" + "message: " + dataMessage);
         builder.setPositiveButton("OK", onOk(input));
-        builder.setNegativeButton("Reject", OnReject("LUivRmMAjzByXFM3OjP"));
+        builder.setNegativeButton("Reject", OnReject(betId));
         builder.setView(input);
         builder.show();
     }
