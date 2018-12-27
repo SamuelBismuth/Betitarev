@@ -15,8 +15,6 @@ import com.example.betitarev.betitarev.objects.Bettor;
 import com.example.betitarev.betitarev.objects.BettorStatus;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.FictiveMoney;
-import com.example.betitarev.betitarev.objects.Friend;
-import com.example.betitarev.betitarev.objects.Friends;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.Player;
 import com.example.betitarev.betitarev.objects.User;
@@ -57,8 +55,11 @@ public class FireBaseQuery {
      * @param mainActivity
      */
 
-
-    public static void loadCurrentUser(final Mail email, final MainActivity mainActivity) {
+    //This function runs only once when the application starts/right after login/ right after registration.
+    // it happens before MainActivity begins
+    public static void loadInitialData(final Mail email, final MainActivity mainActivity) {
+        //first we collect from the db all the users(except of the current one), link to their fullName in a hashmap,
+        // and store it in a singleton UsersNameHashmap, so we could search for any user on the db
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -77,6 +78,7 @@ public class FireBaseQuery {
             }
         });
 
+        //And than we collect the data of the current player and store it in a singleton call CurrentPlayer that extends Player
         reference.orderByChild("mail/mail").equalTo(email.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -95,7 +97,7 @@ public class FireBaseQuery {
         });
     }
 
-
+    //This function using to update the friends of the user after pressing 'Add Friend' or 'Unfriend'
     public static void updateUserFriends(final Context con,User CurrentFriend) {
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.child(CurrentPlayer.getInstance().getUserid()).child("friends").setValue(CurrentPlayer.getInstance().getFriends());
