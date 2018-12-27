@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,11 +61,13 @@ public class OpenedBetActivity extends Fragment {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////my bets list
 
-        List<Bet> bets;
-        bets=new ArrayList<Bet>() ;
+       // List<Bet> bets;
+        //bets=new ArrayList<Bet>() ;
+        //bets.add(new Bet());
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // specify an adapter (see also next example)
+        Log.e("in removeUser", CurrentUserBets.getInstance().getBets().toString());
         mAdapter = new Adapter(CurrentUserBets.getInstance().getBets());
         mRecyclerView.setAdapter(mAdapter);
 
