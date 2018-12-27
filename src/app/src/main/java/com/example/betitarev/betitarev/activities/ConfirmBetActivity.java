@@ -15,8 +15,7 @@ import com.example.betitarev.betitarev.helper.FireBaseQuery;
 public class ConfirmBetActivity extends AppCompatActivity {
 
     private String betId, dataTitle, dataMessage;
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("samyyyy1", "Confirm bet act");
@@ -28,8 +27,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
-            }
-            else {
+            } else {
                 this.betId = extras.getString("betId");
                 this.dataTitle = extras.getString("title");
                 this.dataMessage = extras.getString("message");
