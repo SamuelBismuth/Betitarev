@@ -13,10 +13,8 @@ Arbitrator arbitrator;
         super(player1, player2, phrase, fictiveMoney, arbitrator);
         this.arbitrator = arbitrator;
     }
-
-
-    }
-
-
-
 }
+
+
+
+
