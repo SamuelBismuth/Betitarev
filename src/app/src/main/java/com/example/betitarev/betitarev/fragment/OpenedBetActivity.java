@@ -1,5 +1,6 @@
 package com.example.betitarev.betitarev.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.betitarev.betitarev.R;
@@ -36,12 +39,13 @@ public class OpenedBetActivity extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        bets=CurrentPlayer.getInstance().
-        View view=inflater.inflate(R.layout.activity_opened_bet, container, false);;
+
+        View view=inflater.inflate(R.layout.activity_opened_bet, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv);
 
         // use this setting to improve performance if you know that changes
@@ -59,6 +63,25 @@ public class OpenedBetActivity extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.activity_opened_bet, container, false);
     }
+    **/
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
+        View view = inflater.inflate(R.layout.activity_opened_bet, container, false);
+        RelativeLayout myLayout = (RelativeLayout) view.findViewById(R.id.rl);
+        //LayoutParams lp = new LayoutParams( LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        for(int i=0 ; i<10 ; i++)
+        {
+            TextView tv=new TextView(getActivity());
+            tv.setText("jjjdjdjd\n");
+            tv.setTextSize(42);
+            tv.setTextColor(Color.RED);
+            tv.setGravity(i);
+            tv.setBackgroundColor(Color.BLUE);
+            myLayout.addView(tv);
+        }
+        return view;
+    }
 }
 
