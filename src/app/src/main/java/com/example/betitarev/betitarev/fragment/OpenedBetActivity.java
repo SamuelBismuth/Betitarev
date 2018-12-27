@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.objects.Bet;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
+import com.example.betitarev.betitarev.objects.CurrentUserBets;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class OpenedBetActivity extends Fragment {
         super.onCreate(savedInstanceState);
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-    /**
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,14 +58,15 @@ public class OpenedBetActivity extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new Adapter(bets);
+        mAdapter = new Adapter(CurrentUserBets.getInstance().getBets());
         mRecyclerView.setAdapter(mAdapter);
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.activity_opened_bet, container, false);
     }
-    **/
+
     /////////////////////////////////////////////////////////////////////////////////////////////
+    /**
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -83,5 +85,6 @@ public class OpenedBetActivity extends Fragment {
         }
         return view;
     }
+     **/
 }
 
