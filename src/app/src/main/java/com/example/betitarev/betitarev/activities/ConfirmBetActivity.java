@@ -17,10 +17,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * Here is where the {@link com.example.betitarev.betitarev.objects.Player} is redirected when he accepts a bet.
+ */
 public class ConfirmBetActivity extends AppCompatActivity {
 
-    private String betId, dataTitle, dataMessage;
+    private String betId, dataTitle, dataMessage;  // The Strings of the notification.
 
+    /**
+     * The function on create is call every time we create this activity.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +38,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            if (extras == null) {
-            } else {
+            if (extras != null) {
                 this.betId = extras.getString("betId");
                 this.dataTitle = extras.getString("title");
                 this.dataMessage = extras.getString("message");
@@ -43,6 +50,9 @@ public class ConfirmBetActivity extends AppCompatActivity {
             showAlertDialogArb();
     }
 
+    /**
+     * This is the alert dialog for the {@link com.example.betitarev.betitarev.objects.Arbitrator}.
+     */
     private void showAlertDialogArb() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Answer");
@@ -109,6 +119,9 @@ public class ConfirmBetActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This is the alert dialog for the {@link com.example.betitarev.betitarev.objects.Player}.
+     */
     private void showAlertDialogPlayer() {
         final EditText input = new EditText(ConfirmBetActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -135,4 +148,5 @@ public class ConfirmBetActivity extends AppCompatActivity {
         builder.setView(input);
         builder.show();
     }
+
 }

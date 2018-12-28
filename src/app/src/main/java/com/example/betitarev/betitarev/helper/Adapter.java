@@ -12,10 +12,12 @@ import com.example.betitarev.betitarev.objects.Bet;
 
 import java.util.List;
 
+/**
+ * The Adapter for the bet historic.
+ */
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
-    private List<Bet> mDataset;
 
-
+    private List<Bet> mDataset;  // The list of Bet.
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -37,15 +39,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
     // Create new views (invoked by the layout manager)
     @Override
-
-
-
     public Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         // create a new view
         TextView v = (TextView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.my_text_view, parent, false);
-
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
@@ -81,10 +78,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public int getItemCount() {
         return mDataset.size() + 1;
     }
-
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
 
 }
 

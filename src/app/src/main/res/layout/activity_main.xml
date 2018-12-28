@@ -25,4 +25,12 @@
         app:itemTextColor="@drawable/selector_bottombar_item"
         app:menu="@menu/navigation" />
 
+    <ProgressBar
+        android:id="@+id/progressBarMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="top"
+        android:visibility="gone" />
+
 </android.support.design.widget.CoordinatorLayout>

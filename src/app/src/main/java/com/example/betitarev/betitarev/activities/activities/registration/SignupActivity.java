@@ -26,17 +26,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+/**
+ * The signup activity to register a new User.
+ */
 public class SignupActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword, inputName, inputFamilyName;
-    private Button btnSignIn, btnSignUp, btnResetPassword;
-    private ProgressBar progressBar;
-    private FirebaseAuth auth;
-    private DatabaseReference mFirebaseDatabase;
-    private FirebaseDatabase mFirebaseInstance;
+    private EditText inputEmail, inputPassword, inputName, inputFamilyName;  // All the EditText for the activity.
+    private ProgressBar progressBar;  // The progress bar to wait for the connection.
+    private FirebaseAuth auth;  // The Firebase authentication.
+    private DatabaseReference mFirebaseDatabase;  // The database reference.
 
-    private String userId;
-
+    /**
+     * The function on create is call every time we create this activity.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,16 +49,18 @@ public class SignupActivity extends AppCompatActivity {
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-        btnSignIn = (Button) findViewById(R.id.sign_in_button);
-        btnSignUp = (Button) findViewById(R.id.sign_up_button);
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        inputName = (EditText) findViewById(R.id.name);
-        inputFamilyName = (EditText) findViewById(R.id.family_name);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
+        Button btnSignIn = findViewById(R.id.sign_in_button);
+        Button btnSignUp = findViewById(R.id.sign_up_button);
+        inputEmail = findViewById(R.id.email);
+        inputPassword = findViewById(R.id.password);
+        inputName = findViewById(R.id.name);
+        inputFamilyName = findViewById(R.id.family_name);
+        progressBar = findViewById(R.id.progressBar);
+        // The three buttons.
+        Button btnResetPassword = findViewById(R.id.btn_reset_password);
 
-        mFirebaseInstance = FirebaseDatabase.getInstance();
+        // The database instance.
+        FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
 
         // get reference to 'users' node
         mFirebaseDatabase = mFirebaseInstance.getReference("users");
@@ -147,17 +153,28 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     /**
-     * Creating new user node under 'users'
+     * Creating new user node under 'users'.
+     *
+     * @param name
+     * @param familyName
+     * @param email
+     * @param pushToken
      */
     private void createUser(String name, String familyName, Mail email, String pushToken) {
-        this.userId = mFirebaseDatabase.push().getKey();
+        // The user ID.
+        String userId = mFirebaseDatabase.push().getKey();
         User user = new Player(name, familyName, email, userId, pushToken);
+        assert userId != null;
         mFirebaseDatabase.child(userId).setValue(user);
     }
 
+    /**
+     * This function set the visibility of the progress bar to gone.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         progressBar.setVisibility(View.GONE);
     }
+
 }

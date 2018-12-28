@@ -36,22 +36,25 @@ import java.io.ByteArrayOutputStream;
 
 import static com.example.betitarev.betitarev.helper.FireBaseQuery.getCurrentMail;
 
+/**
+ * This is the activity the edit the profile.
+ * By editing the profile the meaning is change the picture, the name, and the password.
+ */
 public class EditProfileActivity extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private EditText inputFirstName, inputLastName, inputOldPassword, inputNewPassword;
+    private EditText inputFirstName, inputLastName, inputOldPassword, inputNewPassword;  // The EditText for the activity.
     private ImageView mImageView;
-    private Button btnSaveChanges;
     private FirebaseAuth auth;
-    private Mail Email;
-    private CurrentPlayer user;
-    private DatabaseReference reference;
-    private FirebaseStorage storage;
-    private StorageReference storageReference;
+    private Mail email;
     private FirebaseUser FBUser;
     private boolean changedProfileImage = false;
 
-
+    /**
+     * The function on create is call every time we create this activity.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,15 +65,15 @@ public class EditProfileActivity extends AppCompatActivity {
         inputLastName = findViewById(R.id.editLastName);
         inputOldPassword = findViewById(R.id.editOldPassword);
         inputNewPassword = findViewById(R.id.editNewPassword);
-        btnSaveChanges = findViewById(R.id.btn_save_changes);
+        Button btnSaveChanges = findViewById(R.id.btn_save_changes);
         auth = FirebaseAuth.getInstance();
-        Email = getCurrentMail();
-        user = CurrentPlayer.getInstance();
+        email = getCurrentMail();
+        CurrentPlayer user = CurrentPlayer.getInstance();
         inputFirstName.setText(user.getName());
         inputLastName.setText(user.getFamilyName());
 
 
-        ImageView editProfileImage = (ImageView) findViewById(R.id.edit_profile_image);
+        ImageView editProfileImage = findViewById(R.id.edit_profile_image);
         editProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,9 +100,14 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method allows {@link com.example.betitarev.betitarev.objects.User} to edit the password.
+     * @param oldPass
+     * @param newPass
+     */
     private void updatePassword(String oldPass, final String newPass) {
         FBUser = auth.getCurrentUser();
-        AuthCredential credential = EmailAuthProvider.getCredential(Email.getMail(), oldPass);
+        AuthCredential credential = EmailAuthProvider.getCredential(email.getMail(), oldPass);
         FBUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -122,10 +130,13 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method upload the image from our database.
+     */
     private void uploadImage() {
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-        StorageReference ref = storageReference.child("images/" + Email.getMail() + "/profile");
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        StorageReference ref = storageReference.child("images/" + email.getMail() + "/profile");
         mImageView.setDrawingCacheEnabled(true);
         mImageView.buildDrawingCache();
         Bitmap bitmap = mImageView.getDrawingCache();
@@ -138,10 +149,14 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * This method allows the {@link com.example.betitarev.betitarev.objects.User} to update his name.
+     * @param firstName
+     * @param lastName
+     */
     private void updateNameData(final String firstName, final String lastName) {
-        reference = FirebaseDatabase.getInstance().getReference().child("users");
-        reference.orderByChild("mail/mail").equalTo(Email.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
+        reference.orderByChild("mail/mail").equalTo(email.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
@@ -160,6 +175,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This funciton dispatch the picture.
+     */
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -167,12 +185,18 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * As a result of the activity.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            mImageView = (ImageView) findViewById(R.id.edit_profile_image);
+            mImageView = findViewById(R.id.edit_profile_image);
             mImageView.setImageBitmap(imageBitmap);
 
             changedProfileImage = true;

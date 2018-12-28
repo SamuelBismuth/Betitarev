@@ -16,10 +16,19 @@ import com.example.betitarev.betitarev.objects.Notification;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+/**
+ * This class handle messages and notifications between {@link com.example.betitarev.betitarev.objects.User}.
+ */
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
 
+    /**
+     * This function send a message to the {@link com.example.betitarev.betitarev.objects.Arbitrator} to get the answer of the bet.
+     *
+     * @param bet
+     * @param betId
+     */
     protected static void sendMessageForTheAnswer(Bet bet, String betId) {
         FireBaseQuery.sendMessage(new Notification("Answer for the bet",
                 "Phrase: " + bet.getPhrase() + "\n" +
@@ -28,6 +37,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 "betitarevToken", bet.getArbitrator().getUser().getPushToken(), betId));
     }
 
+    /**
+     * This function is called when the user receive a message.
+     *
+     * @param remoteMessage
+     */
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         String notificationTitle = null, notificationBody = null, betId = null;
@@ -41,6 +55,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         sendNotification(notificationTitle, notificationBody, betId);
     }
 
+    /**
+     * This function push the notification.
+     *
+     * @param notificationTitle
+     * @param notificationBody
+     * @param betId
+     */
     private void sendNotification(String notificationTitle, String notificationBody, String betId) {
         Intent intent = new Intent(this, ConfirmBetActivity.class);
         intent.putExtra("title", notificationTitle);

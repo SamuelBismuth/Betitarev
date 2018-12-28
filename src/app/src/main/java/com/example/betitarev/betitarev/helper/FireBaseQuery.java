@@ -36,21 +36,24 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-
+/**
+ * This class handle queries for the firabase database.
+ */
 public class FireBaseQuery {
 
     private static Player user;
-    private static FirebaseAuth auth;
     private static Set<User> allUsersSet = new LinkedHashSet<>();
     private static List<Bet> bets = new ArrayList<>();
-    private static FirebaseStorage storage;
-    private static StorageReference storageReference;
 
+    /**
+     * This function return the mail of the current {@link User}.
+     *
+     * @return the {@link Mail}.
+     */
     public static Mail getCurrentMail() {
-        auth = FirebaseAuth.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         return new Mail(auth.getCurrentUser().getEmail());
     }
-
 
     /**
      * Add the statistics and the friends on the database.
@@ -58,7 +61,6 @@ public class FireBaseQuery {
      * @param email
      * @param mainActivity
      */
-
     public static void loadInitialData(final Mail email, final MainActivity mainActivity) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -66,7 +68,6 @@ public class FireBaseQuery {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
                     Player currentUser = datas.getValue(Player.class);
-                    Log.e("user", currentUser.toString());
                     if (!currentUser.getMail().getMail().equals(email.getMail()))
                         allUsersSet.add(currentUser);
                 }
@@ -88,7 +89,6 @@ public class FireBaseQuery {
 
                 CurrentPlayer.getInstance(user);
                 loadCurrentBets();
-                Log.e("userDetails", user.toString());
                 mainActivity.begin();
             }
 
@@ -98,13 +98,12 @@ public class FireBaseQuery {
         });
     }
 
-
-    public static void changeBetStatus(String betid) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
-        reference.child(betid).child("status").setValue(2);
-        //Log.e("statbet", reference.child(betid).getRoot().toString());
-    }
-
+    /**
+     * This function reload the {@link com.example.betitarev.betitarev.objects.Friends} of the {@link User}
+     *
+     * @param con
+     * @param CurrentFriend
+     */
     public static void updateUserFriends(final Context con, User CurrentFriend) {
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.child(CurrentPlayer.getInstance().getUserid()).child("friends").setValue(CurrentPlayer.getInstance().getFriends());
@@ -113,9 +112,12 @@ public class FireBaseQuery {
         a.finish();
     }
 
+    /**
+     * This function update the picture.
+     */
     public static void updateUserPictureUri() {
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
         StorageReference ref = storageReference.child("images/" + CurrentPlayer.getInstance().getMail().getMail() + "/profile");
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -133,6 +135,15 @@ public class FireBaseQuery {
         });
     }
 
+    /**
+     * This function place a new bet with {@link Arbitrator}.
+     *
+     * @param bettor2
+     * @param arb
+     * @param betPhrase
+     * @param betValue
+     * @param betGuessing
+     */
     public static void placeNewBetWithArb(String bettor2, String arb, String betPhrase, String betValue, String betGuessing) {
         Bet bet = new BetWithArbitrator(new Bettor(CurrentPlayer.getInstance(), betGuessing),
                 new Bettor((Player) UsersNamesHashmap.getAllKeysForValue(bettor2).get(0), " "),
@@ -145,6 +156,14 @@ public class FireBaseQuery {
         createNotification(bet, betId);
     }
 
+    /**
+     * This function place a new bet without {@link Arbitrator}.
+     *
+     * @param bettor2
+     * @param betPhrase
+     * @param betValue
+     * @param betGuessing
+     */
     public static void placeNewBetWithoutArb(String bettor2, String betPhrase, String betValue, String betGuessing) {
         Bet bet = new BetWithoutArbitrator(new Bettor(CurrentPlayer.getInstance(), betGuessing),
                 new Bettor((Player) UsersNamesHashmap.getAllKeysForValue(bettor2).get(0), " "),
@@ -156,6 +175,12 @@ public class FireBaseQuery {
         createNotification(bet, betId);
     }
 
+    /**
+     * This method create a notification for a bet request.
+     *
+     * @param bet
+     * @param betId
+     */
     private static void createNotification(Bet bet, String betId) {
         sendMessage(new Notification("Bet Request",
                 bet.getPhrase(),
@@ -164,7 +189,12 @@ public class FireBaseQuery {
                 betId));
     }
 
-    public static void sendMessage(Notification notif) {
+    /**
+     * This method send the {@link Notification} to the database and a trigger send a push notification to the receiver token.
+     *
+     * @param notif
+     */
+    protected static void sendMessage(Notification notif) {
         DatabaseReference mFirebaseDatabase;
         FirebaseDatabase mFirebaseInstance;
         mFirebaseInstance = FirebaseDatabase.getInstance();
@@ -173,12 +203,23 @@ public class FireBaseQuery {
         mFirebaseDatabase.child(notifId).setValue(notif);
     }
 
+    /**
+     * This method is used by the {@link com.example.betitarev.betitarev.objects.Admin} to remove any {@link User}.
+     *
+     * @param userid
+     */
     public static void removeUser(String userid) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         Log.e("in removeUser", userid + " this is userid");
         reference.child(userid).removeValue();
     }
 
+    /**
+     * This function return the bet by his Id.
+     *
+     * @param betId
+     * @param value
+     */
     public static void getBetById(final String betId, final String value) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -199,7 +240,14 @@ public class FireBaseQuery {
         });
     }
 
-    public static void setBetValue(Bet bet, String value, String betId) {
+    /**
+     * This function set the bet guessing.
+     *
+     * @param bet
+     * @param value
+     * @param betId
+     */
+    private static void setBetValue(Bet bet, String value, String betId) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
         reference.child(betId).child("player2/guessing").setValue(value);
         bet.getPlayer2().setGuessing(value);
@@ -207,7 +255,9 @@ public class FireBaseQuery {
 
     }
 
-
+    /**
+     * This method load all the current bets.
+     */
     private static void loadCurrentBets() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -237,6 +287,12 @@ public class FireBaseQuery {
         });
     }
 
+    /**
+     * This method push the stats in the database.
+     *
+     * @param userid
+     * @param status
+     */
     public static void updateStats(final String userid, final int status) {
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -265,7 +321,7 @@ public class FireBaseQuery {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
     }
+
 }
 

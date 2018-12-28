@@ -10,7 +10,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -36,8 +35,6 @@ import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.User;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,77 +42,70 @@ import java.util.List;
 
 import static com.example.betitarev.betitarev.helper.FireBaseQuery.getCurrentMail;
 
-
+/**
+ * The fragment is the profile of the {@link User}.
+ */
 public class ProfileActivity extends Fragment {
 
     private static FirebaseAuth auth;
-    private static String Name, mAddFriendName;
-    private static Mail Email, mAddFriendMail;
-    private TextView mNameTextView, mEmailTextView;
-    private ImageView mPictureSrc, mEditBtn, mHeaderCoverImage;
-    private Button mSignOutBtn;
-    private ListView mListFriends;
-    private EditText mSearchFriend;
+    private static String name, mAddFriendName;
+    private static Mail email;
+    private ImageView mPictureSrc;
     // Hold a reference to the current animator,
     // so that it can be canceled mid-way.
     private Animator mCurrentAnimator;
-
     // The system "short" animation time duration, in milliseconds. This
     // duration is ideal for subtle animations or animations that occur
     // very frequently.
     private int mShortAnimationDuration;
-
-
-    // Create a storage reference from our app
-    private StorageReference storageRef, pathReference;
-    private FirebaseStorage storage;
-    private CurrentPlayer user;
     private ArrayAdapter<String> adapterFriend;
 
-
     public ProfileActivity() {
-        Email = getCurrentMail();
-        user = CurrentPlayer.getInstance();
-        Name = user.getName() + " " + user.getFamilyName();
+        email = getCurrentMail();
+        CurrentPlayer user = CurrentPlayer.getInstance();
+        name = user.getName() + " " + user.getFamilyName();
     }
 
-    public static ProfileActivity newInstance() {
-        ProfileActivity fragment = new ProfileActivity();
-        return fragment;
-    }
-
-
+    /**
+     * The function on create is call every time we create this fragment.
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
-
     }
 
-
+    /**
+     * This function is called every time the view of the fragment must be created.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_profile, container, false);
         auth = FirebaseAuth.getInstance();
 
-        mHeaderCoverImage = view.findViewById(R.id.header_cover_image);
+        ImageView mHeaderCoverImage = view.findViewById(R.id.header_cover_image);
 
-        mNameTextView = view.findViewById(R.id.name);
-        mNameTextView.setText(Name);
+        TextView mNameTextView = view.findViewById(R.id.name);
+        mNameTextView.setText(name);
 
-        mEmailTextView = view.findViewById(R.id.email);
-        mEmailTextView.setText(Email.getMail());
+        TextView mEmailTextView = view.findViewById(R.id.email);
+        mEmailTextView.setText(email.getMail());
 
-        mListFriends = view.findViewById(R.id.list_friend);
-        mSearchFriend = view.findViewById(R.id.search_friend);
+        ListView mListFriends = view.findViewById(R.id.list_friend);
+        EditText mSearchFriend = view.findViewById(R.id.search_friend);
 
 
         mPictureSrc = view.findViewById(R.id.profile_image);
         setProfileImage();
 
-        mSignOutBtn = view.findViewById(R.id.btn_sign_out);
+        Button mSignOutBtn = view.findViewById(R.id.btn_sign_out);
         mSignOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,7 +151,7 @@ public class ProfileActivity extends Fragment {
 
             }
         });
-        mEditBtn = view.findViewById(R.id.edit);
+        ImageView mEditBtn = view.findViewById(R.id.edit);
         mEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,35 +181,19 @@ public class ProfileActivity extends Fragment {
 
     }
 
-
+    /**
+     * This function set the profile picture.
+     */
     private void setProfileImage() {
-
         if (CurrentPlayer.getInstance().getPicture().length() > 5)
             Glide.with(getContext()).load(CurrentPlayer.getInstance().getPicture()).into(mPictureSrc);
-//        StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" +Email.getMail()+"/profile");
-//        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                Glide.with(getContext()).load(uri).into(mPictureSrc);
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception exception) {
-//                Log.e("downloadImage", "failed");
-//            }
-//        });
-
     }
 
-    private void loadFragment(Fragment fragment) {
-        // load fragment
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.activity_profile_layout, fragment);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
+    /**
+     * This function zoom in the picture.
+     * @param thumbView
+     * @param imageResId
+     */
     private void zoomImageFromThumb(final View thumbView, Drawable imageResId) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
@@ -228,7 +202,7 @@ public class ProfileActivity extends Fragment {
         }
 
         // Load the high-resolution "zoomed-in" image.
-        final ImageView expandedImageView = (ImageView) getView().findViewById(
+        final ImageView expandedImageView = getView().findViewById(
                 R.id.expanded_image);
         expandedImageView.setImageDrawable(imageResId);
 
@@ -357,7 +331,6 @@ public class ProfileActivity extends Fragment {
                 mCurrentAnimator = set;
             }
         });
-
-
     }
+
 }

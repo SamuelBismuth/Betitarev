@@ -6,6 +6,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.fragment.OpenedBetActivity;
@@ -15,10 +17,17 @@ import com.example.betitarev.betitarev.fragment.StatisticsActivity;
 import com.example.betitarev.betitarev.helper.FireBaseQuery;
 import com.example.betitarev.betitarev.helper.FragmentHelper;
 
+/**
+ * The main activity, actually handle four fragments.
+ */
 public class MainActivity extends AppCompatActivity {
 
-    private static AppCompatActivity activity;
+    private static AppCompatActivity activity;  // This implementation allows developper to get an unlimited access to the main activity.
+    private ProgressBar progressBar;  // The progress bar to wait for the connection.
 
+    /**
+     * This function detect the on click of the fragment and make what is necessary to make.
+     */
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -47,20 +56,36 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * This static function return the main activity.
+     * This implementation allows developers to get an access to the main activity from every fragments.
+     *
+     * @return MainActivity
+     */
     public static AppCompatActivity getActivity() {
         return activity;
     }
 
+    /**
+     * The function on create is call every time we create this activity.
+     *
+     * @param savedInstanceState
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        progressBar = findViewById(R.id.progressBarMain);
+        progressBar.setVisibility(View.VISIBLE);
         FireBaseQuery.loadInitialData(FireBaseQuery.getCurrentMail(), this);
     }
 
+    /**
+     * This function is called after the data is completely loaded.
+     */
     public void begin() {
         activity = this;
+        progressBar.setVisibility(View.GONE);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         FragmentHelper.loadFragment(new PlaceBetActivity());
