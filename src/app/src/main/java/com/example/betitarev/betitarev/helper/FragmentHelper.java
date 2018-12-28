@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentTransaction;
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.activities.MainActivity;
 
+/**
+ * This class contains function to handle with fragment.
+ */
 public class FragmentHelper {
 
     /**

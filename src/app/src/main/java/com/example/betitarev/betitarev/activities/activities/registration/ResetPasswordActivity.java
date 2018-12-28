@@ -15,22 +15,31 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * This activity is called if the user forgot his own password.
+ * The team Betitarev send him a mail with a link and the possibility to change his password.
+ */
 public class ResetPasswordActivity extends AppCompatActivity {
 
-    private EditText inputEmail;
-    private Button btnReset, btnBack;
-    private FirebaseAuth auth;
-    private ProgressBar progressBar;
+    private EditText inputEmail;  // The edit text for the mail.
+    private FirebaseAuth auth;  // The Firebase authentication.
+    private ProgressBar progressBar;  // The progress bar to wait for the connection.
 
+    /**
+     * The function on create is call every time we create this activity.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
 
-        inputEmail = (EditText) findViewById(R.id.email);
-        btnReset = (Button) findViewById(R.id.btn_reset_password);
-        btnBack = (Button) findViewById(R.id.btn_back);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        inputEmail = findViewById(R.id.email);
+        Button btnReset = findViewById(R.id.btn_reset_password);
+        // The two buttons of the activity.
+        Button btnBack = findViewById(R.id.btn_back);
+        progressBar = findViewById(R.id.progressBar);
 
         auth = FirebaseAuth.getInstance();
 

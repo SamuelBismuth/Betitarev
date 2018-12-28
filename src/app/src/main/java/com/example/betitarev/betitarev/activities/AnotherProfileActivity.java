@@ -33,61 +33,58 @@ import com.example.betitarev.betitarev.objects.User;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-
+/**
+ * This activity is the profile of each {@link User}.
+ */
 public class AnotherProfileActivity extends AppCompatActivity {
-    private static FirebaseAuth auth;
-    private static String Name;
-    private static Mail Email;
+
+    private static Mail email;
     private User friend;
     private Friend currentFriend;
-    private TextView mNameTextView, mEmailTextView;
     private ImageView mPictureSrc;
-    private Button mAddFriendBtn;
-    private FirebaseStorage storage;
-    private StorageReference storageRef;
-    private StorageReference pathReference;
-    private Button btn_remove;
-    // Hold a reference to the current animator,
-    // so that it can be canceled mid-way.
-    private Animator mCurrentAnimator;
+    private Animator mCurrentAnimator;  // Hold a reference to the current animator, so that it can be canceled mid-way.
 
     // The system "short" animation time duration, in milliseconds. This
     // duration is ideal for subtle animations or animations that occur
     // very frequently.
     private int mShortAnimationDuration;
 
-
+    /**
+     * The function on create is call every time we create this activity.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_another_profile);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        String name;
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
 
             if (extras == null) {
-                Name = null;
+                name = null;
             } else {
-                Name = extras.getString("Name");
+                name = extras.getString("Name");
             }
         } else {
-            Name = (String) savedInstanceState.getSerializable("Name");
+            name = (String) savedInstanceState.getSerializable("Name");
         }
-        Log.e("number of users name", "" + UsersNamesHashmap.getAllKeysForValue(Name).size());
-        friend = UsersNamesHashmap.getAllKeysForValue(Name).get(0);
+        Log.e("number of users name", "" + UsersNamesHashmap.getAllKeysForValue(name).size());
+        friend = UsersNamesHashmap.getAllKeysForValue(name).get(0);
         Log.e("in another...", friend.getUserid() + "this is userid here");
 
-        Email = friend.getMail();
-        mNameTextView = findViewById(R.id.name);
-        mNameTextView.setText(Name);
+        email = friend.getMail();
+        TextView mNameTextView = findViewById(R.id.name);
+        mNameTextView.setText(name);
 
-        mEmailTextView = findViewById(R.id.email);
+        TextView mEmailTextView = findViewById(R.id.email);
         mEmailTextView.setText(friend.getMail().getMail());
 
         mPictureSrc = findViewById(R.id.profile_image);
@@ -101,7 +98,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
             }
         });
 
-        mAddFriendBtn = (Button) findViewById(R.id.btn_add_friend);
+        Button mAddFriendBtn = findViewById(R.id.btn_add_friend);
         mAddFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +126,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
         }
 
         //btn_remove properties
-        btn_remove = (Button) findViewById(R.id.btn_remove);
+        Button btn_remove = findViewById(R.id.btn_remove);
         try {
             if (CurrentPlayer.getInstance().getMail().getMail().endsWith("betitarev.com")) {
                 Log.e("removebutton", "mail: " + CurrentPlayer.getInstance().getMail().getMail().endsWith("betitarev.com"));
@@ -162,11 +159,13 @@ public class AnotherProfileActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * This function set the profile image.
+     */
     private void setProfileImage() {
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference();
-        pathReference = storageRef.child("images/" + Email.getMail() + "/profile");
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference pathReference = storageRef.child("images/" + email.getMail() + "/profile");
         pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -181,6 +180,12 @@ public class AnotherProfileActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This function make a zoom when the {@link User} click in the profile image.
+     *
+     * @param thumbView
+     * @param imageResId
+     */
     private void zoomImageFromThumb(final View thumbView, Drawable imageResId) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
@@ -189,7 +194,7 @@ public class AnotherProfileActivity extends AppCompatActivity {
         }
 
         // Load the high-resolution "zoomed-in" image.
-        final ImageView expandedImageView = (ImageView) findViewById(
+        final ImageView expandedImageView = findViewById(
                 R.id.expanded_image);
         expandedImageView.setImageDrawable(imageResId);
 

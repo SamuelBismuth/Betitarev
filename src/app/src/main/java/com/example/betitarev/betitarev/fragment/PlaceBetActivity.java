@@ -26,7 +26,9 @@ import com.example.betitarev.betitarev.objects.Friend;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * This fragment is where all the bet process is programed.
+ */
 public class PlaceBetActivity extends Fragment {
 
     ArrayAdapter<String> adapterFriend, adapterArbitrator;
@@ -37,14 +39,30 @@ public class PlaceBetActivity extends Fragment {
     private Friend bettor, arbitrator;
     private boolean isWithArb;
 
+    /**
+     * Required empty public constructor for Firebase.
+     */
     public PlaceBetActivity() {
     }
 
+    /**
+     * The function on create is call every time we create this fragment.
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * This function is called every time the view of the fragment must be created.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -189,6 +207,9 @@ public class PlaceBetActivity extends Fragment {
         return false;
     }
 
+    /**
+     * This method push the data in our database.
+     */
     private void pushDataBase() {
         String bettor2 = bettor.getFullName();
         if (isWithArb) {
@@ -199,6 +220,10 @@ public class PlaceBetActivity extends Fragment {
         }
     }
 
+    /**
+     * This function clear the fragment after the confirmation of the bet.
+     * @param view
+     */
     private void clearAll(View view) {
         BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_opened_bet);

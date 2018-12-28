@@ -19,18 +19,27 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * This activity is the login phase.
+ * Here the user need to enter a mail associate with the password or click on "forgot password".
+ * If the user has no account he may click on registration and create himself an account.
+ */
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword;
-    private FirebaseAuth auth;
-    private ProgressBar progressBar;
-    private Button btnSignup, btnLogin, btnReset;
+    private EditText inputEmail, inputPassword;  // The Edit text for the mail and the password.
+    private FirebaseAuth auth;  // The Firebase authentication.
+    private ProgressBar progressBar;  // The progress bar to wait for the connection.
 
+    /**
+     * The function on create is call every time we create this activity.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Get Firebase auth instance
+        // Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
@@ -38,21 +47,19 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
-        // set the view now
+        // Set the view now
         setContentView(R.layout.activity_login);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnSignup = (Button) findViewById(R.id.btn_signup);
-        btnLogin = (Button) findViewById(R.id.btn_login);
-        btnReset = (Button) findViewById(R.id.btn_reset_password);
-
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
+        inputEmail = findViewById(R.id.email);
+        inputPassword = findViewById(R.id.password);
+        progressBar = findViewById(R.id.progressBar);
+        Button btnSignup = findViewById(R.id.btn_signup);
+        Button btnLogin = findViewById(R.id.btn_login);
+        // The buttons.
+        Button btnReset = findViewById(R.id.btn_reset_password);
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,17 +93,17 @@ public class LoginActivity extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                //authenticate user
+                // Authenticate user
                 auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
+                                // The auth state listener will be notified and logic to handle the
+                                // Signed in user can be handled in the listener.
                                 progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
-                                    // there was an error
+                                    // There was an error
                                     if (password.length() < 6) {
                                         inputPassword.setError(getString(R.string.minimum_password));
                                     } else {
