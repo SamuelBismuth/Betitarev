@@ -15,14 +15,14 @@ The tasks are classify from the most to the less important.
 - [x] Log in/up and database connection. [@SamuelBismuth]( https://github.com/SamuelBismuth )
 - [x] Real time database. [@SamuelBismuth]( https://github.com/SamuelBismuth )
 - [x] Profile of the user activity. [@yoshago]( https://github.com/yoshago )
-- [ ] Place a bet activity. [@Yishay1]( https://github.com/Yishay1 )
-- [ ] Opened bet activity. [@SamuelBismuth]( https://github.com/SamuelBismuth )
-- [ ] Statistics activity. [@Yishay1]( https://github.com/Yishay1 )
+- [x] Place a bet activity. [@Yishay1]( https://github.com/Yishay1 )
+- [x] Opened bet activity. [@SamuelBismuth]( https://github.com/SamuelBismuth )
+- [x] Statistics activity. [@Yishay1]( https://github.com/Yishay1 )
 - [x] Connection between all the activities. [@SamuelBismuth]( https://github.com/SamuelBismuth )
 - [x] Account settings activity. [@yoshago]( https://github.com/yoshago )
-- [ ] Bet process (all the best process including the gain...). [@yoshago]( https://github.com/yoshago )  [@SamuelBismuth]( https://github.com/SamuelBismuth )  [@Yishay1]( https://github.com/Yishay1 )
-- [ ] Chat between friend. [@SamuelBismuth]( https://github.com/SamuelBismuth )
-- [ ] Real money transaction [@SamuelBismuth]( https://github.com/SamuelBismuth ) [@Yishay1]( https://github.com/Yishay1 )
+- [x] Bet process (all the best process including the gain...). [@yoshago]( https://github.com/yoshago )  [@SamuelBismuth]( https://github.com/SamuelBismuth )  [@Yishay1]( https://github.com/Yishay1 )
+- [x] Chat between friend. [@SamuelBismuth]( https://github.com/SamuelBismuth )
+- [x] Fictive money transaction [@SamuelBismuth]( https://github.com/SamuelBismuth ) [@Yishay1]( https://github.com/Yishay1 )
 
 # Team Work Rules
 
@@ -30,6 +30,62 @@ The tasks are classify from the most to the less important.
 - Unit test is required to all the needed function.
 - JavaDoc is required.
 - New branches must be open is some hot code must be edit.
+
+# Processes
+
+Here are all the processes Betitarev has.
+
+1. Connection
+	- Sign in with mail and password (mail containing "@betitarev.com are admin).
+	- Change password if the user forgot him.
+	- Register with mail password and fullname.
+
+2. Social Network.
+	- Access to profile with picture, mail and fullname.
+	- Possibility to sign out.
+	- Zooming in the picture by clicking on it.
+	- Edit the profile. Possibility to change name, picture (by using device's camera), and password.
+	- Search for other users and access to their profile (picture, fullname and mail).
+	- Add friend and un-friend users.
+	- Only for the admin users -> remove user from the application.
+	- Send push notification to user as player or as arbitrator.
+
+3. Placing a bet.
+	- Searching a bettor (only among friends).
+	- Editing the phrase and the guessing of the bet.
+	- Editing the amount in virtual money.
+	- Choosing if the bet must be arbitrate or not. (If need to be arbitrate, choose an arbitrator among the user's friends.)
+	- Send the request. (push notification to all the concerned users).
+
+4. Bet Historic.
+	- Review of all the previous bet made by the user containing:
+		- Fullname of the player 1 and his guessing.
+		- Fullname of the player 2 and his guessing.
+		- Phrase of the bet.
+		- Amount of money for the bet.
+		- Winner of the bet.
+
+5. Statistics.
+	- If not yet participate in any bet, the user can be redirected to the activity to place a bet.
+	- Circular diagram with the following numbers:
+		- Number of win.
+		- Number of lose.
+		- Number of draw.
+		- Number of arbitrator.
+
+# Future Work
+
+As future work a lot of things have to be improved:
+- Implementing more tests to correct bugs.
+- Improving the application design.
+- Adding some features and processes.
+- Fixing code syntax.
+
+
+
+		
+
+
 
 
 
