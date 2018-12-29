@@ -44,15 +44,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      */
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        String notificationTitle = null, notificationBody = null, betId = null;
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            String[] messageSplited = remoteMessage.getNotification().getBody().split("split");
-            notificationBody = messageSplited[0];
-            betId = messageSplited[1];
-            notificationTitle = remoteMessage.getNotification().getTitle();
+        String notificationTitle = null, notificationBody = null, notificationId = null;
+        if (remoteMessage.getData() != null) {
+            Log.d("debug", remoteMessage.getData().toString());
+            notificationTitle = remoteMessage.getData().get("title");
+            notificationBody = remoteMessage.getData().get("body");
+            notificationId = remoteMessage.getData().get("id");
         }
-        sendNotification(notificationTitle, notificationBody, betId);
+        sendNotification(notificationTitle, notificationBody, notificationId);
     }
 
     /**
@@ -63,6 +62,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param betId
      */
     private void sendNotification(String notificationTitle, String notificationBody, String betId) {
+        Log.i("send notification", "here");
         Intent intent = new Intent(this, ConfirmBetActivity.class);
         intent.putExtra("title", notificationTitle);
         intent.putExtra("message", notificationBody);

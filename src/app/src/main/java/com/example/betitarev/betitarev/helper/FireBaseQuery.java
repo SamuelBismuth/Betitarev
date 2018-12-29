@@ -269,12 +269,12 @@ public class FireBaseQuery {
                             .getMail().getMail()) || bet.getPlayer2().getUser().getMail().getMail().
                             equals(CurrentPlayer.getInstance().getMail().getMail())) {
                         bets.add(bet);
-                        Log.d("bet added", bet.getPhrase());
+                        Log.i("bet added", bet.getPhrase());
                     }
                     if (bet.getArbitrator() != null) {
                         if (bet.getArbitrator().getUser().getMail().getMail().equals(CurrentPlayer.getInstance().getMail().getMail())) {
                             bets.add(bet);
-                            Log.e("bet added", bet.toString());
+                            Log.i("bet added", bet.toString());
                         }
                     }
                 }
