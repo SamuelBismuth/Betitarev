@@ -43,7 +43,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_bottom_navigation_behavior">BottomNavigationBehavior</string>
     <string name="title_activity_my_application">MyApplicationActivity</string>
-    <string name="title_opened_bet">Bets Historic</string>
+    <string name="title_opened_bet">Bets History</string>
     <string name="title_place_bet">Place a Bet</string>
     <string name="title_statistics">Statistics</string>
     <string name="app_label">Betitarev</string>

@@ -86,9 +86,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/bet_value"
+                    android:drawableLeft = "@drawable/ic_attach_money_white_24dp"
                     android:inputType="numberDecimal"
                     android:padding="16dp"
-                    android:text="0" />
+                    android:text="" />
 
 
             </android.support.design.widget.TextInputLayout>
