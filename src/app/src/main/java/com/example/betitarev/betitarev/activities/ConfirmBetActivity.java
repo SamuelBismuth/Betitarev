@@ -1,11 +1,13 @@
 package com.example.betitarev.betitarev.activities;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -104,7 +106,12 @@ public class ConfirmBetActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        builder.show();
+        AlertDialog alert = builder.create();
+        alert.show();
+        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        nbutton.setTextColor(Color.BLUE);
+        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+        pbutton.setTextColor(Color.BLUE);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
         reference.child(betId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -147,7 +154,12 @@ public class ConfirmBetActivity extends AppCompatActivity {
             }
         });
         builder.setView(input);
-        builder.show();
+        AlertDialog alert = builder.create();
+        alert.show();
+        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        nbutton.setTextColor(Color.BLUE);
+        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+        pbutton.setTextColor(Color.BLUE);
     }
 
 }
