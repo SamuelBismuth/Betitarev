@@ -14,7 +14,7 @@
     <string name="title_activity_login">Sign in</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
-    <string name="hint_name">Fullname</string>
+    <string name="hint_name">First Name</string>
     <string name="btn_login">LOGIN</string>
     <string name="btn_link_to_register">Not a member? Get registered in Firebase now!</string>
     <string name="btn_link_to_login">Already registered. Login Me!</string>
@@ -33,9 +33,9 @@
     <string name="title_activity_user_info">UserInfoActivity</string>
     <string name="name">Name</string>
     <string name="action_save">Save</string>
-    <string name="family_name">Family Name</string>
+    <string name="family_name">Last Name</string>
     <string name="title_activity_profile_page">ProfilePageActivity</string>
-    <string name="hint_family_name">family name</string>
+    <string name="hint_family_name">Last Name</string>
     <string name="title_activity_statistics">StatisticsActivity</string>
     <string name="title_activity_place_bet">PlaceBetActivity</string>
     <string name="title_activity_opened_bet">OpenedBetActivity</string>
@@ -43,7 +43,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_bottom_navigation_behavior">BottomNavigationBehavior</string>
     <string name="title_activity_my_application">MyApplicationActivity</string>
-    <string name="title_opened_bet">Bets Historic</string>
+    <string name="title_opened_bet">Bets History</string>
     <string name="title_place_bet">Place a Bet</string>
     <string name="title_statistics">Statistics</string>
     <string name="app_label">Betitarev</string>

@@ -210,6 +210,7 @@ public class PlaceBetActivity extends Fragment {
     /**
      * This method push the data in our database.
      */
+
     private void pushDataBase() {
         String bettor2 = bettor.getFullName();
         if (isWithArb) {
@@ -224,6 +225,7 @@ public class PlaceBetActivity extends Fragment {
      * This function clear the fragment after the confirmation of the bet.
      * @param view
      */
+
     private void clearAll(View view) {
         BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_opened_bet);

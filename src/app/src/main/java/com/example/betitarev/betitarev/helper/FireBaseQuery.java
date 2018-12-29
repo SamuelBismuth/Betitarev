@@ -99,7 +99,7 @@ public class FireBaseQuery {
     }
 
     /**
-     * This function reload the {@link com.example.betitarev.betitarev.objects.Friends} of the {@link User}
+     * This function reload the {@link com.example.betitarev.betitarev.objects.Friends} of the {@link User} into the database
      *
      * @param con
      * @param CurrentFriend
