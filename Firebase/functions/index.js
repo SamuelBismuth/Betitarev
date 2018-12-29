@@ -10,18 +10,16 @@ exports.sendPush = functions.database.ref('/notifcations/{pushId}').onWrite((cha
     return notif.then(result => 
     {
         const receiver_token = result.val().receiverToken;
-        const sender_token = result.val().senderToken;
-        const body = result.val().message;
-        const title = result.val().title;
-        const betId = result.val().betId;
 
         const payload = {
-            notification : {
-                title : title,
-                body : body  + "split" + betId,
+            data : {
+                title : result.val().title,
+                body : result.val().message,
+                id : result.val().betId,
                 icon : "default"
             }
         };
+    
         return admin.messaging().sendToDevice(receiver_token, payload).then(response => {
             console.log('This was the notification Feature');
             return null;
