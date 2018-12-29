@@ -153,6 +153,15 @@
                 android:textColor="@android:color/black" />
 
             <Button
+                android:id="@+id/btn_reload"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:background="@color/colorAccent"
+                android:text="Reload"
+                android:textColor="@android:color/black" />
+
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="invisible" />

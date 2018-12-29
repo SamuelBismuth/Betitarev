@@ -29,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.activities.AnotherProfileActivity;
 import com.example.betitarev.betitarev.activities.EditProfileActivity;
+import com.example.betitarev.betitarev.activities.MainActivity;
 import com.example.betitarev.betitarev.activities.activities.registration.LoginActivity;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.example.betitarev.betitarev.objects.Mail;
@@ -113,6 +114,18 @@ public class ProfileActivity extends Fragment {
                 CurrentPlayer.signOut();
                 UsersNamesHashmap.reset();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        Button mReload = view.findViewById(R.id.btn_reload);
+        mReload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CurrentPlayer.signOut();
+                UsersNamesHashmap.reset();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
 
             }
