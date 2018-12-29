@@ -29,6 +29,10 @@ public class CurrentUserBets {
         return instance;
     }
 
+    public static void reset(){
+        instance = null;
+    }
+
     public List<Bet> getBets() {
         return bets;
     }

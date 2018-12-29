@@ -17,6 +17,8 @@ import com.example.betitarev.betitarev.fragment.StatisticsActivity;
 import com.example.betitarev.betitarev.helper.FireBaseQuery;
 import com.example.betitarev.betitarev.helper.FragmentHelper;
 
+import org.apache.commons.io.FileUtils;
+
 /**
  * The main activity, actually handle four fragments.
  */
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         progressBar = findViewById(R.id.progressBarMain);
         progressBar.setVisibility(View.VISIBLE);
+        FileUtils.deleteQuietly(getBaseContext().getCacheDir());
         FireBaseQuery.loadInitialData(FireBaseQuery.getCurrentMail(), this);
     }
 
