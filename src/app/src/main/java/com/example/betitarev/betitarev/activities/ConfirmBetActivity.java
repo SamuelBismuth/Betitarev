@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.helper.FireBaseQuery;
-import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,7 +59,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Answer");
         builder.setMessage("title: " + dataTitle + "\n" + "message: " + dataMessage);
-        builder.setPositiveButton("Player1", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Player 1", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Log.i("Winner", "the winner is the player 1");
                 final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
@@ -84,7 +83,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton("Player2", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Player 2", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Log.i("Winner", "the winner is the player 2");
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
