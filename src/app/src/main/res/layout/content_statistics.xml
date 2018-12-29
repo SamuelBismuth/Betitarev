@@ -11,6 +11,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:gravity="center"
+        android:background="@color/colorPrimary"
         android:orientation="vertical">
 
         <TextView
@@ -26,7 +27,7 @@
             android:id="@+id/btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/Gold"
+            android:background="@color/colorAccent"
             android:gravity="center"
             android:onClick="goToPlaceBet"
             android:text="place a bet" />
