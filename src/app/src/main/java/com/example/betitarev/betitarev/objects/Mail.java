@@ -1,11 +1,20 @@
 package com.example.betitarev.betitarev.objects;
 
+/**
+ * This class represents the object Mail.
+ */
 public class Mail {
 
     private String mail;
 
-    private Mail(){}
+    private Mail() {
+    }
 
+    /**
+     * Constructor.
+     *
+     * @param mail
+     */
     public Mail(String mail) {
         this.mail = mail;
     }

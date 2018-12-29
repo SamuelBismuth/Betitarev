@@ -1,5 +1,9 @@
 package com.example.betitarev.betitarev.objects;
 
+
+/**
+ * This class represents the object Bettor.
+ */
 public class Bettor implements BetRole {
 
     private Player user;
@@ -8,6 +12,11 @@ public class Bettor implements BetRole {
     public Bettor() {
     }
 
+    /**
+     * Constructor.
+     * @param user
+     * @param guessing
+     */
     public Bettor(Player user, String guessing) {
         this.user = user;
         this.guessing = guessing;

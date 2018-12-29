@@ -2,13 +2,24 @@ package com.example.betitarev.betitarev.objects;
 
 import android.support.annotation.NonNull;
 
+
+/**
+ * This class represents the object Friend.
+ */
 public class Friend implements Comparable<Friend> {
+
     private String fullName, pushToken;
     private Mail mail;
 
     public Friend() {
     }
 
+    /**
+     * Constructor.
+     * @param fullName
+     * @param mail
+     * @param token
+     */
     public Friend(String fullName, Mail mail, String token) {
         this.fullName = fullName;
         this.mail = mail;

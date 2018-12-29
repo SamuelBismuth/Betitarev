@@ -18,7 +18,7 @@ public class BasicAdmin extends User implements Admin {
     static List<String> AdminPushToken;
 
     /**
-     *
+     * Constructor.
      * @param name
      * @param familyName
      * @param mail

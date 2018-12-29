@@ -4,8 +4,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 //Singleton
+
+/**
+ * This class represents the object SuperAdmin.
+ */
 public class SuperAdmin extends User implements Admin {
 
+    /**
+     * Constructor.
+     *
+     * @param name
+     * @param familyName
+     * @param mail
+     * @param pushToken
+     */
     public SuperAdmin(String name, String familyName, Mail mail, String pushToken) {
         super(name, familyName, mail, pushToken);
     }

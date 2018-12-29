@@ -1,5 +1,8 @@
 package com.example.betitarev.betitarev.objects;
 
+/**
+ * This class represents the object User.
+ */
 public class User {
 
     private String name, familyName;
@@ -15,6 +18,15 @@ public class User {
     public User() {
     }
 
+    /**
+     * Constructor.
+     *
+     * @param name
+     * @param familyName
+     * @param mail
+     * @param userId
+     * @param pushToken
+     */
     public User(String name, String familyName, Mail mail, String userId, String pushToken) {
         this.name = name;
         this.familyName = familyName;

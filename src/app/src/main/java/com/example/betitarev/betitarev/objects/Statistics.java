@@ -1,9 +1,15 @@
 package com.example.betitarev.betitarev.objects;
 
+/**
+ * This class represents the object Statistics.
+ */
 public class Statistics {
 
     private Statistic winStat, loseStat, drawStat, arbitratorStat;
 
+    /**
+     * Constructor.
+     */
     public Statistics() {
         this.winStat = new Statistic(0);
         this.loseStat = new Statistic(0);
@@ -11,6 +17,14 @@ public class Statistics {
         this.arbitratorStat = new Statistic(0);
     }
 
+    /**
+     * Constructor.
+     *
+     * @param winStat
+     * @param loseStat
+     * @param drawStat
+     * @param arbitratorStat
+     */
     public Statistics(Statistic winStat, Statistic loseStat, Statistic drawStat, Statistic arbitratorStat) {
         this.winStat = winStat;
         this.loseStat = loseStat;

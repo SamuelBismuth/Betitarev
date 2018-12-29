@@ -1,7 +1,10 @@
 package com.example.betitarev.betitarev.objects;
 
-public class CurrentAdmin extends BasicAdmin {
 
+/**
+ * This class represents the object Current Admin.
+ */
+public class CurrentAdmin extends BasicAdmin {
 
     static CurrentAdmin instance = null; // Singleton implementation.
 
@@ -9,6 +12,12 @@ public class CurrentAdmin extends BasicAdmin {
         super(ba, userId);
     }
 
+    /**
+     * Constructor.
+     * @param ba
+     * @param userId
+     * @return
+     */
     static public CurrentAdmin getInstance(BasicAdmin ba, String userId) {
         if (instance != null)
             return instance;

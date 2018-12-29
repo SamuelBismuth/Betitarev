@@ -1,22 +1,33 @@
 package com.example.betitarev.betitarev.objects;
 
+/**
+ * This class represents the object Statistics.
+ */
 public class Statistic {
 
     private int counter;
 
-    public Statistic(){
+    /**
+     * Constructor.
+     */
+    public Statistic() {
         this.counter = 0;
     }
 
+    /**
+     * Constructor.
+     *
+     * @param counter
+     */
     public Statistic(int counter) {
         this.counter = counter;
     }
 
-    protected void increase(){
+    protected void increase() {
 
     }
 
-    protected boolean decrease(){
+    protected boolean decrease() {
         return false;
     }
 
