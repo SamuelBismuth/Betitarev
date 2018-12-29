@@ -1,11 +1,19 @@
 package com.example.betitarev.betitarev.objects;
 
 // Singleton
-public class CurrentPlayer extends Player {
 
+
+/**
+ * This class represents the object Current player
+ */
+public class CurrentPlayer extends Player {
 
     static CurrentPlayer instance = null; // Singleton implementation.
 
+    /**
+     * Constructor.
+     * @param player
+     */
     private CurrentPlayer(Player player) {
         super(player);
     }

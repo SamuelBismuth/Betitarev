@@ -6,12 +6,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
+/**
+ * This class represents the object Users name hash map.
+ */
 public class UsersNamesHashmap {
 
     static UsersNamesHashmap instance = null; // Singleton implementation.
     private HashMap<User, String> Hashmap = new HashMap<>();
 
+    /**
+     * Constructor.
+     *
+     * @param Users
+     */
     private UsersNamesHashmap(Set<User> Users) {
         for (User user : Users) {
             this.getHashmap().put(user, user.getName() + " " + user.getFamilyName());

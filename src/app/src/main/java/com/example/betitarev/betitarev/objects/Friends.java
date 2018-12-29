@@ -5,6 +5,10 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * This class represents the object Friends.
+ */
 public class Friends {
 
     private List<Friend> friends;
@@ -17,6 +21,12 @@ public class Friends {
         return friends.size();
     }
 
+    /**
+     * Constructor.
+     *
+     * @param friend
+     * @return
+     */
     public boolean isFriend(Friend friend) {
         if (friends.contains(friend))
             return true;

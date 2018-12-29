@@ -1,11 +1,23 @@
 package com.example.betitarev.betitarev.objects;
 
+/**
+ * This class represents the object Notification.
+ */
 public class Notification {
 
     private String title, message;
     private String senderToken, receiverToken;
     private String betId;
 
+    /**
+     * Constructor.
+     *
+     * @param title
+     * @param message
+     * @param senderToken
+     * @param receiverToken
+     * @param betId
+     */
     public Notification(String title, String message, String senderToken, String receiverToken, String betId) {
         this.title = title;
         this.message = message;
