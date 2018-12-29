@@ -2,7 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,14 +12,24 @@
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:gravity="center"
+        android:gravity="top"
         android:background="@color/colorPrimary"
         android:orientation="vertical">
+
+        <Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimaryDark"
+            android:popupTheme="@style/AppTheme.PopupOverlay"
+            android:title="@string/title_statistics"
+            tools:targetApi="lollipop" />
 
         <TextView
             android:id="@+id/bet_invite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="170dp"
             android:gravity="center"
             android:text="You have not participated in bets yet.\n start earn money on betting right now by a click"
             android:textColor="@android:color/holo_red_light"

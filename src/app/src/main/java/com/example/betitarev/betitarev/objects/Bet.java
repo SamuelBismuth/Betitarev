@@ -1,5 +1,8 @@
 package com.example.betitarev.betitarev.objects;
 
+/**
+ * This class represents the object Bet.
+ */
 public class Bet {
 
     private Bettor player1, player2;
@@ -11,6 +14,14 @@ public class Bet {
 
     public Bet() {}
 
+    /**
+     * Constructor.
+     * @param player1
+     * @param player2
+     * @param phrase
+     * @param fictiveMoney
+     * @param arbitrator
+     */
     public Bet(Bettor player1, Bettor player2, String phrase, FictiveMoney fictiveMoney, Arbitrator arbitrator) {
         this.player1 = player1;
         this.player2 = player2;

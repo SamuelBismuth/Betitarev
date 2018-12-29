@@ -10,6 +10,9 @@ import java.util.List;
 
 import static com.example.betitarev.betitarev.helper.FireBaseQuery.removeUser;
 
+/**
+ * This class represents the object Basic Admin.
+ */
 public class BasicAdmin extends User implements Admin {
     static List<String> AdminPushToken;
 
@@ -44,7 +47,7 @@ public class BasicAdmin extends User implements Admin {
         Log.i("innnn basic admin :", "before if...");
         if (CurrentPlayer.getInstance().getFriends().isFriend(the_user)) {
             CurrentPlayer.getInstance().getFriends().removeFriend(the_user);
-            Friend current=new Friend(CurrentPlayer.getInstance().getName() +
+            Friend current = new Friend(CurrentPlayer.getInstance().getName() +
                     " " + CurrentPlayer.getInstance().getFamilyName(),
                     CurrentPlayer.getInstance().getMail(),
                     CurrentPlayer.getInstance().getPushToken());
@@ -59,19 +62,6 @@ public class BasicAdmin extends User implements Admin {
         }
 
         removeUser(user.getUserid());
-        //        DatabaseReference mFirebaseDatabase;
-//        FirebaseDatabase mFirebaseInstance;
-//        mFirebaseInstance = FirebaseDatabase.getInstance();
-//        mFirebaseDatabase = mFirebaseInstance.getReference();
-//        if(!AdminPushToken.contains(pushToken))
-//            mFirebaseDatabase.child(pushToken).removeValue();
-
-
-//      FirebaseDatabase.getInstance().;
-//        node.setValue(null);
-
-        //   DatabaseReference node = FirebaseDatabase.getInstance().getReference("users");
-
         return false;
     }
 
