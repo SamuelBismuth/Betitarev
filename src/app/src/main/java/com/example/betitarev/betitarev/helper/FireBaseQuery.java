@@ -42,8 +42,8 @@ import java.util.Set;
 public class FireBaseQuery {
 
     private static Player user;
-    private static Set<User> allUsersSet = new LinkedHashSet<>();
-    private static List<Bet> bets = new ArrayList<>();
+    private static Set<User> allUsersSet;
+    private static List<Bet> bets;
 
     /**
      * This function return the mail of the current {@link User}.
@@ -62,6 +62,7 @@ public class FireBaseQuery {
      * @param mainActivity
      */
     public static void loadInitialData(final Mail email, final MainActivity mainActivity) {
+        allUsersSet = new LinkedHashSet<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -259,6 +260,7 @@ public class FireBaseQuery {
      * This method load all the current bets.
      */
     private static void loadCurrentBets() {
+        bets = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

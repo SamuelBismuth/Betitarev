@@ -32,6 +32,7 @@ import com.example.betitarev.betitarev.activities.EditProfileActivity;
 import com.example.betitarev.betitarev.activities.MainActivity;
 import com.example.betitarev.betitarev.activities.activities.registration.LoginActivity;
 import com.example.betitarev.betitarev.objects.CurrentPlayer;
+import com.example.betitarev.betitarev.objects.CurrentUserBets;
 import com.example.betitarev.betitarev.objects.Mail;
 import com.example.betitarev.betitarev.objects.User;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
@@ -113,6 +114,7 @@ public class ProfileActivity extends Fragment {
                 auth.signOut();
                 CurrentPlayer.signOut();
                 UsersNamesHashmap.reset();
+                CurrentUserBets.reset();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
 
@@ -125,6 +127,7 @@ public class ProfileActivity extends Fragment {
             public void onClick(View view) {
                 CurrentPlayer.signOut();
                 UsersNamesHashmap.reset();
+                CurrentUserBets.reset();
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
 
