@@ -38,7 +38,7 @@
     <string name="hint_family_name">Last Name</string>
     <string name="title_activity_statistics">StatisticsActivity</string>
     <string name="title_activity_place_bet">PlaceBetActivity</string>
-    <string name="title_activity_opened_bet">OpenedBetActivity</string>
+    <string name="title_activity_opened_bet">Bets History</string>
     <string name="title_profile">Profile</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_bottom_navigation_behavior">BottomNavigationBehavior</string>
