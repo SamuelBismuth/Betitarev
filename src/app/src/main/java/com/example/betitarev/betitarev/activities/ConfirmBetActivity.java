@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.example.betitarev.betitarev.R;
 import com.example.betitarev.betitarev.helper.FireBaseQuery;
+import com.example.betitarev.betitarev.objects.CurrentPlayer;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -117,6 +118,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String userIdArbitrator = dataSnapshot.child("arbitrator/user/userid").getValue().toString();
+                Log.i("arbitest", "im updating arbitrator");
                 FireBaseQuery.updateStats(userIdArbitrator, 2);
             }
 
