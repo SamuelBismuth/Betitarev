@@ -5,7 +5,7 @@ package com.example.betitarev.betitarev.objects;
  */
 public class Arbitrator implements BetRole {
 
-    private User user;
+    private User user;  // The user which is the arbitrator.
 
     public Arbitrator() {
     }

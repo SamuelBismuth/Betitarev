@@ -14,8 +14,16 @@ import static com.example.betitarev.betitarev.helper.FireBaseQuery.removeUser;
  * This class represents the object Basic Admin.
  */
 public class BasicAdmin extends User implements Admin {
+
     static List<String> AdminPushToken;
 
+    /**
+     *
+     * @param name
+     * @param familyName
+     * @param mail
+     * @param pushToken
+     */
     public BasicAdmin(String name, String familyName, Mail mail, String pushToken) {
         super(name, familyName, mail, pushToken);
         if (AdminPushToken == null)

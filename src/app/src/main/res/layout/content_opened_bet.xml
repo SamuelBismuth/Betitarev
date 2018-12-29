@@ -4,7 +4,7 @@
     android:id="@+id/rl"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-
+    
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
@@ -15,10 +15,5 @@
         android:descendantFocusability="afterDescendants"
         android:paddingTop="0dp">
 
-
-
-
-
     </android.support.v7.widget.RecyclerView>
-
 </RelativeLayout>
