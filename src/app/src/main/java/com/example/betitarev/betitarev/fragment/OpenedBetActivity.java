@@ -2,6 +2,7 @@ package com.example.betitarev.betitarev.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -54,8 +55,11 @@ public class OpenedBetActivity extends Fragment {
         //mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
+                mLayoutManager.getOrientation());
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
 
         // specify an adapter (see also next example)
 

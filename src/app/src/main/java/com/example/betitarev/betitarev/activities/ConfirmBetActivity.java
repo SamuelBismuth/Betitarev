@@ -60,13 +60,14 @@ public class ConfirmBetActivity extends AppCompatActivity {
         builder.setPositiveButton("Player1", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Log.i("Winner", "the winner is the player 1");
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
-                reference.child(betId).child("winner").setValue("Player 1");
+                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bets");
                 reference.child(betId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String userIdWinner = dataSnapshot.child("player1/user/userid").getValue().toString();
                         String userIdLoser = dataSnapshot.child("player2/user/userid").getValue().toString();
+                        String winnerName = dataSnapshot.child("player1/user/name").getValue().toString() + " " + dataSnapshot.child("player1/user/familyName").getValue().toString();
+                        reference.child(betId).child("winner").setValue(winnerName);
                         FireBaseQuery.updateStats(userIdWinner, 0);
                         FireBaseQuery.updateStats(userIdLoser, 1);
                     }
