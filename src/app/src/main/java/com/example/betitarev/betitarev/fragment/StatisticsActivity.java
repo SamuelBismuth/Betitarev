@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,9 +60,11 @@ public class StatisticsActivity extends Fragment {
 
 
         int win = CurrentPlayer.getInstance().getStatistics().getWinStat().getCounter();
+        Log.i("arbitest", "cntr win is "+CurrentPlayer.getInstance().getStatistics().getWinStat().getCounter());
         int lose = CurrentPlayer.getInstance().getStatistics().getLoseStat().getCounter();
         int draw = CurrentPlayer.getInstance().getStatistics().getDrawStat().getCounter();
         int arbitrator = CurrentPlayer.getInstance().getStatistics().getArbitratorStat().getCounter();
+        Log.i("arbitest", "cntr arb is "+CurrentPlayer.getInstance().getStatistics().getArbitratorStat().getCounter());
         int total = win + lose + draw + arbitrator;
 
 
