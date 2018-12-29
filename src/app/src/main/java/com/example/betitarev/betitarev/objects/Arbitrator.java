@@ -1,5 +1,8 @@
 package com.example.betitarev.betitarev.objects;
 
+/**
+ * This class represents the object Arbitrator which judge the game.
+ */
 public class Arbitrator implements BetRole {
 
     private User user;
