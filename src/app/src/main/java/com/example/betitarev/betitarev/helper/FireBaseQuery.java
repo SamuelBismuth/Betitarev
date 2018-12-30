@@ -273,7 +273,7 @@ public class FireBaseQuery {
                         bets.add(bet);
                         Log.i("bet added", bet.getPhrase());
                     }
-                    if (bet.getArbitrator() != null) {
+                    else if (bet.getArbitrator() != null) {
                         if (bet.getArbitrator().getUser().getMail().getMail().equals(CurrentPlayer.getInstance().getMail().getMail())) {
                             bets.add(bet);
                             Log.i("bet added", bet.toString());
