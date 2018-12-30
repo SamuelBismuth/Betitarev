@@ -69,7 +69,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         //holder.mTextView.onCli
         holder.mTextView.setTextColor(Color.BLACK);
         if(position%2==0)
-            holder.mTextView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.Gold));
+            holder.mTextView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.colorAccent));
         else
             holder.mTextView.setBackgroundColor(Color.TRANSPARENT);
     }
