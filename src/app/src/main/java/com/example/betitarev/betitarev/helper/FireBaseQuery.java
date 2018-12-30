@@ -114,9 +114,11 @@ public class FireBaseQuery {
                             return;
                         } else {
                             Log.i("Token", task.getResult().getToken());
-                            CurrentPlayer.getInstance().setPushToken(task.getResult().getToken());
-                            final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-                            reference.child(CurrentPlayer.getInstance().getUserid()).child("pushToken").setValue(task.getResult().getToken());
+                            if(! CurrentPlayer.getInstance().getPushToken().equals(task.getResult().getToken())) {
+                                CurrentPlayer.getInstance().setPushToken(task.getResult().getToken());
+                                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+                                reference.child(CurrentPlayer.getInstance().getUserid()).child("pushToken").setValue(task.getResult().getToken());
+                            }
                         }
                     }
                 });
