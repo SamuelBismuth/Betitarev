@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.betitarev.betitarev">
+    package="com.course.betitarev.betitarev">
 
     <!-- All the permissions -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -24,7 +24,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="ExtraText,GoogleAppIndexingWarning">
         <activity
-            android:name=".activities.activities.registration.LoginActivity"
+            android:name="com.course.betitarev.betitarev.activities.activities.registration.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
@@ -34,31 +34,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.activities.registration.SignupActivity"
+            android:name="com.course.betitarev.betitarev.activities.activities.registration.SignupActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.activities.registration.ResetPasswordActivity"
+            android:name="com.course.betitarev.betitarev.activities.activities.registration.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.course.betitarev.betitarev.activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.EditProfileActivity"
+            android:name="com.course.betitarev.betitarev.activities.EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.AnotherProfileActivity"
+            android:name="com.course.betitarev.betitarev.activities.AnotherProfileActivity"
             android:label="@string/title_activity_another_profile"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activities.ConfirmBetActivity"
+            android:name="com.course.betitarev.betitarev.activities.ConfirmBetActivity"
             android:label="@string/title_activity_confirm_bet"
             android:theme="@style/AppTheme" />
 
-        <service android:name=".helper.MyFirebaseMessagingService">
+        <service android:name="com.course.betitarev.betitarev.helper.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
