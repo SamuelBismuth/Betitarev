@@ -85,6 +85,7 @@ public class FireBaseQuery {
         });
 
         //And than we collect the data of the current player and store it in a singleton call CurrentPlayer that extends Player
+        user = null;
         reference.orderByChild("mail/mail").equalTo(email.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
