@@ -38,6 +38,8 @@ import com.example.betitarev.betitarev.objects.User;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.apache.commons.io.FileUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -115,6 +117,7 @@ public class ProfileActivity extends Fragment {
                 CurrentPlayer.signOut();
                 UsersNamesHashmap.reset();
                 CurrentUserBets.reset();
+                FileUtils.deleteQuietly(getActivity().getBaseContext().getCacheDir());
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
 
