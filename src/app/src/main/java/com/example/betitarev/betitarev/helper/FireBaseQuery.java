@@ -20,14 +20,18 @@ import com.example.betitarev.betitarev.objects.Notification;
 import com.example.betitarev.betitarev.objects.Player;
 import com.example.betitarev.betitarev.objects.User;
 import com.example.betitarev.betitarev.objects.UsersNamesHashmap;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -84,12 +88,12 @@ public class FireBaseQuery {
         reference.orderByChild("mail/mail").equalTo(email.getMail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                for (final DataSnapshot datas : dataSnapshot.getChildren()) {
                     user = datas.getValue(Player.class);
                 }
-
                 CurrentPlayer.getInstance(user);
                 loadCurrentBets();
+                reloadToken();
                 mainActivity.begin();
             }
 
@@ -97,6 +101,24 @@ public class FireBaseQuery {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
+
+    private static void reloadToken() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("TAG", "getInstanceId failed", task.getException());
+                            return;
+                        } else {
+                            Log.i("Token", task.getResult().getToken());
+                            CurrentPlayer.getInstance().setPushToken(task.getResult().getToken());
+                            final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+                            reference.child(CurrentPlayer.getInstance().getUserid()).child("pushToken").setValue(task.getResult().getToken());
+                        }
+                    }
+                });
     }
 
     /**
@@ -272,8 +294,7 @@ public class FireBaseQuery {
                             equals(CurrentPlayer.getInstance().getMail().getMail())) {
                         bets.add(bet);
                         Log.i("bet added", bet.getPhrase());
-                    }
-                    else if (bet.getArbitrator() != null) {
+                    } else if (bet.getArbitrator() != null) {
                         if (bet.getArbitrator().getUser().getMail().getMail().equals(CurrentPlayer.getInstance().getMail().getMail())) {
                             bets.add(bet);
                             Log.i("bet added", bet.toString());
