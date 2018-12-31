@@ -54,6 +54,10 @@ Here are all the processes Betitarev has.
 		- Number of draw.
 		- Number of arbitrator.
 
+# Bet process in video
+
+![alt text](https://github.com/SamuelBismuth/Betitarev/blob/master/Video_Recorder/BetWithoutArbitrator.mp4)
+
 # Included in this repository
 
 - Diagrams folder which contains seven diagrams [here](https://github.com/SamuelBismuth/Betitarev/tree/master/Diagrams)
